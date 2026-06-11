@@ -319,6 +319,8 @@
                 <strong>Why it matters:</strong> Good readers don't just memorize facts. They can point to the exact sentence that proves something is true. This is a superpower in school!
             </div>
             
+            <p style="margin-bottom: 15px;"><strong>Lesson ID:</strong> <span id="lessonDisplay">Week1Part1</span></p>
+            
             <p style="margin-bottom: 15px;"><strong>📖 Read this passage out loud, then answer the questions below:</strong></p>
             
             <div class="numbered-passage">
@@ -561,6 +563,9 @@
     </div>
     
     <script>
+        const LESSON_ID = 'Week1Part1';
+        const NETLIFY_FUNCTION = '/.netlify/functions/save-lesson-data';
+        
         // Continuous Timer
         let seconds = 0;
         const timerDisplay = document.getElementById('timer');
@@ -576,9 +581,9 @@
         
         setInterval(updateTimer, 1000);
         
-        // Save Part 1 answers
-        function savePart1Answers() {
-            const part1Data = {
+        // Gather all answers into payload
+        function buildPayload() {
+            const payload = {
                 answer1: document.getElementById('answer1').value,
                 sentence1: document.getElementById('sentence1').value,
                 answer2: document.getElementById('answer2').value,
@@ -590,25 +595,60 @@
                 answer5: document.getElementById('answer5').value,
                 sentence5: document.getElementById('sentence5').value,
             };
-            localStorage.setItem('part1Answers', JSON.stringify(part1Data));
+            
+            // Add spelling answers if they exist
+            for (let i = 1; i <= 12; i++) {
+                const elem = document.getElementById(`spelling${i}`);
+                if (elem) {
+                    payload[`spelling${i}`] = elem.value;
+                }
+            }
+            
+            return payload;
         }
         
-        // Save Part 2 spelling answers
-        function submitSpelling() {
-            const spellingData = {};
-            for (let i = 1; i <= 12; i++) {
-                spellingData[`spelling${i}`] = document.getElementById(`spelling${i}`).value;
+        // Save to Netlify Function (which posts to GitHub)
+        async function submitAssessment() {
+            const answers = buildPayload();
+            
+            try {
+                const response = await fetch(NETLIFY_FUNCTION, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        lessonID: LESSON_ID,
+                        answers: answers
+                    })
+                });
+                
+                const result = await response.json();
+                if (response.ok) {
+                    console.log('Assessment submitted:', result);
+                    return true;
+                } else {
+                    console.error('Error submitting:', result);
+                    alert('There was an error saving your assessment. Please try again.');
+                    return false;
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('Could not connect to save your assessment. Please check your internet connection.');
+                return false;
             }
-            localStorage.setItem('part2Spelling', JSON.stringify(spellingData));
-            savePart1Answers();
-            showPart(3);
+        }
+        
+        // Submit spelling and move to Part 3
+        async function submitSpelling() {
+            const success = await submitAssessment();
+            if (success) {
+                showPart(3);
+            }
         }
         
         // Section Navigation
         function showPart(partNumber) {
-            if (partNumber === 2) {
-                savePart1Answers();
-            }
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.add('hidden');
             });
@@ -616,13 +656,15 @@
             window.scrollTo(0, 0);
         }
         
-        function showComplete() {
-            savePart1Answers();
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.add('hidden');
-            });
-            document.getElementById('complete').classList.remove('hidden');
-            window.scrollTo(0, 0);
+        async function showComplete() {
+            const success = await submitAssessment();
+            if (success) {
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.add('hidden');
+                });
+                document.getElementById('complete').classList.remove('hidden');
+                window.scrollTo(0, 0);
+            }
         }
     </script>
 </body>

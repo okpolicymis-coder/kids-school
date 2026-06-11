@@ -281,14 +281,14 @@
             <div class="section" id="part1AnswersSection" style="display: none;">
                 <h2>📖 Part 1: Max's Reading Answers</h2>
                 <div id="part1AnswersDisplay" style="background: white; padding: 15px; border-radius: 8px;"></div>
-                <p style="margin-top: 15px; font-size: 0.9em; color: #666;"><strong>Note:</strong> Answers update as Max types them on his device.</p>
+                <p style="margin-top: 15px; font-size: 0.9em; color: #666;"><strong>Note:</strong> Answers from GitHub (real-time sync).</p>
             </div>
             
             <!-- PART 2 ANSWERS -->
             <div class="section" id="part2AnswersSection" style="display: none;">
                 <h2>🔤 Part 2: Max's Spelling Attempts</h2>
                 <div id="part2AnswersDisplay" style="background: white; padding: 15px; border-radius: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;"></div>
-                <p style="margin-top: 15px; font-size: 0.9em; color: #666;"><strong>Note:</strong> After Max submits Part 2, his spelling attempts appear here.</p>
+                <p style="margin-top: 15px; font-size: 0.9em; color: #666;"><strong>Note:</strong> Answers from GitHub (real-time sync).</p>
             </div>
                 <h2>📖 Part 1: Reading Fluency - Real-Time Notes</h2>
                 
@@ -493,10 +493,14 @@
     </div>
     
     <script>
+        const GITHUB_OWNER = 'okpolicymis-coder';
+        const GITHUB_REPO = 'kids-school';
+        
         // Check if already authenticated
         if (localStorage.getItem('dashboardAuthenticated') === 'true') {
             document.getElementById('loginForm').style.display = 'none';
             document.getElementById('authenticatedContent').classList.add('active');
+            fetchLatestAssessment();
         }
         
         function toggleLogin() {
@@ -515,7 +519,7 @@
                 document.getElementById('loginForm').classList.remove('active');
                 document.getElementById('authenticatedContent').classList.add('active');
                 localStorage.setItem('dashboardAuthenticated', 'true');
-                displayAnswers();
+                fetchLatestAssessment();
             } else {
                 document.getElementById('errorMsg').textContent = 'Incorrect password. Try again.';
                 document.getElementById('passwordInput').value = '';
@@ -538,20 +542,39 @@
             document.getElementById('errorMsg').textContent = '';
         }
         
-        // Display Max's answers
-        function displayAnswers() {
-            const part1Data = JSON.parse(localStorage.getItem('part1Answers') || '{}');
-            const spellingData = JSON.parse(localStorage.getItem('part2Spelling') || '{}');
+        // Fetch assessment data from GitHub
+        async function fetchLatestAssessment() {
+            try {
+                const fileName = 'Week1Part1.json';
+                const url = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/lessons-data/${fileName}`;
+                
+                const response = await fetch(url);
+                if (!response.ok) {
+                    console.log('No assessment data found yet');
+                    return;
+                }
+                
+                const data = await response.json();
+                displayAnswers(data.answers);
+            } catch (error) {
+                console.error('Error fetching assessment:', error);
+            }
+        }
+        
+        // Display answers from GitHub
+        function displayAnswers(answers) {
+            if (!answers) return;
             
-            if (Object.keys(part1Data).length > 0) {
+            // Display Part 1 answers
+            if (answers.answer1) {
                 document.getElementById('part1AnswersSection').style.display = 'block';
                 let html = '<div style="padding: 10px;">';
                 for (let i = 1; i <= 5; i++) {
                     html += `
                         <div style="margin-bottom: 15px; padding: 10px; background: #f9f9f9; border-radius: 5px;">
                             <strong>Question ${i}:</strong><br>
-                            Answer: ${part1Data[`answer${i}`] || '(no answer)'}<br>
-                            Sentence(s): ${part1Data[`sentence${i}`] || '(not specified)'}
+                            Answer: ${answers[`answer${i}`] || '(no answer)'}<br>
+                            Sentence(s): ${answers[`sentence${i}`] || '(not specified)'}
                         </div>
                     `;
                 }
@@ -559,12 +582,13 @@
                 document.getElementById('part1AnswersDisplay').innerHTML = html;
             }
             
-            if (Object.keys(spellingData).length > 0) {
+            // Display Part 2 spelling
+            if (answers.spelling1) {
                 document.getElementById('part2AnswersSection').style.display = 'block';
                 let html = '';
                 const correctWords = ['action', 'decision', 'special', 'picture', 'bicycle', 'energy', 'running', 'complete', 'family', 'discover', 'visible', 'transport'];
                 for (let i = 1; i <= 12; i++) {
-                    const userAnswer = spellingData[`spelling${i}`] || '';
+                    const userAnswer = answers[`spelling${i}`] || '';
                     const correct = correctWords[i-1];
                     const isCorrect = userAnswer.toLowerCase() === correct.toLowerCase();
                     html += `
@@ -578,10 +602,12 @@
             }
         }
         
-        // Display answers when page loads if authenticated
-        if (localStorage.getItem('dashboardAuthenticated') === 'true') {
-            displayAnswers();
-        }
+        // Refresh data periodically
+        setInterval(() => {
+            if (localStorage.getItem('dashboardAuthenticated') === 'true') {
+                fetchLatestAssessment();
+            }
+        }, 5000); // Check every 5 seconds
     </script>
 </body>
 </html>
