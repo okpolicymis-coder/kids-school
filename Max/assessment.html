@@ -548,10 +548,24 @@
             </div>
             
             <button class="btn secondary" onclick="showPart(2)">← Back</button>
-            <button class="btn" onclick="showComplete()">I'm Done! →</button>
+            <button class="btn" onclick="showResults()">View Results & Export →</button>
         </div>
         
-        <!-- COMPLETION -->
+        <!-- RESULTS PAGE -->
+        <div class="section hidden" id="results">
+            <h2>✅ Assessment Complete!</h2>
+            <div id="resultsDisplay" style="background: white; padding: 20px; border-radius: 10px; margin: 20px 0;"></div>
+            
+            <div style="background: #f0f0f0; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <h3 style="color: #333; margin-bottom: 15px;">📥 Download Your Answers</h3>
+                <button class="btn" onclick="exportToJSON()">📥 Download as JSON File</button>
+                <button class="btn secondary" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+            </div>
+            
+            <button class="btn" onclick="window.location.href='./'">← Back to Lessons</button>
+        </div>
+        
+        <!-- COMPLETION (LEGACY) -->
         <div class="section hidden" id="complete">
             <div class="completion-message">
                 <h2>✅ Great Job!</h2>
@@ -564,7 +578,6 @@
     
     <script>
         const WEEK = 1;
-        const NETLIFY_FUNCTION = '/.netlify/functions/save-lesson-data';
         
         // Continuous Timer
         let seconds = 0;
@@ -581,87 +594,41 @@
         
         setInterval(updateTimer, 1000);
         
-        // Gather Part 1 (Reading) answers
-        function buildReadingAnswers() {
-            return {
-                answer1: document.getElementById('answer1').value,
-                sentence1: document.getElementById('sentence1').value,
-                answer2: document.getElementById('answer2').value,
-                sentence2: document.getElementById('sentence2').value,
-                answer3: document.getElementById('answer3').value,
-                sentence3: document.getElementById('sentence3').value,
-                answer4: document.getElementById('answer4').value,
-                sentence4: document.getElementById('sentence4').value,
-                answer5: document.getElementById('answer5').value,
-                sentence5: document.getElementById('sentence5').value,
+        // Gather all answers
+        function buildAllAnswers() {
+            const answers = {
+                reading: {},
+                spelling: {},
+                writing: {}
             };
-        }
-        
-        // Gather Part 2 (Spelling) answers
-        function buildSpellingAnswers() {
-            const payload = {};
+            
+            // Reading answers
+            for (let i = 1; i <= 5; i++) {
+                answers.reading[`answer${i}`] = document.getElementById(`answer${i}`).value;
+                answers.reading[`sentence${i}`] = document.getElementById(`sentence${i}`).value;
+            }
+            
+            // Spelling answers
             for (let i = 1; i <= 12; i++) {
                 const elem = document.getElementById(`spelling${i}`);
                 if (elem) {
-                    payload[`spelling${i}`] = elem.value;
+                    answers.spelling[`spelling${i}`] = elem.value;
                 }
-            }
-            return payload;
-        }
-        
-        // Gather Part 3 (Writing) answers
-        function buildWritingAnswers() {
-            return {
-                writing1: document.getElementById('writing1')?.value || '',
-                writing2: document.getElementById('writing2')?.value || '',
-                writing3: document.getElementById('writing3')?.value || '',
-                writing4: document.getElementById('writing4')?.value || '',
-                writing5: document.getElementById('writing5')?.value || '',
-            };
-        }
-        
-        // Save to Netlify Function (which posts to GitHub)
-        async function submitPart(partName, answers) {
-            try {
-                const response = await fetch(NETLIFY_FUNCTION, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        week: WEEK,
-                        part: partName,
-                        answers: answers
-                    })
-                });
-                
-                const result = await response.json();
-                if (response.ok) {
-                    console.log(`${partName} answers submitted:`, result);
-                    return true;
-                } else {
-                    console.error('Error submitting:', result);
-                    alert('There was an error saving your work. Please try again.');
-                    return false;
-                }
-            } catch (error) {
-                console.error('Submission error:', error);
-                alert('Could not connect to save your work. Please check your internet connection.');
-                return false;
-            }
-        }
-        
-        // Section Navigation
-        async function showPart(partNumber) {
-            // Save current part before moving to next
-            if (partNumber === 2) {
-                const success = await submitPart('Reading', buildReadingAnswers());
-                if (!success) return;
-            } else if (partNumber === 3) {
-                const success = await submitPart('Spelling', buildSpellingAnswers());
-                if (!success) return;
             }
             
+            // Writing answers
+            for (let i = 1; i <= 5; i++) {
+                const elem = document.getElementById(`writing${i}`);
+                if (elem) {
+                    answers.writing[`writing${i}`] = elem.value;
+                }
+            }
+            
+            return answers;
+        }
+        
+        // Navigate between sections
+        function showPart(partNumber) {
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.add('hidden');
             });
@@ -669,15 +636,104 @@
             window.scrollTo(0, 0);
         }
         
-        async function showComplete() {
-            const success = await submitPart('Writing', buildWritingAnswers());
-            if (success) {
-                document.querySelectorAll('.section').forEach(section => {
-                    section.classList.add('hidden');
-                });
-                document.getElementById('complete').classList.remove('hidden');
-                window.scrollTo(0, 0);
+        // Show results page
+        function showResults() {
+            const allAnswers = buildAllAnswers();
+            const timestamp = new Date().toLocaleString();
+            const part = 'Reading'; // Could be dynamic later
+            
+            // Display results
+            displayResultsPage(allAnswers, timestamp, part);
+            
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById('results').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+        
+        // Display results on results page
+        function displayResultsPage(allAnswers, timestamp, part) {
+            let html = `<p style="margin-bottom: 20px; font-size: 0.95em; color: #666;"><strong>Completed:</strong> ${timestamp}</p>`;
+            
+            // Reading section
+            html += '<div style="margin-bottom: 25px;"><h3 style="color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px;">📖 Reading Comprehension</h3>';
+            for (let i = 1; i <= 5; i++) {
+                html += `<div style="margin: 12px 0; padding: 10px; background: #f9f9f9; border-radius: 5px;">
+                    <strong>Q${i}:</strong> ${allAnswers.reading[`answer${i}`] || '(no answer)'}
+                    <br><small style="color: #666;">Sentence(s): ${allAnswers.reading[`sentence${i}`] || '(not specified)'}</small>
+                </div>`;
             }
+            html += '</div>';
+            
+            // Spelling section
+            html += '<div style="margin-bottom: 25px;"><h3 style="color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px;">🔤 Spelling</h3>';
+            const correctWords = ['action', 'decision', 'special', 'picture', 'bicycle', 'energy', 'running', 'complete', 'family', 'discover', 'visible', 'transport'];
+            for (let i = 1; i <= 12; i++) {
+                const userAnswer = allAnswers.spelling[`spelling${i}`] || '';
+                const correct = correctWords[i-1];
+                const isCorrect = userAnswer.toLowerCase() === correct.toLowerCase();
+                html += `<div style="margin: 8px 0; padding: 8px; background: ${isCorrect ? '#e8f5e9' : '#fff3cd'}; border-radius: 5px; border-left: 4px solid ${isCorrect ? '#4caf50' : '#ff9800'};">
+                    <strong>${i}. ${correct}</strong> — ${isCorrect ? '✓ Correct!' : `typed: "${userAnswer || '(blank)'}"`}
+                </div>`;
+            }
+            html += '</div>';
+            
+            // Writing section
+            html += '<div style="margin-bottom: 25px;"><h3 style="color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px;">✍️ Writing</h3>';
+            for (let i = 1; i <= 5; i++) {
+                const writing = allAnswers.writing[`writing${i}`] || '(no answer)';
+                html += `<div style="margin: 12px 0; padding: 10px; background: #f9f9f9; border-radius: 5px;">
+                    <strong>Sentence ${i}:</strong><br>
+                    <em>${writing}</em>
+                </div>`;
+            }
+            html += '</div>';
+            
+            document.getElementById('resultsDisplay').innerHTML = html;
+            
+            // Store for export
+            window.lastAssessmentData = {
+                week: WEEK,
+                part: part,
+                timestamp: new Date().toISOString(),
+                answers: allAnswers
+            };
+        }
+        
+        // Export to JSON
+        function exportToJSON() {
+            const data = window.lastAssessmentData;
+            if (!data) {
+                alert('No assessment data to export');
+                return;
+            }
+            
+            const filename = `Week${data.week}-${data.part}-${new Date(data.timestamp).getTime()}.json`;
+            const jsonStr = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // Copy to clipboard
+        function copyToClipboard() {
+            const data = window.lastAssessmentData;
+            if (!data) {
+                alert('No assessment data to copy');
+                return;
+            }
+            
+            const jsonStr = JSON.stringify(data, null, 2);
+            navigator.clipboard.writeText(jsonStr).then(() => {
+                alert('Assessment data copied to clipboard!');
+            }).catch(() => {
+                alert('Could not copy to clipboard');
+            });
         }
     </script>
 </body>

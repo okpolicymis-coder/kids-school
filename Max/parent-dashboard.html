@@ -279,59 +279,26 @@
             
             <!-- WEEK/PART SELECTOR -->
             <div class="section" id="selectorSection" style="display: none;">
-                <h2>📊 Select Assessment to View</h2>
+                <h2>📊 View Max's Assessment Results</h2>
+                <p style="margin: 20px 0; color: #666;">Upload the JSON file(s) that Max exported from his assessment:</p>
                 
-                <div style="margin: 20px 0;">
-                    <label style="font-weight: bold; color: #667eea; display: block; margin-bottom: 10px;">Week:</label>
-                    <select id="weekSelect" style="padding: 10px; font-size: 1em; border: 2px solid #ddd; border-radius: 5px; width: 100%;">
-                        <option value="1">Week 1</option>
-                        <option value="2">Week 2</option>
-                        <option value="3">Week 3</option>
-                        <option value="4">Week 4</option>
-                        <option value="5">Week 5</option>
-                        <option value="6">Week 6</option>
-                    </select>
+                <div style="border: 2px dashed #667eea; padding: 30px; border-radius: 10px; text-align: center; margin: 20px 0; background: #f9f9f9;">
+                    <input type="file" id="fileUpload" accept=".json" style="display: none;" onchange="handleFileUpload(event)">
+                    <button onclick="document.getElementById('fileUpload').click()" style="padding: 15px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; font-weight: bold;">
+                        📁 Choose JSON File
+                    </button>
+                    <p style="margin-top: 15px; font-size: 0.9em; color: #999;">or drag & drop a file here</p>
                 </div>
                 
-                <div style="margin: 20px 0;">
-                    <label style="font-weight: bold; color: #667eea; display: block; margin-bottom: 10px;">Part:</label>
-                    <div style="display: grid; gap: 10px;">
-                        <button onclick="loadPart('Reading')" style="padding: 12px 16px; background: #f0f0f0; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; text-align: left; font-weight: bold; transition: all 0.3s;">📖 Reading</button>
-                        <button onclick="loadPart('Spelling')" style="padding: 12px 16px; background: #f0f0f0; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; text-align: left; font-weight: bold; transition: all 0.3s;">🔤 Spelling</button>
-                        <button onclick="loadPart('Writing')" style="padding: 12px 16px; background: #f0f0f0; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; text-align: left; font-weight: bold; transition: all 0.3s;">✍️ Writing</button>
-                    </div>
-                </div>
+                <div id="loadedFiles" style="margin-top: 20px;"></div>
             </div>
             
-            <!-- ATTEMPTS SELECTOR -->
-            <div class="section" id="attemptsSection" style="display: none;">
+            <!-- RESULTS DISPLAY -->
+            <div class="section" id="resultsSection" style="display: none;">
                 <button onclick="backToSelector()" style="padding: 8px 16px; margin-bottom: 15px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">← Back</button>
-                <h2 id="partTitle">Attempts</h2>
-                <div id="attemptsList" style="display: grid; gap: 10px;"></div>
-            </div>
-            
-            <!-- PART 1 ANSWERS -->
-            <div class="section" id="part1AnswersSection" style="display: none;">
-                <button onclick="backToAttempts()" style="padding: 8px 16px; margin-bottom: 15px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">← Back to Attempts</button>
-                <h2>📖 Reading Comprehension</h2>
-                <p id="currentAttemptTime" style="font-size: 0.9em; color: #666; margin-bottom: 15px;"></p>
-                <div id="part1AnswersDisplay" style="background: white; padding: 15px; border-radius: 8px;"></div>
-            </div>
-            
-            <!-- PART 2 ANSWERS -->
-            <div class="section" id="part2AnswersSection" style="display: none;">
-                <button onclick="backToAttempts()" style="padding: 8px 16px; margin-bottom: 15px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">← Back to Attempts</button>
-                <h2>🔤 Spelling</h2>
-                <p id="currentAttemptTime2" style="font-size: 0.9em; color: #666; margin-bottom: 15px;"></p>
-                <div id="part2AnswersDisplay" style="background: white; padding: 15px; border-radius: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;"></div>
-            </div>
-            
-            <!-- PART 3 ANSWERS -->
-            <div class="section" id="part3AnswersSection" style="display: none;">
-                <button onclick="backToAttempts()" style="padding: 8px 16px; margin-bottom: 15px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">← Back to Attempts</button>
-                <h2>✍️ Writing</h2>
-                <p id="currentAttemptTime3" style="font-size: 0.9em; color: #666; margin-bottom: 15px;"></p>
-                <div id="part3AnswersDisplay" style="background: white; padding: 15px; border-radius: 8px;"></div>
+                <h2 id="resultTitle">Assessment Results</h2>
+                <p id="resultTime" style="font-size: 0.9em; color: #666; margin-bottom: 15px;"></p>
+                <div id="resultDisplay" style="background: white; padding: 20px; border-radius: 8px;"></div>
             </div>
                 <h2>📖 Part 1: Reading Fluency - Real-Time Notes</h2>
                 
@@ -536,12 +503,6 @@
     </div>
     
     <script>
-        const GITHUB_OWNER = 'okpolicymis-coder';
-        const GITHUB_REPO = 'kids-school';
-        let allAttempts = [];
-        let currentAttemptIndex = null;
-        let currentPart = null;
-        
         // Check if already authenticated
         if (localStorage.getItem('dashboardAuthenticated') === 'true') {
             document.getElementById('loginForm').style.display = 'none';
@@ -588,157 +549,101 @@
             document.getElementById('errorMsg').textContent = '';
         }
         
-        // Show Week/Part selector
+        // Show selector section
         function showSelector() {
             document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
             document.getElementById('selectorSection').style.display = 'block';
         }
         
-        // Load attempts for selected week/part
-        async function loadPart(part) {
-            currentPart = part;
-            const week = document.getElementById('weekSelect').value;
-            const fileName = `Week${week}-${part}.json`;
+        // Handle file upload
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
             
-            try {
-                const url = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/lessons-data/${fileName}`;
-                const response = await fetch(url);
-                
-                if (!response.ok) {
-                    alert(`No data found for Week ${week} - ${part}`);
-                    return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    displayResults(data);
+                } catch (error) {
+                    alert('Invalid JSON file. Please make sure it was exported from the assessment.');
+                    console.error('JSON parse error:', error);
                 }
-                
-                const data = await response.json();
-                allAttempts = data.attempts || [];
-                
-                if (allAttempts.length === 0) {
-                    alert('No attempts recorded yet.');
-                    return;
-                }
-                
-                displayAttemptsList(week, part);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                alert('Error loading assessment data.');
+            };
+            reader.readAsText(file);
+            
+            // Reset file input
+            event.target.value = '';
+        }
+        
+        // Display results
+        function displayResults(data) {
+            if (!data.answers) {
+                alert('Invalid assessment file format.');
+                return;
             }
-        }
-        
-        // Display list of attempts
-        function displayAttemptsList(week, part) {
-            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-            document.getElementById('attemptsSection').style.display = 'block';
-            document.getElementById('partTitle').textContent = `Week ${week} - ${part} Attempts`;
             
-            let html = '';
-            allAttempts.forEach((attempt, index) => {
-                const date = new Date(attempt.timestamp);
-                const timeStr = date.toLocaleString();
-                const attemptNum = index + 1;
-                html += `
-                    <button onclick="viewAttempt(${index})" style="padding: 12px 16px; background: #f0f0f0; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; text-align: left; transition: all 0.3s;">
-                        <strong>Attempt ${attemptNum}</strong> - ${timeStr}
-                    </button>
-                `;
-            });
-            document.getElementById('attemptsList').innerHTML = html;
-        }
-        
-        // View specific attempt
-        function viewAttempt(index) {
-            currentAttemptIndex = index;
-            const attempt = allAttempts[index];
-            const date = new Date(attempt.timestamp);
+            const date = new Date(data.timestamp);
             const timeStr = date.toLocaleString();
             
-            if (currentPart === 'Reading') {
-                document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-                document.getElementById('part1AnswersSection').style.display = 'block';
-                document.getElementById('currentAttemptTime').textContent = `Recorded: ${timeStr}`;
-                displayReadingAnswers(attempt.answers);
-            } else if (currentPart === 'Spelling') {
-                document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-                document.getElementById('part2AnswersSection').style.display = 'block';
-                document.getElementById('currentAttemptTime2').textContent = `Recorded: ${timeStr}`;
-                displaySpellingAnswers(attempt.answers);
-            } else if (currentPart === 'Writing') {
-                document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-                document.getElementById('part3AnswersSection').style.display = 'block';
-                document.getElementById('currentAttemptTime3').textContent = `Recorded: ${timeStr}`;
-                displayWritingAnswers(attempt.answers);
-            }
-        }
-        
-        // Go back to selector
-        function backToSelector() {
-            currentAttemptIndex = null;
-            currentPart = null;
-            showSelector();
-        }
-        
-        // Go back to attempts list
-        function backToAttempts() {
-            currentAttemptIndex = null;
-            const week = document.getElementById('weekSelect').value;
-            displayAttemptsList(week, currentPart);
-        }
-        
-        // Display Reading answers
-        function displayReadingAnswers(answers) {
-            let html = '<div style="padding: 10px;">';
-            for (let i = 1; i <= 5; i++) {
-                html += `
-                    <div style="margin-bottom: 15px; padding: 10px; background: #f9f9f9; border-radius: 5px;">
-                        <strong>Question ${i}:</strong><br>
-                        Answer: ${answers[`answer${i}`] || '(no answer)'}<br>
-                        Sentence(s): ${answers[`sentence${i}`] || '(not specified)'}
-                    </div>
-                `;
-            }
-            html += '</div>';
-            document.getElementById('part1AnswersDisplay').innerHTML = html;
-        }
-        
-        // Display Spelling answers
-        function displaySpellingAnswers(answers) {
+            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+            document.getElementById('resultsSection').style.display = 'block';
+            document.getElementById('resultTitle').textContent = `Week ${data.week} - ${data.part}`;
+            document.getElementById('resultTime').textContent = `Completed: ${timeStr}`;
+            
             let html = '';
-            const correctWords = ['action', 'decision', 'special', 'picture', 'bicycle', 'energy', 'running', 'complete', 'family', 'discover', 'visible', 'transport'];
-            for (let i = 1; i <= 12; i++) {
-                const userAnswer = answers[`spelling${i}`] || '';
-                const correct = correctWords[i-1];
-                const isCorrect = userAnswer.toLowerCase() === correct.toLowerCase();
-                html += `
-                    <div style="padding: 10px; background: ${isCorrect ? '#e8f5e9' : '#fff3cd'}; border-radius: 5px; border-left: 4px solid ${isCorrect ? '#4caf50' : '#ff9800'};">
-                        <strong>${i}. ${correct}</strong><br>
-                        <small>Max typed: "${userAnswer || '(blank)'}"</small>
-                    </div>
-                `;
+            
+            // Reading
+            if (data.answers.reading && Object.keys(data.answers.reading).length > 0) {
+                html += '<div style="margin-bottom: 25px;"><h3 style="color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px;">📖 Reading Comprehension</h3>';
+                for (let i = 1; i <= 5; i++) {
+                    html += `<div style="margin: 12px 0; padding: 10px; background: #f9f9f9; border-radius: 5px;">
+                        <strong>Q${i}:</strong> ${data.answers.reading[`answer${i}`] || '(no answer)'}
+                        <br><small style="color: #666;">Sentence(s): ${data.answers.reading[`sentence${i}`] || '(not specified)'}</small>
+                    </div>`;
+                }
+                html += '</div>';
             }
-            document.getElementById('part2AnswersDisplay').innerHTML = html;
-        }
-        
-        // Display Writing answers
-        function displayWritingAnswers(answers) {
-            let html = '<div style="padding: 10px;">';
-            for (let i = 1; i <= 5; i++) {
-                const writing = answers[`writing${i}`] || '(no answer)';
-                html += `
-                    <div style="margin-bottom: 15px; padding: 10px; background: #f9f9f9; border-radius: 5px;">
+            
+            // Spelling
+            if (data.answers.spelling && Object.keys(data.answers.spelling).length > 0) {
+                html += '<div style="margin-bottom: 25px;"><h3 style="color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px;">🔤 Spelling</h3>';
+                const correctWords = ['action', 'decision', 'special', 'picture', 'bicycle', 'energy', 'running', 'complete', 'family', 'discover', 'visible', 'transport'];
+                let correct = 0, total = 0;
+                for (let i = 1; i <= 12; i++) {
+                    const userAnswer = data.answers.spelling[`spelling${i}`] || '';
+                    const correctWord = correctWords[i-1];
+                    const isCorrect = userAnswer.toLowerCase() === correctWord.toLowerCase();
+                    if (isCorrect) correct++;
+                    if (userAnswer) total++;
+                    html += `<div style="margin: 8px 0; padding: 8px; background: ${isCorrect ? '#e8f5e9' : '#fff3cd'}; border-radius: 5px; border-left: 4px solid ${isCorrect ? '#4caf50' : '#ff9800'};">
+                        <strong>${i}. ${correctWord}</strong> — ${isCorrect ? '✓ Correct!' : `typed: "${userAnswer || '(blank)'}"`}
+                    </div>`;
+                }
+                html += `<div style="margin-top: 15px; padding: 12px; background: #e3f2fd; border-radius: 5px;"><strong>Score: ${correct}/${total || 12} correct</strong></div>`;
+                html += '</div>';
+            }
+            
+            // Writing
+            if (data.answers.writing && Object.keys(data.answers.writing).length > 0) {
+                html += '<div style="margin-bottom: 25px;"><h3 style="color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px;">✍️ Writing</h3>';
+                for (let i = 1; i <= 5; i++) {
+                    const writing = data.answers.writing[`writing${i}`] || '(no answer)';
+                    html += `<div style="margin: 12px 0; padding: 10px; background: #f9f9f9; border-radius: 5px;">
                         <strong>Sentence ${i}:</strong><br>
                         <em>${writing}</em>
-                    </div>
-                `;
+                    </div>`;
+                }
+                html += '</div>';
             }
-            html += '</div>';
-            document.getElementById('part3AnswersDisplay').innerHTML = html;
+            
+            document.getElementById('resultDisplay').innerHTML = html;
         }
         
-        // Refresh data periodically
-        setInterval(() => {
-            if (localStorage.getItem('dashboardAuthenticated') === 'true' && currentPart) {
-                loadPart(currentPart);
-            }
-        }, 10000); // Check every 10 seconds
+        // Back to selector
+        function backToSelector() {
+            showSelector();
+        }
     </script>
 </body>
 </html>
