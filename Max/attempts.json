@@ -2,204 +2,40 @@
   {
     "week": 1,
     "part": "Reading",
-    "timestamp": "2026-06-11T17:50:49.374Z",
+    "timestamp": "2026-06-11T22:26:38.151Z",
     "answers": {
       "reading": {
-        "answer1": "",
-        "sentence1": "",
-        "answer2": "",
-        "sentence2": "",
-        "answer3": "",
-        "sentence3": "",
-        "answer4": "",
-        "sentence4": "",
-        "answer5": "",
-        "sentence5": ""
+        "answer1": "monarch butterflies",
+        "sentence1": "1",
+        "answer2": "fall",
+        "sentence2": "1",
+        "answer3": "mountains of central mexico",
+        "sentence3": "2",
+        "answer4": "the Sun's position and the Earth's magnetic field",
+        "sentence4": "4",
+        "answer5": "wait in dense clusters on specific trees",
+        "sentence5": "6"
       },
       "spelling": {
-        "spelling1": "",
-        "spelling2": "",
-        "spelling3": "",
-        "spelling4": "",
-        "spelling5": "",
-        "spelling6": "",
-        "spelling7": "",
-        "spelling8": "",
-        "spelling9": "",
-        "spelling10": "",
-        "spelling11": "",
-        "spelling12": ""
-      },
-      "writing": {}
-    }
-  },
-  {
-    "week": 1,
-    "part": "Reading",
-    "timestamp": "2026-06-11T18:38:32.432Z",
-    "answers": {
-      "reading": {
-        "answer1": "test",
-        "sentence1": "test",
-        "answer2": "test",
-        "sentence2": "test",
-        "answer3": "test",
-        "sentence3": "testtest",
-        "answer4": "test",
-        "sentence4": "testest",
-        "answer5": "testest",
-        "sentence5": ""
-      },
-      "spelling": {
-        "spelling1": "1",
-        "spelling2": "2",
-        "spelling3": "3",
-        "spelling4": "4",
-        "spelling5": "5",
-        "spelling6": "6",
-        "spelling7": "7",
-        "spelling8": "8",
-        "spelling9": "9",
-        "spelling10": "10",
-        "spelling11": "11",
-        "spelling12": "12"
-      },
-      "writing": {}
-    }
-  },
-  {
-    "week": 1,
-    "part": "Reading",
-    "timestamp": "2026-06-11T18:46:43.004Z",
-    "answers": {
-      "reading": {
-        "answer1": "",
-        "sentence1": "",
-        "answer2": "",
-        "sentence2": "",
-        "answer3": "",
-        "sentence3": "",
-        "answer4": "",
-        "sentence4": "",
-        "answer5": "",
-        "sentence5": ""
-      },
-      "spelling": {
-        "spelling1": "",
-        "spelling2": "",
-        "spelling3": "",
-        "spelling4": "",
-        "spelling5": "",
-        "spelling6": "",
-        "spelling7": "",
-        "spelling8": "",
-        "spelling9": "",
-        "spelling10": "",
-        "spelling11": "",
-        "spelling12": ""
-      },
-      "writing": {}
-    }
-  },
-  {
-    "week": 1,
-    "part": "Reading",
-    "timestamp": "2026-06-11T18:47:21.044Z",
-    "answers": {
-      "reading": {
-        "answer1": "test5",
-        "sentence1": "test23",
-        "answer2": "test xy",
-        "sentence2": "",
-        "answer3": "",
-        "sentence3": "",
-        "answer4": "",
-        "sentence4": "",
-        "answer5": "",
-        "sentence5": ""
-      },
-      "spelling": {
-        "spelling1": "a",
-        "spelling2": "b",
-        "spelling3": "c",
-        "spelling4": "d",
-        "spelling5": "",
-        "spelling6": "",
-        "spelling7": "",
-        "spelling8": "",
-        "spelling9": "",
-        "spelling10": "",
-        "spelling11": "",
-        "spelling12": ""
+        "spelling1": "action",
+        "spelling2": "dition",
+        "spelling3": "speshall",
+        "spelling4": "picsher",
+        "spelling5": "bicycel",
+        "spelling6": "energy",
+        "spelling7": "runing",
+        "spelling8": "complet",
+        "spelling9": "famalley",
+        "spelling10": "discover",
+        "spelling11": "visibel",
+        "spelling12": "transport"
       },
       "writing": {
-        "writing1": "who",
-        "writing2": "what",
-        "writing3": "when",
-        "writing4": "where",
-        "writing5": "why"
-      }
-    }
-  },
-  {
-    "week": 1,
-    "part": "Scientific Method",
-    "timestamp": "2026-06-11T19:22:43.895Z",
-    "answers": {
-      "reading": {
-        "answer1": "",
-        "answer2": "",
-        "answer3": "",
-        "answer4": "",
-        "answer5": ""
-      },
-      "vocabulary": {
-        "vocabulary1": "",
-        "vocabulary2": "",
-        "vocabulary3": "",
-        "vocabulary4": "",
-        "vocabulary5": "",
-        "vocabulary6": "",
-        "vocabulary7": "",
-        "vocabulary8": ""
-      },
-      "experiment": {
-        "step1": "",
-        "step2": "",
-        "step3": "",
-        "step4": "",
-        "step5": ""
-      }
-    }
-  },
-  {
-    "week": 1,
-    "part": "Scientific Method",
-    "timestamp": "2026-06-11T19:25:07.125Z",
-    "answers": {
-      "reading": {
-        "answer1": "",
-        "answer2": "test",
-        "answer3": "",
-        "answer4": "",
-        "answer5": "test"
-      },
-      "vocabulary": {
-        "vocabulary1": "",
-        "vocabulary2": "test",
-        "vocabulary3": "",
-        "vocabulary4": "",
-        "vocabulary5": "test",
-        "vocabulary6": "",
-        "vocabulary7": "",
-        "vocabulary8": ""
-      },
-      "experiment": {
-        "step1": "test",
-        "step2": "",
-        "step3": "test",
-        "step4": "",
-        "step5": ""
+        "writing1": "My favorite game to play is cod warzone.",
+        "writing2": "I like playing warzone because I get to shoot people and them yell just because I killed them I allso think that funny.",
+        "writing3": "I like playing Reberth cashawels because I like the map, and because thar bots and normall players.",
+        "writing4": "It makes me feel angre and happy. ",
+        "writing5": "No I would not recommend theis game to other people because it cud mac them distrwy thigs and be rudd to people."
       }
     }
   }
