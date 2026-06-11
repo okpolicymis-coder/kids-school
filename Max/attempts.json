@@ -140,5 +140,36 @@
         "writing5": "why"
       }
     }
+  },
+  {
+    "week": 1,
+    "part": "Scientific Method",
+    "timestamp": "2026-06-11T19:22:43.895Z",
+    "answers": {
+      "reading": {
+        "answer1": "",
+        "answer2": "",
+        "answer3": "",
+        "answer4": "",
+        "answer5": ""
+      },
+      "vocabulary": {
+        "vocabulary1": "",
+        "vocabulary2": "",
+        "vocabulary3": "",
+        "vocabulary4": "",
+        "vocabulary5": "",
+        "vocabulary6": "",
+        "vocabulary7": "",
+        "vocabulary8": ""
+      },
+      "experiment": {
+        "step1": "",
+        "step2": "",
+        "step3": "",
+        "step4": "",
+        "step5": ""
+      }
+    }
   }
 ]
