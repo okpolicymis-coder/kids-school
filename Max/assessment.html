@@ -319,7 +319,7 @@
                 <strong>Why it matters:</strong> Good readers don't just memorize facts. They can point to the exact sentence that proves something is true. This is a superpower in school!
             </div>
             
-            <p style="margin-bottom: 15px;"><strong>Lesson ID:</strong> <span id="lessonDisplay">Week1Part1</span></p>
+            <p style="margin-bottom: 15px;"><strong>Lesson ID:</strong> <span id="lessonDisplay">Week 1 - Reading</span></p>
             
             <p style="margin-bottom: 15px;"><strong>📖 Read this passage out loud, then answer the questions below:</strong></p>
             
@@ -563,7 +563,7 @@
     </div>
     
     <script>
-        const LESSON_ID = 'Week1Part1';
+        const WEEK = 1;
         const NETLIFY_FUNCTION = '/.netlify/functions/save-lesson-data';
         
         // Continuous Timer
@@ -581,9 +581,9 @@
         
         setInterval(updateTimer, 1000);
         
-        // Gather all answers into payload
-        function buildPayload() {
-            const payload = {
+        // Gather Part 1 (Reading) answers
+        function buildReadingAnswers() {
+            return {
                 answer1: document.getElementById('answer1').value,
                 sentence1: document.getElementById('sentence1').value,
                 answer2: document.getElementById('answer2').value,
@@ -595,22 +595,33 @@
                 answer5: document.getElementById('answer5').value,
                 sentence5: document.getElementById('sentence5').value,
             };
-            
-            // Add spelling answers if they exist
+        }
+        
+        // Gather Part 2 (Spelling) answers
+        function buildSpellingAnswers() {
+            const payload = {};
             for (let i = 1; i <= 12; i++) {
                 const elem = document.getElementById(`spelling${i}`);
                 if (elem) {
                     payload[`spelling${i}`] = elem.value;
                 }
             }
-            
             return payload;
         }
         
+        // Gather Part 3 (Writing) answers
+        function buildWritingAnswers() {
+            return {
+                writing1: document.getElementById('writing1')?.value || '',
+                writing2: document.getElementById('writing2')?.value || '',
+                writing3: document.getElementById('writing3')?.value || '',
+                writing4: document.getElementById('writing4')?.value || '',
+                writing5: document.getElementById('writing5')?.value || '',
+            };
+        }
+        
         // Save to Netlify Function (which posts to GitHub)
-        async function submitAssessment() {
-            const answers = buildPayload();
-            
+        async function submitPart(partName, answers) {
             try {
                 const response = await fetch(NETLIFY_FUNCTION, {
                     method: 'POST',
@@ -618,37 +629,39 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        lessonID: LESSON_ID,
+                        week: WEEK,
+                        part: partName,
                         answers: answers
                     })
                 });
                 
                 const result = await response.json();
                 if (response.ok) {
-                    console.log('Assessment submitted:', result);
+                    console.log(`${partName} answers submitted:`, result);
                     return true;
                 } else {
                     console.error('Error submitting:', result);
-                    alert('There was an error saving your assessment. Please try again.');
+                    alert('There was an error saving your work. Please try again.');
                     return false;
                 }
             } catch (error) {
                 console.error('Submission error:', error);
-                alert('Could not connect to save your assessment. Please check your internet connection.');
+                alert('Could not connect to save your work. Please check your internet connection.');
                 return false;
             }
         }
         
-        // Submit spelling and move to Part 3
-        async function submitSpelling() {
-            const success = await submitAssessment();
-            if (success) {
-                showPart(3);
-            }
-        }
-        
         // Section Navigation
-        function showPart(partNumber) {
+        async function showPart(partNumber) {
+            // Save current part before moving to next
+            if (partNumber === 2) {
+                const success = await submitPart('Reading', buildReadingAnswers());
+                if (!success) return;
+            } else if (partNumber === 3) {
+                const success = await submitPart('Spelling', buildSpellingAnswers());
+                if (!success) return;
+            }
+            
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.add('hidden');
             });
@@ -657,7 +670,7 @@
         }
         
         async function showComplete() {
-            const success = await submitAssessment();
+            const success = await submitPart('Writing', buildWritingAnswers());
             if (success) {
                 document.querySelectorAll('.section').forEach(section => {
                     section.classList.add('hidden');

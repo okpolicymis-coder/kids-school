@@ -56,14 +56,16 @@ exports.handler = async (event) => {
 
   try {
     const data = JSON.parse(event.body);
-    const { lessonID, answers } = data;
+    const { week, part, answers } = data;
 
-    if (!lessonID || !answers) {
+    if (!week || !part || !answers) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: 'Missing lessonID or answers' })
+        body: JSON.stringify({ error: 'Missing week, part, or answers' })
       };
     }
+    
+    const lessonID = `Week${week}-${part}`;
 
     const githubToken = process.env.GITHUB_TOKEN;
     const owner = 'okpolicymis-coder';
@@ -73,7 +75,8 @@ exports.handler = async (event) => {
 
     // Try to fetch existing file
     let fileData = {
-      lessonID,
+      week,
+      part,
       attempts: []
     };
     let sha = null;
