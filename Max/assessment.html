@@ -19,153 +19,187 @@
         }
         
         .container {
-            max-width: 700px;
+            max-width: 750px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
         
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             border-bottom: 3px solid #667eea;
-            padding-bottom: 20px;
+            padding-bottom: 15px;
         }
         
-        h1 {
-            color: #667eea;
-            font-size: 2em;
+        .header h1 {
+            color: #333;
+            font-size: 1.8em;
             margin-bottom: 10px;
         }
         
         .timer {
-            background: #667eea;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
+            font-size: 1.4em;
+            color: #fff;
             font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 12px 20px;
+            border-radius: 8px;
             display: inline-block;
-            margin-top: 10px;
         }
         
         .section {
-            margin: 40px 0;
-            padding: 25px;
-            background: #f8f9ff;
-            border-radius: 8px;
-            border-left: 5px solid #667eea;
+            display: block;
+            margin-bottom: 20px;
+        }
+        
+        .section.hidden {
+            display: none;
         }
         
         .section h2 {
-            color: #667eea;
-            font-size: 1.5em;
+            color: #333;
             margin-bottom: 15px;
-        }
-        
-        .section p {
-            color: #555;
-            line-height: 1.8;
-            margin: 15px 0;
-            font-size: 0.95em;
+            font-size: 1.5em;
+            border-left: 5px solid #28a745;
+            padding-left: 15px;
         }
         
         .reading-passage {
-            background: white;
+            background: #f5f5f5;
             padding: 20px;
-            border-radius: 8px;
-            border: 2px solid #667eea;
-            margin: 15px 0;
-            line-height: 1.9;
+            border-radius: 10px;
+            line-height: 1.8;
+            margin: 20px 0;
             font-size: 1em;
-            color: #333;
         }
         
-        .spelling-words {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+        .reading-passage.hidden {
+            display: none;
+        }
+        
+        .recall-section {
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .recall-section.hidden {
+            display: none;
+        }
+        
+        .recall-question {
             margin: 15px 0;
+            font-size: 1em;
         }
         
-        .word-item {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            border: 2px solid #667eea;
-            text-align: center;
-        }
-        
-        .word-num {
-            color: #999;
-            font-size: 0.85em;
-            margin-bottom: 5px;
-        }
-        
-        .word {
+        .recall-question strong {
             color: #667eea;
-            font-weight: bold;
-            font-size: 1.2em;
         }
         
-        .writing-prompt {
-            background: #fff3cd;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 5px solid #f5576c;
-            margin: 15px 0;
-        }
-        
-        .writing-prompt strong {
-            color: #333;
-            font-size: 1.1em;
-        }
-        
-        textarea {
+        .recall-input {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #667eea;
-            border-radius: 8px;
-            font-family: inherit;
+            padding: 10px;
+            margin-top: 8px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
             font-size: 1em;
-            min-height: 120px;
-            margin-top: 10px;
+            font-family: inherit;
+        }
+        
+        .spelling-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .spelling-input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .spelling-input-group label {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        
+        .spelling-input-group input {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+        }
+        
+        .writing-steps {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .writing-step {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .writing-step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .writing-step label {
+            display: block;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        
+        .writing-step textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            min-height: 80px;
+            resize: vertical;
         }
         
         .instructions {
-            background: #e3f2fd;
+            background: #e8f4f8;
             padding: 15px;
             border-radius: 8px;
-            color: #1976D2;
-            font-size: 0.95em;
-            line-height: 1.6;
-            margin: 15px 0;
-        }
-        
-        .nav-buttons {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
+            border-left: 4px solid #667eea;
+            margin: 20px 0;
         }
         
         .btn {
-            padding: 12px 30px;
-            margin: 0 10px;
-            background: #667eea;
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            padding: 12px 25px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 1em;
-            transition: all 0.3s ease;
-            text-decoration: none;
+            font-weight: bold;
+            margin-right: 10px;
+            margin-top: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         
         .btn:hover {
-            background: #5568d3;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
         
         .btn.secondary {
@@ -174,19 +208,21 @@
         
         .btn.secondary:hover {
             background: #777;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         
-        .parent-note {
-            background: #fff3cd;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 40px 0;
-            font-size: 0.9em;
-            color: #333;
+        .completion-message {
+            text-align: center;
+            background: #d4edda;
+            padding: 30px;
+            border-radius: 10px;
+            color: #155724;
         }
         
-        .hidden {
-            display: none;
+        .completion-message h2 {
+            color: #155724;
+            border: none;
+            padding: 0;
         }
     </style>
 </head>
@@ -194,8 +230,218 @@
     <div class="container">
         <div class="header">
             <h1>� Reading & Spelling Assessment</h1>
-            <div class="timer" id="timer">⏱️ Time: 1:15</div>
+            <div class="timer" id="timer">⏱️ 00:00</div>
         </div>
+        
+        <!-- PART 1: READING FLUENCY -->
+        <div class="section" id="part1">
+            <h2>Part 1: Reading Fluency</h2>
+            <p style="margin-bottom: 15px;"><strong>Read this passage out loud.</strong> After you're done, I'll hide it and ask you questions about what you remember.</p>
+            
+            <button class="btn secondary" id="toggleBtn" onclick="toggleParagraph()">Show Paragraph</button>
+            
+            <div class="reading-passage" id="passage">
+                <strong>The Great Migration of Monarch Butterflies</strong><br><br>
+                Every fall, millions of monarch butterflies embark on one of nature's most remarkable journeys. These delicate insects migrate thousands of miles from Canada and the northern United States to the mountains of central Mexico. Scientists have long been fascinated by how monarchs accomplish this incredible feat without a map or GPS. The butterflies navigate using the sun's position and the Earth's magnetic field. Their journey is dangerous, and many monarchs don't survive. But those who make it to Mexico spend the winter in dense clusters on specific trees, waiting for spring. When spring arrives, the monarchs begin their journey north again, laying eggs along the way. These eggs will hatch into the next generation of butterflies that will continue the migration.
+            </div>
+            
+            <div class="recall-section" id="recallSection">
+                <p style="margin-bottom: 15px;"><strong>Now, answer these questions based on what you remember:</strong></p>
+                
+                <div class="recall-question">
+                    <strong>1. What animal was the passage about?</strong>
+                    <input type="text" class="recall-input" placeholder="Your answer..." />
+                </div>
+                
+                <div class="recall-question">
+                    <strong>2. What time of year do they migrate?</strong>
+                    <input type="text" class="recall-input" placeholder="Your answer..." />
+                </div>
+                
+                <div class="recall-question">
+                    <strong>3. Where do they go? (Name the place or country)</strong>
+                    <input type="text" class="recall-input" placeholder="Your answer..." />
+                </div>
+                
+                <div class="recall-question">
+                    <strong>4. How do butterflies find their way without a map?</strong>
+                    <input type="text" class="recall-input" placeholder="Your answer..." />
+                </div>
+                
+                <div class="recall-question">
+                    <strong>5. What do they do when they get there in the fall?</strong>
+                    <input type="text" class="recall-input" placeholder="Your answer..." />
+                </div>
+            </div>
+            
+            <button class="btn" onclick="showPart(2)">Continue to Part 2 →</button>
+        </div>
+        
+        <!-- PART 2: SPELLING WORDS -->
+        <div class="section hidden" id="part2">
+            <h2>Part 2: Spelling Words</h2>
+            <p style="margin-bottom: 15px;">Listen as I say each word out loud. Type what you hear in each box below. Do your best!</p>
+            
+            <div class="spelling-inputs">
+                <div class="spelling-input-group">
+                    <label>1. action</label>
+                    <input type="text" placeholder="Your spelling..." />
+                </div>
+                <div class="spelling-input-group">
+                    <label>2. decision</label>
+                    <input type="text" placeholder="Your spelling..." />
+                </div>
+                <div class="spelling-input-group">
+                    <label>3. special</label>
+                    <input type="text" placeholder="Your spelling..." />
+                </div>
+                <div class="spelling-input-group">
+                    <label>4. picture</label>
+                    <input type="text" placeholder="Your spelling..." />
+                </div>
+                <div class="spelling-input-group">
+                    <label>5. bicycle</label>
+                    <input type="text" placeholder="Your spelling..." />
+                </div>
+                <div class="spelling-input-group">
+                    <label>6. energy</label>
+                    <input type="text" placeholder="Your spelling..." />
+                </div>
+                <div class="spelling-input-group">
+                    <label>7. running</label>
+                    <input type="text" placeholder="Your spelling..." />
+                </div>
+                <div class="spelling-input-group">
+                    <label>8. complete</label>
+                    <input type="text" placeholder="Your spelling..." />
+                </div>
+                <div class="spelling-input-group">
+                    <label>9. family</label>
+                    <input type="text" placeholder="Your spelling..." />
+                </div>
+                <div class="spelling-input-group">
+                    <label>10. discover</label>
+                    <input type="text" placeholder="Your spelling..." />
+                </div>
+                <div class="spelling-input-group">
+                    <label>11. visible</label>
+                    <input type="text" placeholder="Your spelling..." />
+                </div>
+                <div class="spelling-input-group">
+                    <label>12. transport</label>
+                    <input type="text" placeholder="Your spelling..." />
+                </div>
+            </div>
+            
+            <button class="btn secondary" onclick="showPart(1)">← Back</button>
+            <button class="btn" onclick="showPart(3)">Continue to Part 3 →</button>
+        </div>
+        
+        <!-- PART 3: WRITING SAMPLE -->
+        <div class="section hidden" id="part3">
+            <h2>Part 3: Write a Paragraph</h2>
+            <p style="margin-bottom: 15px;"><strong>Write about your favorite game, show, or hobby.</strong> Follow these steps to write your paragraph:</p>
+            
+            <div class="writing-steps">
+                <div class="writing-step">
+                    <label>Step 1: What is your favorite game, show, or hobby? (Write 1 sentence)</label>
+                    <textarea placeholder="Example: My favorite hobby is playing video games."></textarea>
+                </div>
+                
+                <div class="writing-step">
+                    <label>Step 2: Why do you like it? What's fun about it? (Write 1 sentence)</label>
+                    <textarea placeholder="Example: I like it because I can play with my friends."></textarea>
+                </div>
+                
+                <div class="writing-step">
+                    <label>Step 3: Give an example or detail about it. (Write 1 sentence)</label>
+                    <textarea placeholder="Example: We like playing adventure games where we can explore new worlds."></textarea>
+                </div>
+                
+                <div class="writing-step">
+                    <label>Step 4: How does it make you feel? (Write 1 sentence)</label>
+                    <textarea placeholder="Example: When I play, I feel happy and excited."></textarea>
+                </div>
+                
+                <div class="writing-step">
+                    <label>Step 5: Would you recommend it to someone else? Why or why not? (Write 1 sentence)</label>
+                    <textarea placeholder="Example: Yes, I would tell my friend because it's really fun and cool."></textarea>
+                </div>
+            </div>
+            
+            <button class="btn secondary" onclick="showPart(2)">← Back</button>
+            <button class="btn" onclick="showComplete()">I'm Done! →</button>
+        </div>
+        
+        <!-- COMPLETION -->
+        <div class="section hidden" id="complete">
+            <div class="completion-message">
+                <h2>✅ Great Job!</h2>
+                <p style="font-size: 1.1em; margin-top: 15px;">You've completed the assessment!</p>
+            </div>
+            
+            <button class="btn" onclick="window.location.href='./'">← Back to Lessons</button>
+        </div>
+    </div>
+    
+    <script>
+        // Continuous Timer
+        let seconds = 0;
+        const timerDisplay = document.getElementById('timer');
+        
+        function updateTimer() {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            const displayMins = mins.toString().padStart(2, '0');
+            const displaySecs = secs.toString().padStart(2, '0');
+            timerDisplay.textContent = `⏱️ ${displayMins}:${displaySecs}`;
+            seconds++;
+        }
+        
+        setInterval(updateTimer, 1000);
+        
+        // Paragraph Show/Hide
+        let paragraphVisible = true;
+        function toggleParagraph() {
+            const passage = document.getElementById('passage');
+            const recallSection = document.getElementById('recallSection');
+            const btn = document.getElementById('toggleBtn');
+            
+            if (paragraphVisible) {
+                passage.classList.add('hidden');
+                recallSection.classList.remove('hidden');
+                btn.textContent = 'Show Paragraph';
+                paragraphVisible = false;
+            } else {
+                passage.classList.remove('hidden');
+                recallSection.classList.add('hidden');
+                btn.textContent = 'Hide Paragraph';
+                paragraphVisible = true;
+            }
+        }
+        
+        // Hide recall section initially
+        document.getElementById('recallSection').classList.add('hidden');
+        
+        // Section Navigation
+        function showPart(partNumber) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById('part' + partNumber).classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+        
+        function showComplete() {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById('complete').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
         
         <!-- PART 1: READING FLUENCY -->
         <div class="section" id="part1">

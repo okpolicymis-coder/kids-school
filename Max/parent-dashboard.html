@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+        
+        /* LOGIN FORM */
+        .login-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 400px;
+            margin: 40px auto;
+        }
+        
+        .login-form {
+            width: 100%;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .login-form.active {
+            max-height: 400px;
+        }
+        
+        .form-group {
+            margin: 15px 0;
+            width: 100%;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .error-msg {
+            color: #d32f2f;
+            font-size: 0.9em;
+            margin-top: 8px;
+        }
+        
+        .login-btn, .logout-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            margin-top: 15px;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .login-btn:hover, .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .toggle-login-btn {
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .toggle-login-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        
+        /* AUTHENTICATED CONTENT */
+        .authenticated-content {
+            display: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .authenticated-content.active {
+            display: block;
+            max-height: none;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .reading-passage {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.8;
+            margin: 15px 0;
+            border: 2px solid #ddd;
+        }
+        
+        .notes-area {
+            background: white;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            min-height: 150px;
+            margin-top: 15px;
+            font-family: inherit;
+            font-size: 0.95em;
+        }
+        
+        .word-list {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .word-list p {
+            margin: 12px 0;
+            font-size: 1.05em;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .assessment-guide {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            line-height: 1.7;
+        }
+        
+        .assessment-guide h3 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .assessment-guide ul, .assessment-guide ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .assessment-guide li {
+            margin: 8px 0;
+        }
+        
+        .logout-btn {
+            width: 100%;
+            max-width: 300px;
+            margin: 30px auto;
+        }
+        
+        .checklist {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .checklist-item {
+            margin: 10px 0;
+            padding: 8px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .checklist-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        .observation-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #1976D2;
+        }
+        
+        .observation-box strong {
+            color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Parent Dashboard</h1>
+            <p style="color: #666; margin-top: 10px;">Manage Max's assessment and take real-time notes</p>
+        </div>
+        
+        <!-- LOGIN SECTION -->
+        <div class="login-section">
+            <button class="toggle-login-btn" id="toggleLoginBtn" onclick="toggleLogin()">Enter Password</button>
+            
+            <div class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="passwordInput">Dashboard Password:</label>
+                    <input type="password" id="passwordInput" placeholder="Enter password..." />
+                    <div class="error-msg" id="errorMsg"></div>
+                </div>
+                <button class="login-btn" onclick="checkPassword()">Access Dashboard</button>
+            </div>
+        </div>
+        
+        <!-- AUTHENTICATED CONTENT -->
+        <div class="authenticated-content" id="authenticatedContent">
+            
+            <!-- PART 1: READING & NOTES -->
+            <div class="section">
+                <h2>📖 Part 1: Reading Fluency - Real-Time Notes</h2>
+                
+                <p><strong>The Reading Passage (For Reference):</strong></p>
+                <div class="reading-passage">
+                    <strong>The Great Migration of Monarch Butterflies</strong><br><br>
+                    Every fall, millions of monarch butterflies embark on one of nature's most remarkable journeys. These delicate insects migrate thousands of miles from Canada and the northern United States to the mountains of central Mexico. Scientists have long been fascinated by how monarchs accomplish this incredible feat without a map or GPS. The butterflies navigate using the sun's position and the Earth's magnetic field. Their journey is dangerous, and many monarchs don't survive. But those who make it to Mexico spend the winter in dense clusters on specific trees, waiting for spring. When spring arrives, the monarchs begin their journey north again, laying eggs along the way. These eggs will hatch into the next generation of butterflies that will continue the migration.
+                </div>
+                
+                <p><strong>Observation Checklist:</strong></p>
+                <div class="checklist">
+                    <div class="checklist-item">
+                        <input type="checkbox"> Does he guess at words?
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> Does he skip endings (-ed, -ing, -s)?
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> Does he lose his place?
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> Does he sound choppy or monotone?
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> Does he self-correct?
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> Can he answer recall questions?
+                    </div>
+                </div>
+                
+                <p><strong>Take Notes (Real-Time):</strong></p>
+                <textarea class="notes-area" placeholder="Record observations about his reading fluency, decoding patterns, self-corrections, and comprehension..."></textarea>
+            </div>
+            
+            <!-- PART 2: WORD LIST -->
+            <div class="section">
+                <h2>🔤 Part 2: Spelling Words - Read These Aloud</h2>
+                <p><strong>Read each word out loud to Max on his device. Have him type what he hears.</strong></p>
+                
+                <div class="word-list">
+                    <p><strong>1. action</strong></p>
+                    <p><strong>2. decision</strong></p>
+                    <p><strong>3. special</strong></p>
+                    <p><strong>4. picture</strong></p>
+                    <p><strong>5. bicycle</strong></p>
+                    <p><strong>6. energy</strong></p>
+                    <p><strong>7. running</strong></p>
+                    <p><strong>8. complete</strong></p>
+                    <p><strong>9. family</strong></p>
+                    <p><strong>10. discover</strong></p>
+                    <p><strong>11. visible</strong></p>
+                    <p><strong>12. transport</strong></p>
+                </div>
+                
+                <p><strong>What to Observe While He Spells:</strong></p>
+                <div class="checklist">
+                    <div class="checklist-item">
+                        <input type="checkbox"> Does he spell phonetically? (e.g., "akshun" for "action")
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> Does he drop vowels?
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> Does he confuse soft c/g?
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> Does he over- or under-double consonants?
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> Does he show any awareness of meaning (roots/prefixes)?
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PART 3: WRITING GUIDANCE -->
+            <div class="section">
+                <h2>✍️ Part 3: Writing Sample - Expectations</h2>
+                
+                <p><strong>What He's Writing About:</strong> His favorite game, show, or hobby in 5 specific sentences (following the guided steps).</p>
+                
+                <p><strong>What to Look For:</strong></p>
+                <div class="checklist">
+                    <div class="checklist-item">
+                        <input type="checkbox"> Sentence boundaries (capital letters & periods)
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> Capitalization & punctuation
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> Spelling in context
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> Organization (follows the steps)
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> Attitude/avoidance behaviors during writing
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> Can he sustain writing for 10 minutes?
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ASSESSMENT GUIDE -->
+            <div class="section">
+                <h2>📋 Assessment Guide & Analysis</h2>
+                
+                <div class="assessment-guide">
+                    <h3>What You've Learned</h3>
+                    <p>By the end of the 1-hour assessment, you'll know whether Max struggles with:</p>
+                    
+                    <div class="observation-box">
+                        <strong>1. Phonological Decoding</strong><br>
+                        Reading aloud is choppy, hesitant, or error-prone. He guesses at words or skips word parts.
+                    </div>
+                    
+                    <div class="observation-box">
+                        <strong>2. Orthographic Mapping</strong><br>
+                        Spelling patterns don't stick. Errors are phonetic or show no awareness of common patterns.
+                    </div>
+                    
+                    <div class="observation-box">
+                        <strong>3. Working Memory</strong><br>
+                        He forgets instructions mid-task or loses his place frequently.
+                    </div>
+                    
+                    <div class="observation-box">
+                        <strong>4. Executive Function</strong><br>
+                        Attitude issues, avoidance behaviors, shutdown during writing, difficulty starting tasks.
+                    </div>
+                    
+                    <div class="observation-box">
+                        <strong>5. Motivation/Dopamine Imbalance</strong><br>
+                        Common in gaming-heavy kids. He needs external validation or gives up quickly.
+                    </div>
+                    
+                    <div class="observation-box">
+                        <strong>6. Writing Stamina</strong><br>
+                        10 minutes of writing feels impossible. He needs frequent breaks or refuses entirely.
+                    </div>
+                    
+                    <h3>Next Steps</h3>
+                    <p>Based on your observations, you'll decide whether Max needs:</p>
+                    <ul>
+                        <li><strong>Structured Literacy Instruction</strong> — If phonological decoding and orthographic mapping are weak</li>
+                        <li><strong>Executive Function Supports</strong> — If attitude, avoidance, or task initiation are issues</li>
+                        <li><strong>Dopamine/Motivation Intervention</strong> — If gaming addiction or motivation is the root cause</li>
+                        <li><strong>Combination Approach</strong> — Most likely scenario</li>
+                    </ul>
+                    
+                    <h3>15-Minute Break Rules</h3>
+                    <p>After Part 2, Max gets a screen-free break with snack + movement:</p>
+                    <ul>
+                        <li>✗ No screens, no gaming</li>
+                        <li>✓ Snack + movement (walk, trampoline, pet the dog)</li>
+                        <li>✓ Something sensory-resetting</li>
+                        <li>✓ Keep it predictable: "We start again at [TIME]"</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    
+    <script>
+        // Check if already authenticated
+        if (localStorage.getItem('dashboardAuthenticated') === 'true') {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('authenticatedContent').classList.add('active');
+        }
+        
+        function toggleLogin() {
+            const form = document.getElementById('loginForm');
+            form.classList.toggle('active');
+            if (form.classList.contains('active')) {
+                document.getElementById('passwordInput').focus();
+            }
+        }
+        
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            const correctPassword = 'Dashboard123!';
+            
+            if (password === correctPassword) {
+                document.getElementById('loginForm').classList.remove('active');
+                document.getElementById('authenticatedContent').classList.add('active');
+                localStorage.setItem('dashboardAuthenticated', 'true');
+            } else {
+                document.getElementById('errorMsg').textContent = 'Incorrect password. Try again.';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+        
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        }
+        
+        document.getElementById('passwordInput').addEventListener('keypress', handleKeyPress);
+        
+        function logout() {
+            localStorage.removeItem('dashboardAuthenticated');
+            document.getElementById('authenticatedContent').classList.remove('active');
+            document.getElementById('loginForm').classList.remove('active');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('errorMsg').textContent = '';
+        }
+    </script>
+</body>
+</html>
