@@ -144,7 +144,7 @@
             <p>Welcome, Max! 👋</p>
             <p style="margin-top: 20px;">Get ready to build your reading and spelling skills this summer!</p>
             
-            <button class="btn" onclick="toggleLogin()">Enter Password</button>
+            <button class="btn" id="passwordToggleBtn" onclick="toggleLogin()">Enter Password</button>
             
             <div class="login-form" id="loginForm">
                 <input type="password" id="passwordInput" placeholder="Enter password" onkeypress="handleKeyPress(event)">
@@ -176,6 +176,7 @@
             
             if (password === correctPassword) {
                 document.getElementById('loginForm').classList.remove('active');
+                document.getElementById('passwordToggleBtn').style.display = 'none';
                 document.getElementById('authenticatedContent').classList.add('active');
                 localStorage.setItem('maxAuthenticated', 'true');
             } else {
@@ -187,6 +188,7 @@
         // Check if already authenticated on page load
         window.addEventListener('load', function() {
             if (localStorage.getItem('maxAuthenticated') === 'true') {
+                document.getElementById('passwordToggleBtn').style.display = 'none';
                 document.getElementById('authenticatedContent').classList.add('active');
             }
         });
