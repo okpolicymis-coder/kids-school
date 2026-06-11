@@ -19,7 +19,7 @@
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
@@ -28,10 +28,15 @@
         }
         
         .header {
+            display: none;
             text-align: center;
             margin-bottom: 30px;
             border-bottom: 3px solid #667eea;
             padding-bottom: 15px;
+        }
+        
+        .header.visible {
+            display: block;
         }
         
         .header h1 {
@@ -40,29 +45,37 @@
             margin-bottom: 10px;
         }
         
-        /* LOGIN FORM */
+        /* LOGIN FORM - FULL SCREEN */
         .login-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            max-width: 400px;
-            margin: 40px auto;
+            justify-content: center;
+            min-height: 60vh;
         }
         
-        .login-form {
+        .login-section.hidden {
+            display: none;
+        }
+        
+        .login-form-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
             width: 100%;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
+            max-width: 400px;
+            text-align: center;
         }
         
-        .login-form.active {
-            max-height: 400px;
+        .login-form-container h2 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 1.5em;
         }
         
         .form-group {
-            margin: 15px 0;
-            width: 100%;
+            margin: 20px 0;
+            text-align: left;
         }
         
         .form-group label {
@@ -74,7 +87,7 @@
         
         .form-group input {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             border: 2px solid #ddd;
             border-radius: 8px;
             font-size: 1em;
@@ -91,12 +104,13 @@
             color: #d32f2f;
             font-size: 0.9em;
             margin-top: 8px;
+            min-height: 20px;
         }
         
         .login-btn, .logout-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 12px 30px;
+            padding: 14px 30px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
@@ -255,18 +269,17 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
+        <div class="header" id="header">
             <h1>📊 Parent Dashboard</h1>
-            <p style="color: #666; margin-top: 10px;">Manage Max's assessment and take real-time notes</p>
+            <p style="color: #666; margin-top: 10px;">Manage Max's Assessment Results</p>
         </div>
         
-        <!-- LOGIN SECTION -->
-        <div class="login-section">
-            <button class="toggle-login-btn" id="toggleLoginBtn" onclick="toggleLogin()">Enter Password</button>
-            
-            <div class="login-form" id="loginForm">
+        <!-- LOGIN SECTION - FULL SCREEN INITIALLY -->
+        <div class="login-section" id="loginSection">
+            <div class="login-form-container">
+                <h2>Dashboard Access</h2>
                 <div class="form-group">
-                    <label for="passwordInput">Dashboard Password:</label>
+                    <label for="passwordInput">Enter Password:</label>
                     <input type="password" id="passwordInput" placeholder="Enter password..." />
                     <div class="error-msg" id="errorMsg"></div>
                 </div>
@@ -275,29 +288,27 @@
         </div>
         
         <!-- AUTHENTICATED CONTENT -->
-        <div class="authenticated-content" id="authenticatedContent">
+        <div class="authenticated-content" id="authenticatedContent" style="display: none;">
             
-            <!-- WEEK/PART SELECTOR -->
-            <div class="section" id="selectorSection" style="display: none;">
-                <h2>📊 View Max's Assessment Results</h2>
-                
-                <div id="attemptsList" style="margin: 20px 0;"></div>
-                
-                <hr style="margin: 30px 0; border: none; border-top: 2px solid #ddd;">
-                
-                <h3 style="margin-bottom: 15px; color: #333;">📁 Or Upload a File</h3>
-                <p style="margin: 10px 0; color: #666; font-size: 0.95em;">If you have a JSON file that Max exported, you can upload it here:</p>
-                
-                <div style="border: 2px dashed #667eea; padding: 30px; border-radius: 10px; text-align: center; margin: 20px 0; background: #f9f9f9;">
-                    <input type="file" id="fileUpload" accept=".json" style="display: none;" onchange="handleFileUpload(event)">
-                    <button onclick="document.getElementById('fileUpload').click()" style="padding: 15px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; font-weight: bold;">
-                        📁 Choose JSON File
-                    </button>
-                    <p style="margin-top: 15px; font-size: 0.9em; color: #999;">or drag & drop a file here</p>
+            <!-- WEEK SELECTOR -->
+            <div id="weekSelector" style="margin-bottom: 30px; padding: 20px; background: #f9f9f9; border-radius: 10px;">
+                <h3 style="margin-bottom: 15px; color: #333;">📅 Select Week:</h3>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button onclick="selectWeek(1)" class="week-btn active" data-week="1" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer;">Week 1</button>
+                    <button onclick="selectWeek(2)" class="week-btn" data-week="2" style="padding: 10px 20px; background: #ddd; color: #333; border: none; border-radius: 8px; cursor: pointer;">Week 2</button>
+                    <button onclick="selectWeek(3)" class="week-btn" data-week="3" style="padding: 10px 20px; background: #ddd; color: #333; border: none; border-radius: 8px; cursor: pointer;">Week 3</button>
                 </div>
-                
-                <div id="loadedFiles" style="margin-top: 20px;"></div>
             </div>
+            
+            <!-- LESSON CONTENT & ATTEMPTS -->
+            <div id="lessonContent"></div>
+            
+            <!-- LOGOUT -->
+            <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #ddd; text-align: center;">
+                <button class="logout-btn" onclick="logout()" style="padding: 10px 20px; background: #999; color: white; border: none; border-radius: 8px; cursor: pointer;">Logout</button>
+            </div>
+        </div>
+    </div>
             
             <!-- RESULTS DISPLAY -->
             <div class="section" id="resultsSection" style="display: none;">
@@ -509,33 +520,88 @@
     </div>
     
     <script>
+        // LESSON CONTEXT DATA
+        const lessonContent = {
+            1: {
+                'Reading': `
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: #667eea; margin-bottom: 15px;">📖 Reading Passage & Questions</h3>
+                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; line-height: 1.8;">
+                            <strong>The Great Migration of Monarch Butterflies</strong><br><br>
+                            <div style="margin: 12px 0;"><strong>1.</strong> Every fall, millions of monarch butterflies embark on one of nature's most remarkable journeys.</div>
+                            <div style="margin: 12px 0;"><strong>2.</strong> These delicate insects migrate thousands of miles from Canada and the northern United States to the mountains of central Mexico.</div>
+                            <div style="margin: 12px 0;"><strong>3.</strong> Scientists have long been fascinated by how monarchs accomplish this incredible feat without a map or GPS.</div>
+                            <div style="margin: 12px 0;"><strong>4.</strong> The butterflies navigate using the sun's position and the Earth's magnetic field.</div>
+                            <div style="margin: 12px 0;"><strong>5.</strong> What makes this migration even more astounding is that no single butterfly completes the entire round trip.</div>
+                        </div>
+                        <p style="margin-top: 15px; color: #666; font-size: 0.95em;"><strong>Note:</strong> Max answers comprehension questions about this passage and provides evidence (sentence numbers) for his answers.</p>
+                    </div>
+                `,
+                'Spelling': `
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: #667eea; margin-bottom: 15px;">🔤 Spelling Words</h3>
+                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px;">
+                            <p style="margin-bottom: 15px;"><strong>Max spells these 12 words:</strong></p>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                <div>1. action</div>
+                                <div>2. decision</div>
+                                <div>3. special</div>
+                                <div>4. picture</div>
+                                <div>5. bicycle</div>
+                                <div>6. energy</div>
+                                <div>7. running</div>
+                                <div>8. complete</div>
+                                <div>9. family</div>
+                                <div>10. discover</div>
+                                <div>11. visible</div>
+                                <div>12. transport</div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                'Writing': `
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: #667eea; margin-bottom: 15px;">✍️ Writing Prompts</h3>
+                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px;">
+                            <p style="margin-bottom: 15px;"><strong>Max writes about his favorite hobby in 5 sentences:</strong></p>
+                            <ol style="line-height: 1.8;">
+                                <li>What is your favorite game, show, or hobby?</li>
+                                <li>Why do you like it? What's fun about it?</li>
+                                <li>Give a specific example or detail about it.</li>
+                                <li>How does it make you feel?</li>
+                                <li>Would you recommend it to someone else? Why or why not?</li>
+                            </ol>
+                        </div>
+                    </div>
+                `
+            }
+        };
+        
         // Check if already authenticated
         if (localStorage.getItem('dashboardAuthenticated') === 'true') {
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('authenticatedContent').classList.add('active');
-            showSelector();
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('header').classList.add('visible');
+            document.getElementById('authenticatedContent').style.display = 'block';
+            selectWeek(1);
         }
         
-        function toggleLogin() {
-            const form = document.getElementById('loginForm');
-            form.classList.toggle('active');
-            if (form.classList.contains('active')) {
-                document.getElementById('passwordInput').focus();
-            }
-        }
-        
+        // Password check
         function checkPassword() {
             const password = document.getElementById('passwordInput').value;
             const correctPassword = 'Dashboard123!';
             
             if (password === correctPassword) {
-                document.getElementById('loginForm').classList.remove('active');
-                document.getElementById('authenticatedContent').classList.add('active');
+                document.getElementById('passwordInput').addEventListener('keypress', handleKeyPress);
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('header').classList.add('visible');
+                document.getElementById('authenticatedContent').style.display = 'block';
                 localStorage.setItem('dashboardAuthenticated', 'true');
-                showSelector();
+                document.getElementById('errorMsg').textContent = '';
+                selectWeek(1);
             } else {
                 document.getElementById('errorMsg').textContent = 'Incorrect password. Try again.';
                 document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
             }
         }
         
@@ -547,31 +613,84 @@
         
         document.getElementById('passwordInput').addEventListener('keypress', handleKeyPress);
         
-        function logout() {
-            localStorage.removeItem('dashboardAuthenticated');
-            document.getElementById('authenticatedContent').classList.remove('active');
-            document.getElementById('loginForm').classList.remove('active');
-            document.getElementById('passwordInput').value = '';
-            document.getElementById('errorMsg').textContent = '';
-        }
-        
-        // Show selector section
-        function showSelector() {
-            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-            document.getElementById('selectorSection').style.display = 'block';
+        // Week selection
+        function selectWeek(weekNum) {
+            // Update button styles
+            document.querySelectorAll('.week-btn').forEach(btn => {
+                if (btn.dataset.week == weekNum) {
+                    btn.style.background = '#667eea';
+                    btn.style.color = 'white';
+                    btn.classList.add('active');
+                } else {
+                    btn.style.background = '#ddd';
+                    btn.style.color = '#333';
+                    btn.classList.remove('active');
+                }
+            });
             
-            // Fetch attempts from GitHub on load
-            fetchAttemptsFromGitHub();
+            // Load lesson content for this week
+            loadLessonContent(weekNum);
+            fetchAttemptsForWeek(weekNum);
         }
         
-        // Fetch attempts from GitHub
-        function fetchAttemptsFromGitHub() {
+        function loadLessonContent(weekNum) {
+            const content = lessonContent[weekNum];
+            if (!content) return;
+            
+            let html = `<h2 style="margin-bottom: 25px; color: #333;">📚 Week ${weekNum} - Lesson Context</h2>`;
+            html += '<div style="display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 30px;">';
+            
+            // Reading
+            html += `<div style="border: 2px solid #667eea; border-radius: 10px; overflow: hidden;">
+                <button onclick="toggleSection('reading-context')" style="width: 100%; padding: 15px; background: #667eea; color: white; border: none; cursor: pointer; font-size: 1em; font-weight: bold; text-align: left;">📖 Reading Context</button>
+                <div id="reading-context" style="padding: 20px; display: none; background: white;">${content.Reading}</div>
+            </div>`;
+            
+            // Spelling
+            html += `<div style="border: 2px solid #667eea; border-radius: 10px; overflow: hidden;">
+                <button onclick="toggleSection('spelling-context')" style="width: 100%; padding: 15px; background: #667eea; color: white; border: none; cursor: pointer; font-size: 1em; font-weight: bold; text-align: left;">🔤 Spelling Context</button>
+                <div id="spelling-context" style="padding: 20px; display: none; background: white;">${content.Spelling}</div>
+            </div>`;
+            
+            // Writing
+            html += `<div style="border: 2px solid #667eea; border-radius: 10px; overflow: hidden;">
+                <button onclick="toggleSection('writing-context')" style="width: 100%; padding: 15px; background: #667eea; color: white; border: none; cursor: pointer; font-size: 1em; font-weight: bold; text-align: left;">✍️ Writing Context</button>
+                <div id="writing-context" style="padding: 20px; display: none; background: white;">${content.Writing}</div>
+            </div>`;
+            
+            html += '</div>';
+            
+            // Attempts section
+            html += `<h3 style="margin-top: 40px; margin-bottom: 15px; color: #333; border-top: 2px solid #ddd; padding-top: 20px;">📊 Max's Attempts</h3>`;
+            html += '<div id="attemptsList" style="display: flex; flex-direction: column; gap: 10px;"></div>';
+            
+            // File upload section
+            html += `<hr style="margin: 30px 0; border: none; border-top: 2px solid #ddd;">
+            <h3 style="margin-bottom: 15px; color: #333;">📁 Or Upload a JSON File</h3>
+            <div style="border: 2px dashed #667eea; padding: 20px; border-radius: 10px; text-align: center; background: #f9f9f9;">
+                <input type="file" id="fileUpload" accept=".json" style="display: none;" onchange="handleFileUpload(event)">
+                <button onclick="document.getElementById('fileUpload').click()" style="padding: 12px 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                    📁 Choose File
+                </button>
+            </div>`;
+            
+            document.getElementById('lessonContent').innerHTML = html;
+        }
+        
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.style.display = section.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+        
+        // Fetch attempts for specific week
+        function fetchAttemptsForWeek(weekNum) {
             const attemptsList = document.getElementById('attemptsList');
             if (!attemptsList) return;
             
             attemptsList.innerHTML = '<p style="color: #999;">Loading attempts...</p>';
             
-            // Fetch the raw content from GitHub
             fetch('https://raw.githubusercontent.com/okpolicymis-coder/kids-school/main/Max/attempts.json')
                 .then(response => {
                     if (response.status === 404) {
@@ -581,15 +700,19 @@
                     return response.json();
                 })
                 .then(data => {
-                    if (data && Array.isArray(data) && data.length > 0) {
-                        displayAttemptsList(data);
-                    } else if (data) {
-                        attemptsList.innerHTML = '<p style="color: #999;">No attempts saved yet.</p>';
+                    if (data && Array.isArray(data)) {
+                        const weekAttempts = data.filter(a => a.week == weekNum);
+                        if (weekAttempts.length > 0) {
+                            displayAttemptsList(weekAttempts);
+                        } else {
+                            attemptsList.innerHTML = '<p style="color: #999;">No attempts for this week yet.</p>';
+                        }
+                        window.allAttempts = data;
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching attempts:', error);
-                    attemptsList.innerHTML = '<p style="color: #d32f2f;">Could not load attempts from GitHub. Try uploading a file instead.</p>';
+                    attemptsList.innerHTML = '<p style="color: #d32f2f;">Could not load attempts from GitHub.</p>';
                 });
         }
         
@@ -598,32 +721,25 @@
             const attemptsList = document.getElementById('attemptsList');
             if (!attemptsList) return;
             
-            let html = '<h3 style="margin-top: 20px; margin-bottom: 15px; color: #333;">📚 Previous Attempts (' + attempts.length + ')</h3>';
-            html += '<div style="display: flex; flex-direction: column; gap: 10px;">';
-            
+            let html = '';
             attempts.forEach((attempt, index) => {
                 const date = new Date(attempt.timestamp);
                 const timeStr = date.toLocaleString();
-                html += `<button onclick="loadAttempt(${index})" style="padding: 12px; background: #f5f5f5; border: 2px solid #ddd; border-radius: 5px; cursor: pointer; text-align: left; transition: all 0.2s;">
-                    <strong>Week ${attempt.week} - ${attempt.part}</strong><br>
-                    <small style="color: #666;">${timeStr}</small>
+                html += `<button onclick="loadAttempt(${attempts.indexOf(attempt)})" style="padding: 12px; background: #f5f5f5; border: 2px solid #ddd; border-radius: 5px; cursor: pointer; text-align: left; transition: all 0.2s; hover: {background: #e8e8e8};">
+                    <strong>${attempt.part}</strong> — ${timeStr}
                 </button>`;
             });
             
-            html += '</div>';
-            attemptsList.innerHTML = html;
-            
-            // Store attempts for later access
-            window.githubAttempts = attempts;
+            attemptsList.innerHTML = html || '<p style="color: #999;">No attempts available.</p>';
         }
         
         // Load specific attempt
         function loadAttempt(index) {
-            if (!window.githubAttempts || !window.githubAttempts[index]) {
+            if (!window.allAttempts || !window.allAttempts[index]) {
                 alert('Attempt not found');
                 return;
             }
-            displayResults(window.githubAttempts[index]);
+            displayResults(window.allAttempts[index]);
         }
         
         // Handle file upload
@@ -637,13 +753,11 @@
                     const data = JSON.parse(e.target.result);
                     displayResults(data);
                 } catch (error) {
-                    alert('Invalid JSON file. Please make sure it was exported from the assessment.');
+                    alert('Invalid JSON file.');
                     console.error('JSON parse error:', error);
                 }
             };
             reader.readAsText(file);
-            
-            // Reset file input
             event.target.value = '';
         }
         
@@ -657,12 +771,10 @@
             const date = new Date(data.timestamp);
             const timeStr = date.toLocaleString();
             
-            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-            document.getElementById('resultsSection').style.display = 'block';
-            document.getElementById('resultTitle').textContent = `Week ${data.week} - ${data.part}`;
-            document.getElementById('resultTime').textContent = `Completed: ${timeStr}`;
-            
-            let html = '';
+            let html = `<div style="background: #f9f9f9; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                <h2 style="color: #333; margin-bottom: 10px;">Week ${data.week} - ${data.part}</h2>
+                <p style="color: #666;"><strong>Completed:</strong> ${timeStr}</p>
+            </div>`;
             
             // Reading
             if (data.answers.reading && Object.keys(data.answers.reading).length > 0) {
@@ -708,12 +820,26 @@
                 html += '</div>';
             }
             
-            document.getElementById('resultDisplay').innerHTML = html;
+            // Display modal or full screen
+            const modal = document.createElement('div');
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px;';
+            modal.innerHTML = `<div style="background: white; border-radius: 15px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 30px;">
+                ${html}
+                <button onclick="this.closest('[role=dialog]')?.remove()" style="margin-top: 20px; padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer;">Close</button>
+            </div>`;
+            modal.setAttribute('role', 'dialog');
+            document.body.appendChild(modal);
         }
         
-        // Back to selector
-        function backToSelector() {
-            showSelector();
+        // Logout
+        function logout() {
+            localStorage.removeItem('dashboardAuthenticated');
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('header').classList.remove('visible');
+            document.getElementById('authenticatedContent').style.display = 'none';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('errorMsg').textContent = '';
+            document.getElementById('passwordInput').focus();
         }
     </script>
 </body>
