@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max's Week 2 Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .header {
+            max-width: 1200px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            color: white;
+            font-size: 1.5em;
+        }
+        
+        .home-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .home-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .assessment-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .part-header {
+            color: #667eea;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .part-1-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .passage-column {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .passage-title {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1em;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .passage-text {
+            line-height: 1.8;
+            color: #333;
+            font-size: 0.95em;
+        }
+        
+        .questions-column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .question-block {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .question-label {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95em;
+            font-family: inherit;
+            transition: border-color 0.3s;
+            autocomplete: off;
+        }
+        
+        .answer-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: #fff;
+        }
+        
+        .answer-input.sentence {
+            min-height: 50px;
+            resize: vertical;
+        }
+        
+        .part-2-intro {
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            color: #333;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        
+        .spelling-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .spelling-item {
+            background: #f8f9ff;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .spelling-word {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 6px;
+        }
+        
+        .writing-prompt {
+            background: #f8f9ff;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .prompt-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+        
+        .prompt-text {
+            color: #555;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+        
+        .prompt-textarea {
+            width: 100%;
+            min-height: 60px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95em;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.3s;
+            autocomplete: off;
+        }
+        
+        .prompt-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .results-page {
+            display: none;
+        }
+        
+        .results-page.active {
+            display: block;
+        }
+        
+        .results-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .results-header h2 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .results-header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .result-section {
+            margin-bottom: 30px;
+        }
+        
+        .result-title {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e0e0ff;
+        }
+        
+        .result-item {
+            background: #f8f9ff;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+            line-height: 1.6;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #e0e0ff;
+            color: #667eea;
+        }
+        
+        .btn-secondary:hover {
+            background: #d0d0ff;
+        }
+        
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .success-message.show {
+            display: block;
+        }
+
+        @media (max-width: 900px) {
+            .part-1-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📚 Max's Week 2 Assessment</h1>
+        <a href="index.html" class="home-btn">← Back</a>
+    </div>
+    
+    <div class="assessment-container">
+        <!-- Assessment Form -->
+        <div id="assessmentForm">
+            <div class="part-header">Part 1: Reading Comprehension</div>
+            <p style="color: #666; margin-bottom: 20px;">Read the passage on the left, then answer the questions on the right. For each question, include the sentence number (like "1" or "3") where you found your answer.</p>
+            
+            <div class="part-1-container">
+                <div class="passage-column">
+                    <div class="passage-title">The Northern Lights</div>
+                    <div class="passage-text">
+                        <div><strong>1.</strong> The Northern Lights, also called the Aurora Borealis, are one of Earth's most stunning natural displays. They light up the sky in the Arctic regions, particularly around countries like Norway, Canada, and Alaska. Scientists have studied this phenomenon for centuries, trying to understand its mysterious beauty.</div>
+                        
+                        <div style="margin-top: 12px;"><strong>2.</strong> The lights are caused by a fascinating process involving the Sun and Earth's atmosphere. The Sun constantly releases charged particles called solar wind. When these particles reach Earth, they interact with our planet's magnetic field, which protects us like a shield.</div>
+                        
+                        <div style="margin-top: 12px;"><strong>3.</strong> As the charged particles collide with gases in Earth's upper atmosphere—particularly oxygen and nitrogen—they create the colorful light show we see. The colors depend on which gas is hit. Oxygen produces green and red lights, while nitrogen creates blue and purple colors.</div>
+                        
+                        <div style="margin-top: 12px;"><strong>4.</strong> The Aurora Borealis typically appears in a region called the auroral oval. This region forms a circle around the North Pole, usually between 65 and 72 degrees latitude. Places in northern Scandinavia, northern Canada, and Alaska experience frequent displays during winter months when the sky stays dark longer.</div>
+                        
+                        <div style="margin-top: 12px;"><strong>5.</strong> Many people travel thousands of miles just to witness this extraordinary event. Indigenous peoples of the Arctic have observed and created legends about the Northern Lights for thousands of years. Today, viewing the Aurora Borealis has become an unforgettable experience for millions of visitors worldwide.</div>
+                    </div>
+                </div>
+                
+                <div class="questions-column">
+                    <div class="question-block">
+                        <div class="question-label">Question 1: What is another name for the Northern Lights?</div>
+                        <input type="text" class="answer-input" id="reading1" placeholder="Your answer" autocomplete="off" autocorrect="off" spellcheck="false">
+                        <input type="text" class="answer-input sentence" id="readingSentence1" placeholder="Which sentence number? (e.g., 1, 2, 3, etc.)" autocomplete="off" autocorrect="off" spellcheck="false" style="margin-top: 8px;">
+                    </div>
+                    
+                    <div class="question-block">
+                        <div class="question-label">Question 2: What causes the Northern Lights?</div>
+                        <input type="text" class="answer-input" id="reading2" placeholder="Your answer" autocomplete="off" autocorrect="off" spellcheck="false">
+                        <input type="text" class="answer-input sentence" id="readingSentence2" placeholder="Which sentence number?" autocomplete="off" autocorrect="off" spellcheck="false" style="margin-top: 8px;">
+                    </div>
+                    
+                    <div class="question-block">
+                        <div class="question-label">Question 3: What colors are produced by oxygen?</div>
+                        <input type="text" class="answer-input" id="reading3" placeholder="Your answer" autocomplete="off" autocorrect="off" spellcheck="false">
+                        <input type="text" class="answer-input sentence" id="readingSentence3" placeholder="Which sentence number?" autocomplete="off" autocorrect="off" spellcheck="false" style="margin-top: 8px;">
+                    </div>
+                    
+                    <div class="question-block">
+                        <div class="question-label">Question 4: Where does the Aurora Borealis typically appear?</div>
+                        <input type="text" class="answer-input" id="reading4" placeholder="Your answer" autocomplete="off" autocorrect="off" spellcheck="false">
+                        <input type="text" class="answer-input sentence" id="readingSentence4" placeholder="Which sentence number?" autocomplete="off" autocorrect="off" spellcheck="false" style="margin-top: 8px;">
+                    </div>
+                    
+                    <div class="question-block">
+                        <div class="question-label">Question 5: Why do you think people travel to see the Northern Lights?</div>
+                        <input type="text" class="answer-input" id="reading5" placeholder="Your answer" autocomplete="off" autocorrect="off" spellcheck="false">
+                        <input type="text" class="answer-input sentence" id="readingSentence5" placeholder="Which sentence number?" autocomplete="off" autocorrect="off" spellcheck="false" style="margin-top: 8px;">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Part 2: Spelling -->
+            <div class="part-header">Part 2: Spelling Practice</div>
+            <div class="part-2-intro">
+                <strong>Listen carefully to each word and spell it correctly.</strong> Focus on double letters and word patterns. You're working on building strong spelling habits!
+            </div>
+            
+            <div class="spelling-grid">
+                <div class="spelling-item">
+                    <div class="spelling-word">1. Hurry</div>
+                    <input type="text" class="answer-input" id="spelling1" placeholder="spell it" autocomplete="off" autocorrect="off" spellcheck="false">
+                </div>
+                <div class="spelling-item">
+                    <div class="spelling-word">2. Summer</div>
+                    <input type="text" class="answer-input" id="spelling2" placeholder="spell it" autocomplete="off" autocorrect="off" spellcheck="false">
+                </div>
+                <div class="spelling-item">
+                    <div class="spelling-word">3. Button</div>
+                    <input type="text" class="answer-input" id="spelling3" placeholder="spell it" autocomplete="off" autocorrect="off" spellcheck="false">
+                </div>
+                <div class="spelling-item">
+                    <div class="spelling-word">4. Dinner</div>
+                    <input type="text" class="answer-input" id="spelling4" placeholder="spell it" autocomplete="off" autocorrect="off" spellcheck="false">
+                </div>
+                <div class="spelling-item">
+                    <div class="spelling-word">5. Station</div>
+                    <input type="text" class="answer-input" id="spelling5" placeholder="spell it" autocomplete="off" autocorrect="off" spellcheck="false">
+                </div>
+                <div class="spelling-item">
+                    <div class="spelling-word">6. Question</div>
+                    <input type="text" class="answer-input" id="spelling6" placeholder="spell it" autocomplete="off" autocorrect="off" spellcheck="false">
+                </div>
+                <div class="spelling-item">
+                    <div class="spelling-word">7. Creature</div>
+                    <input type="text" class="answer-input" id="spelling7" placeholder="spell it" autocomplete="off" autocorrect="off" spellcheck="false">
+                </div>
+                <div class="spelling-item">
+                    <div class="spelling-word">8. Treasure</div>
+                    <input type="text" class="answer-input" id="spelling8" placeholder="spell it" autocomplete="off" autocorrect="off" spellcheck="false">
+                </div>
+                <div class="spelling-item">
+                    <div class="spelling-word">9. Pleasure</div>
+                    <input type="text" class="answer-input" id="spelling9" placeholder="spell it" autocomplete="off" autocorrect="off" spellcheck="false">
+                </div>
+                <div class="spelling-item">
+                    <div class="spelling-word">10. Measure</div>
+                    <input type="text" class="answer-input" id="spelling10" placeholder="spell it" autocomplete="off" autocorrect="off" spellcheck="false">
+                </div>
+                <div class="spelling-item">
+                    <div class="spelling-word">11. Happen</div>
+                    <input type="text" class="answer-input" id="spelling11" placeholder="spell it" autocomplete="off" autocorrect="off" spellcheck="false">
+                </div>
+                <div class="spelling-item">
+                    <div class="spelling-word">12. Success</div>
+                    <input type="text" class="answer-input" id="spelling12" placeholder="spell it" autocomplete="off" autocorrect="off" spellcheck="false">
+                </div>
+            </div>
+            
+            <!-- Part 3: Writing -->
+            <div class="part-header">Part 3: Writing - Your Favorite Movie or Show</div>
+            <p style="color: #666; margin-bottom: 20px;">Think of a movie or TV show you really enjoy. Answer each question with 1-2 sentences. Remember to use capital letters at the start of sentences and periods at the end!</p>
+            
+            <div class="writing-prompt">
+                <div class="prompt-number">1. What is your favorite movie or show?</div>
+                <textarea class="prompt-textarea" id="writing1" placeholder="Your answer" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+            </div>
+            
+            <div class="writing-prompt">
+                <div class="prompt-number">2. Why do you like it so much?</div>
+                <textarea class="prompt-textarea" id="writing2" placeholder="Your answer" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+            </div>
+            
+            <div class="writing-prompt">
+                <div class="prompt-number">3. Describe one character from the movie or show.</div>
+                <textarea class="prompt-textarea" id="writing3" placeholder="Your answer" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+            </div>
+            
+            <div class="writing-prompt">
+                <div class="prompt-number">4. What happens in your favorite scene?</div>
+                <textarea class="prompt-textarea" id="writing4" placeholder="Your answer" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+            </div>
+            
+            <div class="writing-prompt">
+                <div class="prompt-number">5. Would you recommend it to a friend? Why or why not?</div>
+                <textarea class="prompt-textarea" id="writing5" placeholder="Your answer" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="showResults()">Submit Assessment ✓</button>
+            </div>
+        </div>
+        
+        <!-- Results Page -->
+        <div id="resultsPage" class="results-page">
+            <div class="results-header">
+                <h2>✨ Assessment Complete!</h2>
+                <p id="completionMessage">Great job finishing Week 2! Your answers have been saved.</p>
+            </div>
+            
+            <div class="success-message" id="successMessage" style="display: none;">
+                ✓ Your answers have been saved to your account!
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="window.location.href='index.html'">Back to Dashboard</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const WEEK = 2;
+        const CHILD = 'Max';
+        
+        function buildAllAnswers() {
+            const answers = {
+                reading: {
+                    answer1: document.getElementById('reading1').value,
+                    sentence1: document.getElementById('readingSentence1').value,
+                    answer2: document.getElementById('reading2').value,
+                    sentence2: document.getElementById('readingSentence2').value,
+                    answer3: document.getElementById('reading3').value,
+                    sentence3: document.getElementById('readingSentence3').value,
+                    answer4: document.getElementById('reading4').value,
+                    sentence4: document.getElementById('readingSentence4').value,
+                    answer5: document.getElementById('reading5').value,
+                    sentence5: document.getElementById('readingSentence5').value,
+                },
+                spelling: {
+                    spelling1: document.getElementById('spelling1').value,
+                    spelling2: document.getElementById('spelling2').value,
+                    spelling3: document.getElementById('spelling3').value,
+                    spelling4: document.getElementById('spelling4').value,
+                    spelling5: document.getElementById('spelling5').value,
+                    spelling6: document.getElementById('spelling6').value,
+                    spelling7: document.getElementById('spelling7').value,
+                    spelling8: document.getElementById('spelling8').value,
+                    spelling9: document.getElementById('spelling9').value,
+                    spelling10: document.getElementById('spelling10').value,
+                    spelling11: document.getElementById('spelling11').value,
+                    spelling12: document.getElementById('spelling12').value,
+                },
+                writing: {
+                    writing1: document.getElementById('writing1').value,
+                    writing2: document.getElementById('writing2').value,
+                    writing3: document.getElementById('writing3').value,
+                    writing4: document.getElementById('writing4').value,
+                    writing5: document.getElementById('writing5').value,
+                }
+            };
+            return answers;
+        }
+        
+        function saveToGitHub(answers) {
+            const timestamp = new Date().toISOString();
+            
+            fetch('/.netlify/functions/save-lesson-data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    week: WEEK,
+                    part: 'Reading',
+                    timestamp: timestamp,
+                    answers: answers,
+                    child: CHILD
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('successMessage').classList.add('show');
+                } else {
+                    console.error('Save failed:', data);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        
+        function showResults() {
+            const allAnswers = buildAllAnswers();
+            saveToGitHub(allAnswers);
+            
+            document.getElementById('assessmentForm').style.display = 'none';
+            document.getElementById('resultsPage').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
