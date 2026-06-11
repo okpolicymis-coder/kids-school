@@ -280,7 +280,13 @@
             <!-- WEEK/PART SELECTOR -->
             <div class="section" id="selectorSection" style="display: none;">
                 <h2>📊 View Max's Assessment Results</h2>
-                <p style="margin: 20px 0; color: #666;">Upload the JSON file(s) that Max exported from his assessment:</p>
+                
+                <div id="attemptsList" style="margin: 20px 0;"></div>
+                
+                <hr style="margin: 30px 0; border: none; border-top: 2px solid #ddd;">
+                
+                <h3 style="margin-bottom: 15px; color: #333;">📁 Or Upload a File</h3>
+                <p style="margin: 10px 0; color: #666; font-size: 0.95em;">If you have a JSON file that Max exported, you can upload it here:</p>
                 
                 <div style="border: 2px dashed #667eea; padding: 30px; border-radius: 10px; text-align: center; margin: 20px 0; background: #f9f9f9;">
                     <input type="file" id="fileUpload" accept=".json" style="display: none;" onchange="handleFileUpload(event)">
@@ -553,6 +559,71 @@
         function showSelector() {
             document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
             document.getElementById('selectorSection').style.display = 'block';
+            
+            // Fetch attempts from GitHub on load
+            fetchAttemptsFromGitHub();
+        }
+        
+        // Fetch attempts from GitHub
+        function fetchAttemptsFromGitHub() {
+            const attemptsList = document.getElementById('attemptsList');
+            if (!attemptsList) return;
+            
+            attemptsList.innerHTML = '<p style="color: #999;">Loading attempts...</p>';
+            
+            // Fetch the raw content from GitHub
+            fetch('https://raw.githubusercontent.com/okpolicymis-coder/kids-school/main/Max/attempts.json')
+                .then(response => {
+                    if (response.status === 404) {
+                        attemptsList.innerHTML = '<p style="color: #999;">No attempts saved yet.</p>';
+                        return null;
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && Array.isArray(data) && data.length > 0) {
+                        displayAttemptsList(data);
+                    } else if (data) {
+                        attemptsList.innerHTML = '<p style="color: #999;">No attempts saved yet.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching attempts:', error);
+                    attemptsList.innerHTML = '<p style="color: #d32f2f;">Could not load attempts from GitHub. Try uploading a file instead.</p>';
+                });
+        }
+        
+        // Display list of attempts
+        function displayAttemptsList(attempts) {
+            const attemptsList = document.getElementById('attemptsList');
+            if (!attemptsList) return;
+            
+            let html = '<h3 style="margin-top: 20px; margin-bottom: 15px; color: #333;">📚 Previous Attempts (' + attempts.length + ')</h3>';
+            html += '<div style="display: flex; flex-direction: column; gap: 10px;">';
+            
+            attempts.forEach((attempt, index) => {
+                const date = new Date(attempt.timestamp);
+                const timeStr = date.toLocaleString();
+                html += `<button onclick="loadAttempt(${index})" style="padding: 12px; background: #f5f5f5; border: 2px solid #ddd; border-radius: 5px; cursor: pointer; text-align: left; transition: all 0.2s;">
+                    <strong>Week ${attempt.week} - ${attempt.part}</strong><br>
+                    <small style="color: #666;">${timeStr}</small>
+                </button>`;
+            });
+            
+            html += '</div>';
+            attemptsList.innerHTML = html;
+            
+            // Store attempts for later access
+            window.githubAttempts = attempts;
+        }
+        
+        // Load specific attempt
+        function loadAttempt(index) {
+            if (!window.githubAttempts || !window.githubAttempts[index]) {
+                alert('Attempt not found');
+                return;
+            }
+            displayResults(window.githubAttempts[index]);
         }
         
         // Handle file upload

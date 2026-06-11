@@ -554,6 +554,7 @@
         <!-- RESULTS PAGE -->
         <div class="section hidden" id="results">
             <h2>✅ Assessment Complete!</h2>
+            <p id="saveStatus" style="display:none; margin-bottom: 20px; padding: 12px; background: #e8f5e9; color: #2e7d32; border-radius: 5px; font-weight: bold;"></p>
             <div id="resultsDisplay" style="background: white; padding: 20px; border-radius: 10px; margin: 20px 0;"></div>
             
             <div style="background: #f0f0f0; padding: 20px; border-radius: 10px; margin: 20px 0;">
@@ -650,6 +651,44 @@
             });
             document.getElementById('results').classList.remove('hidden');
             window.scrollTo(0, 0);
+            
+            // Try to save to GitHub in background
+            saveToGitHub(allAnswers, part);
+        }
+        
+        // Save assessment to GitHub via Netlify Function
+        function saveToGitHub(answers, part) {
+            const timestamp = new Date().toISOString();
+            const payload = {
+                week: WEEK,
+                part: part,
+                timestamp: timestamp,
+                answers: answers
+            };
+            
+            console.log('Saving to GitHub:', payload);
+            
+            fetch('/.netlify/functions/save-lesson-data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('GitHub save response:', data);
+                if (data.success) {
+                    const msg = document.getElementById('saveStatus');
+                    if (msg) {
+                        msg.textContent = `✓ Answers saved for Attempt ${data.attemptCount}`;
+                        msg.style.display = 'block';
+                    }
+                } else {
+                    console.error('GitHub save failed:', data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error saving to GitHub:', error);
+            });
         }
         
         // Display results on results page
