@@ -289,6 +289,15 @@
         <!-- AUTHENTICATED CONTENT -->
         <div class="authenticated-content" id="authenticatedContent">
             
+            <!-- CHILD SELECTOR -->
+            <div style="margin-bottom: 20px; padding: 20px; background: #f0f0f0; border-radius: 10px;">
+                <h3 style="margin-bottom: 15px; color: #333;">👦 Select Student:</h3>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="selectChild('Max')" class="child-btn" id="childBtn-Max" style="padding: 10px 25px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Max</button>
+                    <button onclick="selectChild('Bud')" class="child-btn" id="childBtn-Bud" style="padding: 10px 25px; background: #ddd; color: #333; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Bud</button>
+                </div>
+            </div>
+            
             <!-- WEEK SELECTOR -->
             <div id="weekSelector" style="margin-bottom: 30px; padding: 20px; background: #f9f9f9; border-radius: 10px;">
                 <h3 style="margin-bottom: 15px; color: #333;">📅 Select Week:</h3>
@@ -368,6 +377,9 @@
         };
         
         // Check if already authenticated
+        let selectedChild = 'Max';
+        let selectedWeek = 1;
+        
         if (localStorage.getItem('dashboardAuthenticated') === 'true') {
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('header').classList.add('visible');
@@ -403,8 +415,21 @@
         
         document.getElementById('passwordInput').addEventListener('keypress', handleKeyPress);
         
+        // Child selection
+        function selectChild(child) {
+            selectedChild = child;
+            document.querySelectorAll('.child-btn').forEach(btn => {
+                btn.style.background = '#ddd';
+                btn.style.color = '#333';
+            });
+            document.getElementById('childBtn-' + child).style.background = '#667eea';
+            document.getElementById('childBtn-' + child).style.color = 'white';
+            selectWeek(selectedWeek);
+        }
+        
         // Week selection
         function selectWeek(weekNum) {
+            selectedWeek = weekNum;
             // Update button styles
             document.querySelectorAll('.week-btn').forEach(btn => {
                 if (btn.dataset.week == weekNum) {
@@ -424,8 +449,11 @@
         }
         
         function loadLessonContent(weekNum) {
-            const content = lessonContent[weekNum];
-            if (!content) return;
+            const content = selectedChild === 'Max' ? lessonContent[weekNum] : null;
+            if (!content) {
+                document.getElementById('lessonContent').innerHTML = `<p style="color: #999; padding: 20px;">No lesson content configured for ${selectedChild} Week ${weekNum} yet.</p>`;
+                return;
+            }
             
             let html = `<h2 style="margin-bottom: 25px; color: #333;">📚 Week ${weekNum} - Lesson Context</h2>`;
             html += '<div style="display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 30px;">';
@@ -481,7 +509,7 @@
             
             attemptsList.innerHTML = '<p style="color: #999;">Loading attempts...</p>';
             
-            fetch('https://raw.githubusercontent.com/okpolicymis-coder/kids-school/main/Max/attempts.json')
+            fetch(`https://raw.githubusercontent.com/okpolicymis-coder/kids-school/main/${selectedChild}/attempts.json`)
                 .then(response => {
                     if (response.status === 404) {
                         attemptsList.innerHTML = '<p style="color: #999;">No attempts saved yet.</p>';
