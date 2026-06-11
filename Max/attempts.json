@@ -171,5 +171,36 @@
         "step5": ""
       }
     }
+  },
+  {
+    "week": 1,
+    "part": "Scientific Method",
+    "timestamp": "2026-06-11T19:25:07.125Z",
+    "answers": {
+      "reading": {
+        "answer1": "",
+        "answer2": "test",
+        "answer3": "",
+        "answer4": "",
+        "answer5": "test"
+      },
+      "vocabulary": {
+        "vocabulary1": "",
+        "vocabulary2": "test",
+        "vocabulary3": "",
+        "vocabulary4": "",
+        "vocabulary5": "test",
+        "vocabulary6": "",
+        "vocabulary7": "",
+        "vocabulary8": ""
+      },
+      "experiment": {
+        "step1": "test",
+        "step2": "",
+        "step3": "test",
+        "step4": "",
+        "step5": ""
+      }
+    }
   }
 ]
