@@ -286,8 +286,9 @@
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
             border: 2px solid #e0e0ff;
             border-radius: 10px;
-            padding: 18px;
+            padding: 25px;
             display: none;
+            margin-top: 15px;
         }
         
         .feedback-widget.visible {
@@ -304,35 +305,34 @@
             font-size: 0.95em;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: 12px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 6px;
         }
         
-        .feedback-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        
         .feedback-narrative {
-            grid-column: 1;
             font-size: 0.95em;
-            line-height: 1.5;
+            line-height: 1.7;
             color: #555;
+            margin-bottom: 25px;
         }
         
         .feedback-narrative p {
-            margin: 0 0 10px 0;
+            margin: 0 0 12px 0;
         }
         
-        .feedback-takeaways {
-            grid-column: 2;
+        .feedback-sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
         
         .takeaway-section {
-            margin-bottom: 12px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
         }
         
         .takeaway-label {
@@ -340,7 +340,8 @@
             font-weight: bold;
             font-size: 0.85em;
             text-transform: uppercase;
-            margin-bottom: 6px;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
         }
         
         .takeaway-list {
@@ -348,14 +349,18 @@
             margin: 0;
             padding: 0;
             font-size: 0.9em;
-            line-height: 1.6;
+            line-height: 1.7;
             color: #555;
         }
         
         .takeaway-list li {
-            margin: 0 0 4px 0;
-            padding-left: 18px;
+            margin: 0 0 6px 0;
+            padding-left: 20px;
             position: relative;
+        }
+        
+        .takeaway-list li:last-child {
+            margin-bottom: 0;
         }
         
         .takeaway-list li:before {
@@ -405,30 +410,28 @@
                         <!-- Week 1 Feedback Widget -->
                         <div class="feedback-widget visible" id="week1Feedback">
                             <div class="feedback-header">✨ Week 1 Results</div>
-                            <div class="feedback-content">
-                                <div class="feedback-narrative">
-                                    <p><strong>Fantastic job this week!</strong> Your reading comprehension was excellent—you really showed that you understand what you read by giving detailed answers instead of just short words. I was impressed when you answered "mountains of central Mexico" instead of just "Mexico"—that's what good readers do!</p>
-                                    <p>Your <strong>spelling is improving</strong> in a big way. A few months ago you got 0 out of 30 right; this week you got 4 out of 12. That's real progress, and it shows you're working hard.</p>
-                                    <p>Your <strong>typing speed is noticeably better</strong> too. When we tested you 6 months ago, you were at 6 wpm. You're much faster now and your letters are clear. You stayed engaged the whole time, even when you got a little off-track sometimes—I let that happen because I wanted to keep you happy and motivated.</p>
+                            <div class="feedback-narrative">
+                                <p><strong>Fantastic job this week!</strong> Your reading comprehension was excellent—you really showed that you understand what you read by giving detailed answers instead of just short words. I was impressed when you answered "mountains of central Mexico" instead of just "Mexico"—that's what good readers do!</p>
+                                <p>Your <strong>spelling is improving</strong> in a big way. A few months ago you got 0 out of 30 right; this week you got 4 out of 12. That's real progress, and it shows you're working hard.</p>
+                                <p>Your <strong>typing speed is noticeably better</strong> too. When we tested you 6 months ago, you were at 6 wpm. You're much faster now and your letters are clear. You stayed engaged the whole time, even when you got a little off-track sometimes—I let that happen because I wanted to keep you happy and motivated.</p>
+                            </div>
+                            <div class="feedback-sections">
+                                <div class="takeaway-section">
+                                    <div class="takeaway-label">💪 Strengths</div>
+                                    <ul class="takeaway-list">
+                                        <li>Excellent comprehension</li>
+                                        <li>Detailed, thoughtful answers</li>
+                                        <li>Strong typing improvement</li>
+                                        <li>Great attitude & focus</li>
+                                    </ul>
                                 </div>
-                                <div class="feedback-takeaways">
-                                    <div class="takeaway-section">
-                                        <div class="takeaway-label">💪 Strengths</div>
-                                        <ul class="takeaway-list">
-                                            <li>Excellent comprehension</li>
-                                            <li>Detailed, thoughtful answers</li>
-                                            <li>Strong typing improvement</li>
-                                            <li>Great attitude & focus</li>
-                                        </ul>
-                                    </div>
-                                    <div class="takeaway-section">
-                                        <div class="takeaway-label">🎯 Next Focus</div>
-                                        <ul class="takeaway-list">
-                                            <li>Spelling patterns</li>
-                                            <li>Proofreading & editing</li>
-                                            <li>Grammar & sentences</li>
-                                        </ul>
-                                    </div>
+                                <div class="takeaway-section">
+                                    <div class="takeaway-label">🎯 Next Focus</div>
+                                    <ul class="takeaway-list">
+                                        <li>Spelling patterns</li>
+                                        <li>Proofreading & editing</li>
+                                        <li>Grammar & sentences</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
