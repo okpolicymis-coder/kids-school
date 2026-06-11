@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max's Lessons</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 2em;
+        }
+        
+        .home-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        
+        .home-btn:hover {
+            background: #5568d3;
+        }
+        
+        .content {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .lesson-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .lesson-link:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Max's Lessons</h1>
+            <a href="../" class="home-btn">← Home</a>
+        </div>
+        
+        <div class="content">
+            <p>Welcome, Max! 👋</p>
+            <p style="margin-top: 20px;">Get ready to build your reading and spelling skills this summer!</p>
+            
+            <a href="assessment.html" class="lesson-link">Start Assessment →</a>
+        </div>
+    </div>
+</body>
+</html>

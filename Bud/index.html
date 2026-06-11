@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bud's Lessons</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #f5576c;
+            font-size: 2em;
+        }
+        
+        .home-btn {
+            background: #f5576c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        
+        .home-btn:hover {
+            background: #e03f5c;
+        }
+        
+        .content {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .coming-soon {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fff3cd;
+            border-left: 4px solid #f5576c;
+            border-radius: 5px;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Bud's Lessons</h1>
+            <a href="../" class="home-btn">← Home</a>
+        </div>
+        
+        <div class="content">
+            <p>Welcome, Bud! 👋</p>
+            <p style="margin-top: 20px;">Get ready for some awesome summer learning!</p>
+            
+            <div class="coming-soon">
+                <strong>Coming soon! ⏱️</strong>
+                <p style="margin-top: 10px;">Your lessons will be ready soon. Check back later!</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
