@@ -146,14 +146,10 @@
         /* AUTHENTICATED CONTENT */
         .authenticated-content {
             display: none;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
         }
         
         .authenticated-content.active {
             display: block;
-            max-height: none;
         }
         
         .section {
@@ -375,7 +371,7 @@
         if (localStorage.getItem('dashboardAuthenticated') === 'true') {
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('header').classList.add('visible');
-            document.getElementById('authenticatedContent').style.display = 'block';
+            document.getElementById('authenticatedContent').classList.add('active');
             selectWeek(1);
         }
         
@@ -388,7 +384,7 @@
                 document.getElementById('passwordInput').addEventListener('keypress', handleKeyPress);
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('header').classList.add('visible');
-                document.getElementById('authenticatedContent').style.display = 'block';
+                document.getElementById('authenticatedContent').classList.add('active');
                 localStorage.setItem('dashboardAuthenticated', 'true');
                 document.getElementById('errorMsg').textContent = '';
                 selectWeek(1);
@@ -630,7 +626,7 @@
             localStorage.removeItem('dashboardAuthenticated');
             document.getElementById('loginSection').classList.remove('hidden');
             document.getElementById('header').classList.remove('visible');
-            document.getElementById('authenticatedContent').style.display = 'none';
+            document.getElementById('authenticatedContent').classList.remove('active');
             document.getElementById('passwordInput').value = '';
             document.getElementById('errorMsg').textContent = '';
             document.getElementById('passwordInput').focus();
