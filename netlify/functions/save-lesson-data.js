@@ -46,6 +46,8 @@ function decodeBase64(str) {
 }
 
 exports.handler = async (event) => {
+  console.log('Save lesson data function called');
+  
   // Only allow POST
   if (event.httpMethod !== 'POST') {
     return {
@@ -57,8 +59,10 @@ exports.handler = async (event) => {
   try {
     const data = JSON.parse(event.body);
     const { week, part, answers } = data;
+    console.log('Received data:', { week, part, hasAnswers: !!answers });
 
     if (!week || !part || !answers) {
+      console.log('Missing required fields:', { week, part, answers: !!answers });
       return {
         statusCode: 400,
         body: JSON.stringify({ error: 'Missing week, part, or answers' })
@@ -66,13 +70,24 @@ exports.handler = async (event) => {
     }
     
     const lessonID = `Week${week}-${part}`;
+    console.log('Lesson ID:', lessonID);
 
     const githubToken = process.env.GITHUB_TOKEN;
+    if (!githubToken) {
+      console.error('GITHUB_TOKEN environment variable not set!');
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: 'Server configuration error: missing GitHub token' })
+      };
+    }
+    
     const owner = 'okpolicymis-coder';
     const repo = 'kids-school';
     const path = `lessons-data/${lessonID}.json`;
     const timestamp = new Date().toISOString();
 
+    console.log('Fetching existing file from GitHub...');
+    
     // Try to fetch existing file
     let fileData = {
       week,
@@ -83,11 +98,15 @@ exports.handler = async (event) => {
 
     try {
       const getUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+      console.log('GET URL:', getUrl);
       const getResponse = await makeGithubRequest(getUrl, 'GET', githubToken);
+      console.log('File exists, decoding...');
       const decodedContent = decodeBase64(getResponse.content);
       fileData = JSON.parse(decodedContent);
       sha = getResponse.sha;
+      console.log(`Found ${fileData.attempts.length} existing attempts`);
     } catch (e) {
+      console.log('File does not exist or error fetching:', e.message);
       // File doesn't exist yet, that's fine
     }
 
@@ -96,6 +115,8 @@ exports.handler = async (event) => {
       timestamp: timestamp,
       answers: answers
     });
+    
+    console.log(`Now have ${fileData.attempts.length} total attempts`);
 
     // Prepare updated file content
     const fileContent = JSON.stringify(fileData, null, 2);
@@ -111,9 +132,14 @@ exports.handler = async (event) => {
 
     if (sha) {
       payload.sha = sha;
+      console.log('Updating existing file, SHA:', sha.substring(0, 8));
+    } else {
+      console.log('Creating new file');
     }
 
+    console.log('Sending PUT request to GitHub...');
     const putResponse = await makeGithubRequest(putUrl, 'PUT', githubToken, JSON.stringify(payload));
+    console.log('Success! File saved to GitHub');
 
     return {
       statusCode: 200,
@@ -128,7 +154,8 @@ exports.handler = async (event) => {
     };
 
   } catch (error) {
-    console.error('Error:', error);
+    console.error('ERROR:', error);
+    console.error('Stack:', error.stack);
     return {
       statusCode: 500,
       body: JSON.stringify({
