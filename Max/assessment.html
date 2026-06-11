@@ -224,6 +224,82 @@
             border: none;
             padding: 0;
         }
+        
+        .educational-intro {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #4caf50;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+        
+        .educational-intro strong {
+            color: #2e7d32;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 800px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .numbered-passage {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 2;
+            margin: 15px 0;
+            font-size: 1em;
+        }
+        
+        .sentence {
+            margin: 12px 0;
+            padding: 8px;
+            border-left: 3px solid #667eea;
+            padding-left: 15px;
+        }
+        
+        .sentence-num {
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .sentence-complete {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 12px 0;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .sentence-complete strong {
+            color: #2e7d32;
+        }
+        
+        .sentence-incomplete {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 12px 0;
+            border-left: 4px solid #ff9800;
+        }
+        
+        .sentence-incomplete strong {
+            color: #e65100;
+        }
     </style>
 </head>
 <body>
@@ -235,42 +311,83 @@
         
         <!-- PART 1: READING FLUENCY -->
         <div class="section" id="part1">
-            <h2>Part 1: Reading Fluency</h2>
-            <p style="margin-bottom: 15px;"><strong>Read this passage out loud.</strong> After you're done, I'll hide it and ask you questions about what you remember.</p>
+            <h2>Part 1: Reading Fluency & Comprehension</h2>
             
-            <button class="btn secondary" id="toggleBtn" onclick="toggleParagraph()">Show Paragraph</button>
+            <div class="educational-intro">
+                <strong>What You're Learning:</strong> Reading is about two things: saying the words out loud (fluency) AND understanding what you read (comprehension). Today, you'll read a passage and then answer questions by finding where the answers are IN the text. This teaches you to be a "text detective" — looking for clues in the paragraph that prove your answer is correct.
+                <br><br>
+                <strong>Why it matters:</strong> Good readers don't just memorize facts. They can point to the exact sentence that proves something is true. This is a superpower in school!
+            </div>
             
-            <div class="reading-passage" id="passage">
+            <p style="margin-bottom: 15px;"><strong>📖 Read this passage out loud, then answer the questions below:</strong></p>
+            
+            <div class="numbered-passage">
                 <strong>The Great Migration of Monarch Butterflies</strong><br><br>
-                Every fall, millions of monarch butterflies embark on one of nature's most remarkable journeys. These delicate insects migrate thousands of miles from Canada and the northern United States to the mountains of central Mexico. Scientists have long been fascinated by how monarchs accomplish this incredible feat without a map or GPS. The butterflies navigate using the sun's position and the Earth's magnetic field. Their journey is dangerous, and many monarchs don't survive. But those who make it to Mexico spend the winter in dense clusters on specific trees, waiting for spring. When spring arrives, the monarchs begin their journey north again, laying eggs along the way. These eggs will hatch into the next generation of butterflies that will continue the migration.
+                <div class="sentence">
+                    <span class="sentence-num">1.</span>
+                    Every fall, millions of monarch butterflies embark on one of nature's most remarkable journeys.
+                </div>
+                <div class="sentence">
+                    <span class="sentence-num">2.</span>
+                    These delicate insects migrate thousands of miles from Canada and the northern United States to the mountains of central Mexico.
+                </div>
+                <div class="sentence">
+                    <span class="sentence-num">3.</span>
+                    Scientists have long been fascinated by how monarchs accomplish this incredible feat without a map or GPS.
+                </div>
+                <div class="sentence">
+                    <span class="sentence-num">4.</span>
+                    The butterflies navigate using the sun's position and the Earth's magnetic field.
+                </div>
+                <div class="sentence">
+                    <span class="sentence-num">5.</span>
+                    Their journey is dangerous, and many monarchs don't survive.
+                </div>
+                <div class="sentence">
+                    <span class="sentence-num">6.</span>
+                    But those who make it to Mexico spend the winter in dense clusters on specific trees, waiting for spring.
+                </div>
+                <div class="sentence">
+                    <span class="sentence-num">7.</span>
+                    When spring arrives, the monarchs begin their journey north again, laying eggs along the way.
+                </div>
+                <div class="sentence">
+                    <span class="sentence-num">8.</span>
+                    These eggs will hatch into the next generation of butterflies that will continue the migration.
+                </div>
             </div>
             
             <div class="recall-section" id="recallSection">
-                <p style="margin-bottom: 15px;"><strong>Now, answer these questions based on what you remember:</strong></p>
+                <p style="margin-bottom: 15px;"><strong>Answer these questions. For each answer, write which sentence number(s) helped you find it:</strong></p>
                 
                 <div class="recall-question">
                     <strong>1. What animal was the passage about?</strong>
-                    <input type="text" class="recall-input" placeholder="Your answer..." />
+                    <input type="text" class="recall-input" placeholder="Answer: ..." />
+                    <input type="text" class="recall-input" placeholder="Sentence number(s): ..." />
                 </div>
                 
                 <div class="recall-question">
                     <strong>2. What time of year do they migrate?</strong>
-                    <input type="text" class="recall-input" placeholder="Your answer..." />
+                    <input type="text" class="recall-input" placeholder="Answer: ..." />
+                    <input type="text" class="recall-input" placeholder="Sentence number(s): ..." />
                 </div>
                 
                 <div class="recall-question">
                     <strong>3. Where do they go? (Name the place or country)</strong>
-                    <input type="text" class="recall-input" placeholder="Your answer..." />
+                    <input type="text" class="recall-input" placeholder="Answer: ..." />
+                    <input type="text" class="recall-input" placeholder="Sentence number(s): ..." />
                 </div>
                 
                 <div class="recall-question">
                     <strong>4. How do butterflies find their way without a map?</strong>
-                    <input type="text" class="recall-input" placeholder="Your answer..." />
+                    <input type="text" class="recall-input" placeholder="Answer: ..." />
+                    <input type="text" class="recall-input" placeholder="Sentence number(s): ..." />
                 </div>
                 
                 <div class="recall-question">
                     <strong>5. What do they do when they get there in the fall?</strong>
-                    <input type="text" class="recall-input" placeholder="Your answer..." />
+                    <input type="text" class="recall-input" placeholder="Answer: ..." />
+                    <input type="text" class="recall-input" placeholder="Sentence number(s): ..." />
                 </div>
             </div>
             
@@ -279,57 +396,64 @@
         
         <!-- PART 2: SPELLING WORDS -->
         <div class="section hidden" id="part2">
-            <h2>Part 2: Spelling Words</h2>
-            <p style="margin-bottom: 15px;">Listen as I say each word out loud. Type what you hear in each box below. Do your best!</p>
+            <h2>Part 2: Spelling & Patterns</h2>
+            
+            <div class="educational-intro">
+                <strong>What You're Learning:</strong> Spelling isn't random memorization. Words follow patterns and rules. When you spell a word, you're using patterns you've learned (like knowing that "-tion" sounds like "shun", or that "running" doubles the N). Today, you'll hear words and spell them based on what you hear and what patterns you know.
+                <br><br>
+                <strong>Why it matters:</strong> Understanding patterns helps you spell NEW words you've never seen before, not just the ones you memorized!
+            </div>
+            
+            <p style="margin-bottom: 15px;"><strong>🔤 Listen to each word I read aloud. Type what you hear in each box below:</strong></p>
             
             <div class="spelling-inputs">
                 <div class="spelling-input-group">
-                    <label>1. action</label>
-                    <input type="text" placeholder="Your spelling..." />
+                    <label>1.</label>
+                    <input type="text" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
-                    <label>2. decision</label>
-                    <input type="text" placeholder="Your spelling..." />
+                    <label>2.</label>
+                    <input type="text" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
-                    <label>3. special</label>
-                    <input type="text" placeholder="Your spelling..." />
+                    <label>3.</label>
+                    <input type="text" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
-                    <label>4. picture</label>
-                    <input type="text" placeholder="Your spelling..." />
+                    <label>4.</label>
+                    <input type="text" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
-                    <label>5. bicycle</label>
-                    <input type="text" placeholder="Your spelling..." />
+                    <label>5.</label>
+                    <input type="text" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
-                    <label>6. energy</label>
-                    <input type="text" placeholder="Your spelling..." />
+                    <label>6.</label>
+                    <input type="text" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
-                    <label>7. running</label>
-                    <input type="text" placeholder="Your spelling..." />
+                    <label>7.</label>
+                    <input type="text" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
-                    <label>8. complete</label>
-                    <input type="text" placeholder="Your spelling..." />
+                    <label>8.</label>
+                    <input type="text" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
-                    <label>9. family</label>
-                    <input type="text" placeholder="Your spelling..." />
+                    <label>9.</label>
+                    <input type="text" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
-                    <label>10. discover</label>
-                    <input type="text" placeholder="Your spelling..." />
+                    <label>10.</label>
+                    <input type="text" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
-                    <label>11. visible</label>
-                    <input type="text" placeholder="Your spelling..." />
+                    <label>11.</label>
+                    <input type="text" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
-                    <label>12. transport</label>
-                    <input type="text" placeholder="Your spelling..." />
+                    <label>12.</label>
+                    <input type="text" placeholder="Listen & type..." />
                 </div>
             </div>
             
@@ -339,33 +463,75 @@
         
         <!-- PART 3: WRITING SAMPLE -->
         <div class="section hidden" id="part3">
-            <h2>Part 3: Write a Paragraph</h2>
-            <p style="margin-bottom: 15px;"><strong>Write about your favorite game, show, or hobby.</strong> Follow these steps to write your paragraph:</p>
+            <h2>Part 3: Writing & Sentence Building</h2>
+            
+            <div class="educational-intro">
+                <strong>What You're Learning:</strong> A complete sentence has three parts: (1) a subject (WHO is doing something), (2) an action word or verb (WHAT they're doing), and (3) a complete thought (it makes sense on its own). Today, you'll build 5 sentences by answering specific questions about your favorite hobby.
+                <br><br>
+                <strong>Why it matters:</strong> Writing is how you share your ideas. If your sentences are complete, people understand you!
+            </div>
+            
+            <p style="margin-bottom: 15px;"><strong>📚 Here's what makes a COMPLETE SENTENCE:</strong></p>
+            
+            <div class="two-column">
+                <div>
+                    <p style="text-align: center; font-weight: bold; color: #4caf50; margin-bottom: 10px;">✅ Complete Sentences</p>
+                    <div class="sentence-complete">
+                        <strong>"I play soccer."</strong><br>
+                        Subject: "I" | Verb: "play" | Complete thought: Makes sense!
+                    </div>
+                    <div class="sentence-complete">
+                        <strong>"Dogs are very friendly."</strong><br>
+                        Subject: "Dogs" | Verb: "are" | Complete thought: Makes sense!
+                    </div>
+                    <div class="sentence-complete">
+                        <strong>"She writes stories every day."</strong><br>
+                        Subject: "She" | Verb: "writes" | Complete thought: Makes sense!
+                    </div>
+                </div>
+                <div>
+                    <p style="text-align: center; font-weight: bold; color: #ff9800; margin-bottom: 10px;">❌ NOT Complete Sentences</p>
+                    <div class="sentence-incomplete">
+                        <strong>"Playing soccer."</strong><br>
+                        Missing: WHO is playing? We don't know!
+                    </div>
+                    <div class="sentence-incomplete">
+                        <strong>"Are very friendly."</strong><br>
+                        Missing: Who or what is friendly? We don't know!
+                    </div>
+                    <div class="sentence-incomplete">
+                        <strong>"Every day."</strong><br>
+                        Missing: Who? What are they doing? Incomplete thought!
+                    </div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 25px; margin-bottom: 15px;"><strong>Now write YOUR paragraph about your favorite game, show, or hobby. Follow these 5 steps:</strong></p>
             
             <div class="writing-steps">
                 <div class="writing-step">
-                    <label>Step 1: What is your favorite game, show, or hobby? (Write 1 sentence)</label>
-                    <textarea placeholder="Example: My favorite hobby is playing video games."></textarea>
+                    <label>Step 1: What is your favorite game, show, or hobby? (Write 1 COMPLETE sentence with: I/My + hobby name)</label>
+                    <textarea placeholder="Remember: Subject + Verb + Complete thought..."></textarea>
                 </div>
                 
                 <div class="writing-step">
-                    <label>Step 2: Why do you like it? What's fun about it? (Write 1 sentence)</label>
-                    <textarea placeholder="Example: I like it because I can play with my friends."></textarea>
+                    <label>Step 2: Why do you like it? What's fun about it? (Write 1 COMPLETE sentence)</label>
+                    <textarea placeholder="Remember: Subject + Verb + Complete thought..."></textarea>
                 </div>
                 
                 <div class="writing-step">
-                    <label>Step 3: Give an example or detail about it. (Write 1 sentence)</label>
-                    <textarea placeholder="Example: We like playing adventure games where we can explore new worlds."></textarea>
+                    <label>Step 3: Give a specific example or detail about it. (Write 1 COMPLETE sentence)</label>
+                    <textarea placeholder="Remember: Subject + Verb + Complete thought..."></textarea>
                 </div>
                 
                 <div class="writing-step">
-                    <label>Step 4: How does it make you feel? (Write 1 sentence)</label>
-                    <textarea placeholder="Example: When I play, I feel happy and excited."></textarea>
+                    <label>Step 4: How does it make you feel? (Write 1 COMPLETE sentence)</label>
+                    <textarea placeholder="Remember: Subject + Verb + Complete thought..."></textarea>
                 </div>
                 
                 <div class="writing-step">
-                    <label>Step 5: Would you recommend it to someone else? Why or why not? (Write 1 sentence)</label>
-                    <textarea placeholder="Example: Yes, I would tell my friend because it's really fun and cool."></textarea>
+                    <label>Step 5: Would you recommend it to someone else? Why or why not? (Write 1 COMPLETE sentence)</label>
+                    <textarea placeholder="Remember: Subject + Verb + Complete thought..."></textarea>
                 </div>
             </div>
             
@@ -399,29 +565,6 @@
         }
         
         setInterval(updateTimer, 1000);
-        
-        // Paragraph Show/Hide
-        let paragraphVisible = true;
-        function toggleParagraph() {
-            const passage = document.getElementById('passage');
-            const recallSection = document.getElementById('recallSection');
-            const btn = document.getElementById('toggleBtn');
-            
-            if (paragraphVisible) {
-                passage.classList.add('hidden');
-                recallSection.classList.remove('hidden');
-                btn.textContent = 'Show Paragraph';
-                paragraphVisible = false;
-            } else {
-                passage.classList.remove('hidden');
-                recallSection.classList.add('hidden');
-                btn.textContent = 'Hide Paragraph';
-                paragraphVisible = true;
-            }
-        }
-        
-        // Hide recall section initially
-        document.getElementById('recallSection').classList.add('hidden');
         
         // Section Navigation
         function showPart(partNumber) {
