@@ -578,7 +578,7 @@
     </div>
     
     <script>
-        const WEEK = 1;
+        const WEEK = parseInt(new URLSearchParams(window.location.search).get('week')) || 1;
         
         // Continuous Timer
         let seconds = 0;
