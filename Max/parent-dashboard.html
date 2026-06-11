@@ -572,13 +572,13 @@
                 })
                 .then(data => {
                     if (data && Array.isArray(data)) {
+                        window.allAttempts = data;
                         const weekAttempts = data.filter(a => a.week == weekNum);
                         if (weekAttempts.length > 0) {
                             displayAttemptsList(weekAttempts);
                         } else {
                             attemptsList.innerHTML = '<p style="color: #999;">No attempts for this week yet.</p>';
                         }
-                        window.allAttempts = data;
                     }
                 })
                 .catch(error => {
@@ -593,10 +593,11 @@
             if (!attemptsList) return;
             
             let html = '';
-            attempts.forEach((attempt, index) => {
+            attempts.forEach((attempt) => {
                 const date = new Date(attempt.timestamp);
                 const timeStr = date.toLocaleString();
-                html += `<button onclick="loadAttempt(${attempts.indexOf(attempt)})" style="padding: 12px; background: #f5f5f5; border: 2px solid #ddd; border-radius: 5px; cursor: pointer; text-align: left; transition: all 0.2s; hover: {background: #e8e8e8};">
+                const globalIndex = window.allAttempts ? window.allAttempts.indexOf(attempt) : 0;
+                html += `<button onclick="loadAttempt(${globalIndex})" style="padding: 12px; background: #f5f5f5; border: 2px solid #ddd; border-radius: 5px; cursor: pointer; text-align: left; width: 100%;">
                     <strong>${attempt.part}</strong> — ${timeStr}
                 </button>`;
             });
@@ -651,15 +652,16 @@
             if (data.answers.reading && Object.keys(data.answers.reading).length > 0) {
                 html += '<div style="margin-bottom: 25px;"><h3 style="color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px;">📖 Reading Comprehension</h3>';
                 for (let i = 1; i <= 5; i++) {
+                    const sentence = data.answers.reading[`sentence${i}`];
                     html += `<div style="margin: 12px 0; padding: 10px; background: #f9f9f9; border-radius: 5px;">
                         <strong>Q${i}:</strong> ${data.answers.reading[`answer${i}`] || '(no answer)'}
-                        <br><small style="color: #666;">Sentence(s): ${data.answers.reading[`sentence${i}`] || '(not specified)'}</small>
+                        ${sentence ? `<br><small style="color: #666;">Sentence(s): ${sentence}</small>` : ''}
                     </div>`;
                 }
                 html += '</div>';
             }
             
-            // Spelling
+            // Spelling (Max)
             if (data.answers.spelling && Object.keys(data.answers.spelling).length > 0) {
                 html += '<div style="margin-bottom: 25px;"><h3 style="color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px;">🔤 Spelling</h3>';
                 const correctWords = ['action', 'decision', 'special', 'picture', 'bicycle', 'energy', 'running', 'complete', 'family', 'discover', 'visible', 'transport'];
@@ -678,7 +680,7 @@
                 html += '</div>';
             }
             
-            // Writing
+            // Writing (Max)
             if (data.answers.writing && Object.keys(data.answers.writing).length > 0) {
                 html += '<div style="margin-bottom: 25px;"><h3 style="color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px;">✍️ Writing</h3>';
                 for (let i = 1; i <= 5; i++) {
@@ -686,6 +688,33 @@
                     html += `<div style="margin: 12px 0; padding: 10px; background: #f9f9f9; border-radius: 5px;">
                         <strong>Sentence ${i}:</strong><br>
                         <em>${writing}</em>
+                    </div>`;
+                }
+                html += '</div>';
+            }
+            
+            // Vocabulary (Bud)
+            if (data.answers.vocabulary && Object.keys(data.answers.vocabulary).length > 0) {
+                const vocabTerms = ['Hypothesis', 'Variable', 'Observation', 'Evidence', 'Conclusion', 'Control', 'Data', 'Experiment'];
+                html += '<div style="margin-bottom: 25px;"><h3 style="color: #f5576c; border-bottom: 2px solid #f5576c; padding-bottom: 10px;">📚 Vocabulary Matching</h3>';
+                for (let i = 1; i <= 8; i++) {
+                    const answer = data.answers.vocabulary[`vocabulary${i}`] || '(blank)';
+                    html += `<div style="margin: 8px 0; padding: 8px; background: #f9f9f9; border-radius: 5px;">
+                        <strong>${i}. ${vocabTerms[i-1]}:</strong> answered ${answer}
+                    </div>`;
+                }
+                html += '</div>';
+            }
+            
+            // Experiment Design (Bud)
+            if (data.answers.experiment && Object.keys(data.answers.experiment).length > 0) {
+                const steps = ['Question', 'Hypothesis', 'Variable to Change', 'Things to Keep the Same', 'How to Measure'];
+                html += '<div style="margin-bottom: 25px;"><h3 style="color: #f5576c; border-bottom: 2px solid #f5576c; padding-bottom: 10px;">🧪 Experiment Design</h3>';
+                for (let i = 1; i <= 5; i++) {
+                    const answer = data.answers.experiment[`step${i}`] || '(no answer)';
+                    html += `<div style="margin: 12px 0; padding: 10px; background: #f9f9f9; border-radius: 5px;">
+                        <strong>Step ${i}: ${steps[i-1]}</strong><br>
+                        <em>${answer}</em>
                     </div>`;
                 }
                 html += '</div>';

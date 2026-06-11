@@ -16,6 +16,7 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
+            transition: background 0.5s ease;
         }
         
         .container {
@@ -131,6 +132,121 @@
         .authenticated.active {
             display: block;
         }
+        
+        .avatar-display {
+            display: none;
+            text-align: center;
+            margin: 5px 0 20px;
+        }
+        
+        .avatar-display.visible {
+            display: block;
+        }
+        
+        .avatar-circle {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8em;
+            margin: 0 auto 8px;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .customize-toggle {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 10px 20px;
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        .customize-toggle:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .customize-panel {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 10px;
+            border: 2px solid rgba(102, 126, 234, 0.15);
+        }
+        
+        .customize-panel.open {
+            display: block;
+        }
+        
+        .customize-panel h3 {
+            color: #333;
+            margin-bottom: 12px;
+            margin-top: 16px;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .customize-panel h3:first-child {
+            margin-top: 0;
+        }
+        
+        .avatar-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        
+        .avatar-option {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid #ddd;
+            background: #f5f5f5;
+            font-size: 1.6em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .avatar-option:hover, .avatar-option.selected {
+            border-color: #667eea;
+            background: #eef0ff;
+            transform: scale(1.1);
+        }
+        
+        .bg-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .bg-option {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .bg-option:hover, .bg-option.selected {
+            border-color: #333;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -140,9 +256,15 @@
             <a href="../" class="home-btn">← Home</a>
         </div>
         
+        <div class="avatar-display" id="avatarDisplay">
+            <div class="avatar-circle">
+                <span id="currentAvatar">👦</span>
+            </div>
+        </div>
+        
         <div class="content">
-            <p>Welcome, Max! 👋</p>
-            <p style="margin-top: 20px;">Get ready to build your reading and spelling skills this summer!</p>
+            <p>Welcome, Max! 👦</p>
+            <p style="margin-top: 10px;">Get ready to build your reading and spelling skills this summer!</p>
             
             <button class="btn" id="passwordToggleBtn" onclick="toggleLogin()">Enter Password</button>
             
@@ -155,30 +277,118 @@
             <div class="authenticated" id="authenticatedContent">
                 <p style="margin-top: 25px; margin-bottom: 15px; font-weight: bold; color: #333;">Select a week to begin:</p>
                 <a href="assessment.html?week=1" class="lesson-link">📚 Week 1</a>
+                
+                <br>
+                <button class="customize-toggle" onclick="toggleCustomize()">✏️ Customize My Page</button>
+                
+                <div class="customize-panel" id="customizePanel">
+                    <h3>Choose Your Avatar</h3>
+                    <div class="avatar-grid" id="avatarGrid"></div>
+                    <h3>Choose Background</h3>
+                    <div class="bg-grid" id="bgGrid"></div>
+                </div>
             </div>
         </div>
     </div>
     
     <script>
+        const STORAGE_KEY = 'max_customization';
+        
+        const AVATARS = ['👦', '🧑\u200d💻', '🧑\u200d🔬', '🧑\u200d🚀', '🦸', '🤠', '🧙', '🎮', '🧑\u200d🎨', '🏆'];
+        
+        const BACKGROUNDS = {
+            purple:   { label: 'Purple',   gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
+            ocean:    { label: 'Ocean',    gradient: 'linear-gradient(135deg, #00b4d8 0%, #0077b6 100%)' },
+            sunset:   { label: 'Sunset',   gradient: 'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)' },
+            forest:   { label: 'Forest',   gradient: 'linear-gradient(135deg, #134e5e 0%, #71b280 100%)' },
+            midnight: { label: 'Midnight', gradient: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)' },
+            fire:     { label: 'Fire',     gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' }
+        };
+        
+        let currentAvatar = '👦';
+        let currentBg = 'purple';
+        
+        function loadPreferences() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                try {
+                    const prefs = JSON.parse(saved);
+                    currentAvatar = prefs.avatar || '👦';
+                    currentBg = prefs.bg || 'purple';
+                } catch(e) {}
+            }
+        }
+        
+        function applyPreferences() {
+            document.getElementById('currentAvatar').textContent = currentAvatar;
+            document.body.style.background = BACKGROUNDS[currentBg] ? BACKGROUNDS[currentBg].gradient : BACKGROUNDS.purple.gradient;
+            document.querySelectorAll('.avatar-option').forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.avatar === currentAvatar);
+            });
+            document.querySelectorAll('.bg-option').forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.bg === currentBg);
+            });
+        }
+        
+        function savePreferences() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ avatar: currentAvatar, bg: currentBg }));
+        }
+        
+        function setAvatar(emoji) {
+            currentAvatar = emoji;
+            applyPreferences();
+            savePreferences();
+        }
+        
+        function setBackground(bgKey) {
+            currentBg = bgKey;
+            applyPreferences();
+            savePreferences();
+        }
+        
+        function buildCustomizationUI() {
+            const avatarGrid = document.getElementById('avatarGrid');
+            AVATARS.forEach(emoji => {
+                const btn = document.createElement('button');
+                btn.className = 'avatar-option' + (emoji === currentAvatar ? ' selected' : '');
+                btn.textContent = emoji;
+                btn.dataset.avatar = emoji;
+                btn.onclick = () => setAvatar(emoji);
+                avatarGrid.appendChild(btn);
+            });
+            
+            const bgGrid = document.getElementById('bgGrid');
+            Object.entries(BACKGROUNDS).forEach(([key, bg]) => {
+                const btn = document.createElement('button');
+                btn.className = 'bg-option' + (key === currentBg ? ' selected' : '');
+                btn.style.background = bg.gradient;
+                btn.title = bg.label;
+                btn.dataset.bg = key;
+                btn.onclick = () => setBackground(key);
+                bgGrid.appendChild(btn);
+            });
+        }
+        
+        function toggleCustomize() {
+            document.getElementById('customizePanel').classList.toggle('open');
+        }
+        
         function toggleLogin() {
             document.getElementById('loginForm').classList.toggle('active');
             document.getElementById('passwordInput').focus();
         }
         
         function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                checkPassword();
-            }
+            if (event.key === 'Enter') checkPassword();
         }
         
         function checkPassword() {
             const password = document.getElementById('passwordInput').value;
-            const correctPassword = 'Notyours67!';
-            
-            if (password === correctPassword) {
+            if (password === 'Notyours67!') {
                 document.getElementById('loginForm').classList.remove('active');
                 document.getElementById('passwordToggleBtn').style.display = 'none';
                 document.getElementById('authenticatedContent').classList.add('active');
+                document.getElementById('avatarDisplay').classList.add('visible');
                 localStorage.setItem('maxAuthenticated', 'true');
             } else {
                 document.getElementById('errorMsg').textContent = 'Incorrect password. Try again.';
@@ -186,11 +396,14 @@
             }
         }
         
-        // Check if already authenticated on page load
         window.addEventListener('load', function() {
+            loadPreferences();
+            buildCustomizationUI();
+            applyPreferences();
             if (localStorage.getItem('maxAuthenticated') === 'true') {
                 document.getElementById('passwordToggleBtn').style.display = 'none';
                 document.getElementById('authenticatedContent').classList.add('active');
+                document.getElementById('avatarDisplay').classList.add('visible');
             }
         });
     </script>
