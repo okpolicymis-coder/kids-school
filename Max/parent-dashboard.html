@@ -277,18 +277,25 @@
         <!-- AUTHENTICATED CONTENT -->
         <div class="authenticated-content" id="authenticatedContent">
             
+            <!-- ATTEMPTS SELECTOR -->
+            <div class="section" id="attemptsSection" style="display: none;">
+                <h2>📋 Max's Assessment Attempts</h2>
+                <p style="margin-bottom: 15px;">Select an attempt to view answers:</p>
+                <div id="attemptsList" style="display: grid; gap: 10px;"></div>
+            </div>
+            
             <!-- PART 1 ANSWERS -->
             <div class="section" id="part1AnswersSection" style="display: none;">
+                <button onclick="backToAttempts()" style="padding: 8px 16px; margin-bottom: 15px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">← Back to Attempts</button>
                 <h2>📖 Part 1: Max's Reading Answers</h2>
+                <p id="currentAttemptTime" style="font-size: 0.9em; color: #666; margin-bottom: 15px;"></p>
                 <div id="part1AnswersDisplay" style="background: white; padding: 15px; border-radius: 8px;"></div>
-                <p style="margin-top: 15px; font-size: 0.9em; color: #666;"><strong>Note:</strong> Answers from GitHub (real-time sync).</p>
             </div>
             
             <!-- PART 2 ANSWERS -->
             <div class="section" id="part2AnswersSection" style="display: none;">
                 <h2>🔤 Part 2: Max's Spelling Attempts</h2>
                 <div id="part2AnswersDisplay" style="background: white; padding: 15px; border-radius: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;"></div>
-                <p style="margin-top: 15px; font-size: 0.9em; color: #666;"><strong>Note:</strong> Answers from GitHub (real-time sync).</p>
             </div>
                 <h2>📖 Part 1: Reading Fluency - Real-Time Notes</h2>
                 
@@ -495,6 +502,8 @@
     <script>
         const GITHUB_OWNER = 'okpolicymis-coder';
         const GITHUB_REPO = 'kids-school';
+        let allAttempts = [];
+        let currentAttemptIndex = null;
         
         // Check if already authenticated
         if (localStorage.getItem('dashboardAuthenticated') === 'true') {
@@ -551,14 +560,60 @@
                 const response = await fetch(url);
                 if (!response.ok) {
                     console.log('No assessment data found yet');
+                    document.getElementById('attemptsSection').style.display = 'none';
                     return;
                 }
                 
                 const data = await response.json();
-                displayAnswers(data.answers);
+                allAttempts = data.attempts || [];
+                
+                if (allAttempts.length === 0) {
+                    document.getElementById('attemptsSection').style.display = 'none';
+                    return;
+                }
+                
+                // Display attempts list
+                displayAttemptsList();
             } catch (error) {
                 console.error('Error fetching assessment:', error);
             }
+        }
+        
+        // Display list of attempts
+        function displayAttemptsList() {
+            document.getElementById('attemptsSection').style.display = 'block';
+            document.getElementById('part1AnswersSection').style.display = 'none';
+            document.getElementById('part2AnswersSection').style.display = 'none';
+            
+            let html = '';
+            allAttempts.forEach((attempt, index) => {
+                const date = new Date(attempt.timestamp);
+                const timeStr = date.toLocaleString();
+                const attemptNum = index + 1;
+                html += `
+                    <button onclick="viewAttempt(${index})" style="padding: 12px 16px; background: #f0f0f0; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; text-align: left; transition: all 0.3s;">
+                        <strong>Attempt ${attemptNum}</strong> - ${timeStr}
+                    </button>
+                `;
+            });
+            document.getElementById('attemptsList').innerHTML = html;
+        }
+        
+        // View specific attempt
+        function viewAttempt(index) {
+            currentAttemptIndex = index;
+            const attempt = allAttempts[index];
+            const date = new Date(attempt.timestamp);
+            const timeStr = date.toLocaleString();
+            document.getElementById('currentAttemptTime').textContent = `Recorded: ${timeStr}`;
+            
+            displayAnswers(attempt.answers);
+        }
+        
+        // Go back to attempts list
+        function backToAttempts() {
+            currentAttemptIndex = null;
+            displayAttemptsList();
         }
         
         // Display answers from GitHub
@@ -568,6 +623,7 @@
             // Display Part 1 answers
             if (answers.answer1) {
                 document.getElementById('part1AnswersSection').style.display = 'block';
+                document.getElementById('attemptsSection').style.display = 'none';
                 let html = '<div style="padding: 10px;">';
                 for (let i = 1; i <= 5; i++) {
                     html += `
