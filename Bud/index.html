@@ -60,6 +60,76 @@
             line-height: 1.6;
         }
         
+        .lesson-link, .btn {
+            display: inline-block;
+            margin-top: 20px;
+            margin-right: 10px;
+            padding: 15px 30px;
+            background: #f5576c;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        
+        .lesson-link:hover, .btn:hover {
+            background: #e03f5c;
+            transform: translateY(-2px);
+        }
+        
+        .login-form {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 8px;
+        }
+        
+        .login-form.active {
+            display: block;
+        }
+        
+        .login-form input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #f5576c;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+        
+        .login-form button {
+            width: 100%;
+            padding: 12px;
+            background: #f5576c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .login-form button:hover {
+            background: #e03f5c;
+        }
+        
+        .error {
+            color: #d32f2f;
+            margin-top: 10px;
+        }
+        
+        .authenticated {
+            display: none;
+        }
+        
+        .authenticated.active {
+            display: block;
+        }
+        
         .coming-soon {
             margin-top: 20px;
             padding: 20px;
@@ -79,13 +149,57 @@
         
         <div class="content">
             <p>Welcome, Bud! 👋</p>
-            <p style="margin-top: 20px;">Get ready for some awesome summer learning!</p>
+            <p style="margin-top: 20px;">This summer, you'll learn how to think like a scientist. We'll explore the scientific method, how to ask good questions, and how to test your ideas.</p>
             
-            <div class="coming-soon">
-                <strong>Coming soon! ⏱️</strong>
-                <p style="margin-top: 10px;">Your lessons will be ready soon. Check back later!</p>
+            <button class="btn" id="passwordToggleBtn" onclick="toggleLogin()">Enter Password</button>
+            
+            <div class="login-form" id="loginForm">
+                <input type="password" id="passwordInput" placeholder="Enter password" onkeypress="handleKeyPress(event)">
+                <button onclick="checkPassword()">Login</button>
+                <div class="error" id="errorMsg"></div>
+            </div>
+            
+            <div class="authenticated" id="authenticatedContent">
+                <p style="margin-top: 25px; margin-bottom: 15px; font-weight: bold; color: #333;">Select a week to begin:</p>
+                <a href="assessment.html?week=1" class="lesson-link">📚 Week 1: The Scientific Method</a>
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleLogin() {
+            document.getElementById('loginForm').classList.toggle('active');
+            document.getElementById('passwordInput').focus();
+        }
+        
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        }
+        
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            const correctPassword = 'Notyours67!';
+            
+            if (password === correctPassword) {
+                document.getElementById('loginForm').classList.remove('active');
+                document.getElementById('passwordToggleBtn').style.display = 'none';
+                document.getElementById('authenticatedContent').classList.add('active');
+                localStorage.setItem('budAuthenticated', 'true');
+            } else {
+                document.getElementById('errorMsg').textContent = 'Incorrect password. Try again.';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+        
+        // Check if already authenticated on page load
+        window.addEventListener('load', function() {
+            if (localStorage.getItem('budAuthenticated') === 'true') {
+                document.getElementById('passwordToggleBtn').style.display = 'none';
+                document.getElementById('authenticatedContent').classList.add('active');
+            }
+        });
+    </script>
 </body>
 </html>

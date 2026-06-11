@@ -321,58 +321,102 @@
     <script>
         // LESSON CONTEXT DATA
         const lessonContent = {
-            1: {
-                'Reading': `
-                    <div style="margin-bottom: 30px;">
-                        <h3 style="color: #667eea; margin-bottom: 15px;">📖 Reading Passage & Questions</h3>
-                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; line-height: 1.8;">
-                            <strong>The Great Migration of Monarch Butterflies</strong><br><br>
-                            <div style="margin: 12px 0;"><strong>1.</strong> Every fall, millions of monarch butterflies embark on one of nature's most remarkable journeys.</div>
-                            <div style="margin: 12px 0;"><strong>2.</strong> These delicate insects migrate thousands of miles from Canada and the northern United States to the mountains of central Mexico.</div>
-                            <div style="margin: 12px 0;"><strong>3.</strong> Scientists have long been fascinated by how monarchs accomplish this incredible feat without a map or GPS.</div>
-                            <div style="margin: 12px 0;"><strong>4.</strong> The butterflies navigate using the sun's position and the Earth's magnetic field.</div>
-                            <div style="margin: 12px 0;"><strong>5.</strong> What makes this migration even more astounding is that no single butterfly completes the entire round trip.</div>
+            Max: {
+                1: {
+                    'Reading': `
+                        <div style="margin-bottom: 30px;">
+                            <h3 style="color: #667eea; margin-bottom: 15px;">📖 Reading Passage & Questions</h3>
+                            <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; line-height: 1.8;">
+                                <strong>The Great Migration of Monarch Butterflies</strong><br><br>
+                                <div style="margin: 12px 0;"><strong>1.</strong> Every fall, millions of monarch butterflies embark on one of nature's most remarkable journeys.</div>
+                                <div style="margin: 12px 0;"><strong>2.</strong> These delicate insects migrate thousands of miles from Canada and the northern United States to the mountains of central Mexico.</div>
+                                <div style="margin: 12px 0;"><strong>3.</strong> Scientists have long been fascinated by how monarchs accomplish this incredible feat without a map or GPS.</div>
+                                <div style="margin: 12px 0;"><strong>4.</strong> The butterflies navigate using the sun's position and the Earth's magnetic field.</div>
+                                <div style="margin: 12px 0;"><strong>5.</strong> What makes this migration even more astounding is that no single butterfly completes the entire round trip.</div>
+                            </div>
+                            <p style="margin-top: 15px; color: #666; font-size: 0.95em;"><strong>Note:</strong> Max answers comprehension questions about this passage and provides evidence (sentence numbers) for his answers.</p>
                         </div>
-                        <p style="margin-top: 15px; color: #666; font-size: 0.95em;"><strong>Note:</strong> Max answers comprehension questions about this passage and provides evidence (sentence numbers) for his answers.</p>
-                    </div>
-                `,
-                'Spelling': `
-                    <div style="margin-bottom: 30px;">
-                        <h3 style="color: #667eea; margin-bottom: 15px;">🔤 Spelling Words</h3>
-                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px;">
-                            <p style="margin-bottom: 15px;"><strong>Max spells these 12 words:</strong></p>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                                <div>1. action</div>
-                                <div>2. decision</div>
-                                <div>3. special</div>
-                                <div>4. picture</div>
-                                <div>5. bicycle</div>
-                                <div>6. energy</div>
-                                <div>7. running</div>
-                                <div>8. complete</div>
-                                <div>9. family</div>
-                                <div>10. discover</div>
-                                <div>11. visible</div>
-                                <div>12. transport</div>
+                    `,
+                    'Spelling': `
+                        <div style="margin-bottom: 30px;">
+                            <h3 style="color: #667eea; margin-bottom: 15px;">🔤 Spelling Words</h3>
+                            <div style="background: #f5f5f5; padding: 20px; border-radius: 10px;">
+                                <p style="margin-bottom: 15px;"><strong>Max spells these 12 words:</strong></p>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                    <div>1. action</div>
+                                    <div>2. decision</div>
+                                    <div>3. special</div>
+                                    <div>4. picture</div>
+                                    <div>5. bicycle</div>
+                                    <div>6. energy</div>
+                                    <div>7. running</div>
+                                    <div>8. complete</div>
+                                    <div>9. family</div>
+                                    <div>10. discover</div>
+                                    <div>11. visible</div>
+                                    <div>12. transport</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                `,
-                'Writing': `
-                    <div style="margin-bottom: 30px;">
-                        <h3 style="color: #667eea; margin-bottom: 15px;">✍️ Writing Prompts</h3>
-                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px;">
-                            <p style="margin-bottom: 15px;"><strong>Max writes about his favorite hobby in 5 sentences:</strong></p>
-                            <ol style="line-height: 1.8;">
-                                <li>What is your favorite game, show, or hobby?</li>
-                                <li>Why do you like it? What's fun about it?</li>
-                                <li>Give a specific example or detail about it.</li>
-                                <li>How does it make you feel?</li>
-                                <li>Would you recommend it to someone else? Why or why not?</li>
-                            </ol>
+                    `,
+                    'Writing': `
+                        <div style="margin-bottom: 30px;">
+                            <h3 style="color: #667eea; margin-bottom: 15px;">✍️ Writing Prompts</h3>
+                            <div style="background: #f5f5f5; padding: 20px; border-radius: 10px;">
+                                <p style="margin-bottom: 15px;"><strong>Max writes about his favorite hobby in 5 sentences:</strong></p>
+                                <ol style="line-height: 1.8;">
+                                    <li>What is your favorite game, show, or hobby?</li>
+                                    <li>Why do you like it? What's fun about it?</li>
+                                    <li>Give a specific example or detail about it.</li>
+                                    <li>How does it make you feel?</li>
+                                    <li>Would you recommend it to someone else? Why or why not?</li>
+                                </ol>
+                            </div>
                         </div>
-                    </div>
-                `
+                    `
+                }
+            },
+            Bud: {
+                1: {
+                    'Reading': `
+                        <div style="margin-bottom: 30px;">
+                            <h3 style="color: #f5576c; margin-bottom: 15px;">📖 Understanding the Scientific Method</h3>
+                            <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; line-height: 1.8;">
+                                <strong>What Bud is Learning:</strong><br><br>
+                                <p style="margin: 12px 0;">Bud is learning the 6 steps of the scientific method: Ask a Question, Do Research, Make a Hypothesis, Do an Experiment, Draw a Conclusion, and Repeat.</p>
+                                <p style="margin: 12px 0;"><strong>Key Focus:</strong> The lesson emphasizes HOW to think scientifically—understanding the reasoning behind each step, rather than memorizing facts.</p>
+                                <p style="margin: 12px 0;"><strong>Why this matters:</strong> Critical thinking and asking good questions are skills that apply to everything in life, from solving everyday problems to understanding how the world works.</p>
+                            </div>
+                            <p style="margin-top: 15px; color: #666; font-size: 0.95em;"><strong>What to look for:</strong> Does Bud understand the PURPOSE of each step? Can he explain WHY scientists do experiments? Does he see the connections between steps?</p>
+                        </div>
+                    `,
+                    'Vocabulary': `
+                        <div style="margin-bottom: 30px;">
+                            <h3 style="color: #f5576c; margin-bottom: 15px;">📚 Scientific Vocabulary Matching</h3>
+                            <div style="background: #f5f5f5; padding: 20px; border-radius: 10px;">
+                                <p style="margin-bottom: 15px;"><strong>Bud matches 8 scientific terms to their definitions:</strong></p>
+                                <p style="margin: 12px 0;"><em>These words are essential to scientific thinking: Hypothesis, Variable, Observation, Evidence, Conclusion, Control, Data, Experiment.</em></p>
+                                <p style="margin-top: 15px; color: #666; font-size: 0.95em;"><strong>What to look for:</strong> Accuracy in matching terms to definitions shows Bud understands the tools scientists use. This demonstrates conceptual understanding rather than memorization.</p>
+                            </div>
+                        </div>
+                    `,
+                    'Experiment': `
+                        <div style="margin-bottom: 30px;">
+                            <h3 style="color: #f5576c; margin-bottom: 15px;">🧪 Design Your Own Experiment</h3>
+                            <div style="background: #f5f5f5; padding: 20px; border-radius: 10px;">
+                                <p style="margin-bottom: 15px;"><strong>Bud designs his own experiment in 5 steps:</strong></p>
+                                <ol style="margin-left: 20px; line-height: 1.8;">
+                                    <li>Ask a Question: What is he curious about?</li>
+                                    <li>Make a Hypothesis: What does he predict?</li>
+                                    <li>Identify the Variable: What will he change?</li>
+                                    <li>Plan the Control: What will stay the same?</li>
+                                    <li>Describe Measurements: How will he measure results?</li>
+                                </ol>
+                                <p style="margin-top: 15px; color: #666; font-size: 0.95em;"><strong>What to look for:</strong> Does his experiment design make logical sense? Can he identify ONE variable to change? Does he understand why a control is needed? This shows whether Bud can APPLY the scientific method to real problems.</p>
+                            </div>
+                        </div>
+                    `
+                }
             }
         };
         
@@ -449,7 +493,8 @@
         }
         
         function loadLessonContent(weekNum) {
-            const content = selectedChild === 'Max' ? lessonContent[weekNum] : null;
+            const childContent = lessonContent[selectedChild];
+            const content = childContent ? childContent[weekNum] : null;
             if (!content) {
                 document.getElementById('lessonContent').innerHTML = `<p style="color: #999; padding: 20px;">No lesson content configured for ${selectedChild} Week ${weekNum} yet.</p>`;
                 return;
@@ -458,36 +503,44 @@
             let html = `<h2 style="margin-bottom: 25px; color: #333;">📚 Week ${weekNum} - Lesson Context</h2>`;
             html += '<div style="display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 30px;">';
             
-            // Reading
-            html += `<div style="border: 2px solid #667eea; border-radius: 10px; overflow: hidden;">
-                <button onclick="toggleSection('reading-context')" style="width: 100%; padding: 15px; background: #667eea; color: white; border: none; cursor: pointer; font-size: 1em; font-weight: bold; text-align: left;">📖 Reading Context</button>
-                <div id="reading-context" style="padding: 20px; display: none; background: white;">${content.Reading}</div>
+            // Get section names based on child
+            let section1Name = selectedChild === 'Max' ? 'Reading' : 'Reading';
+            let section2Name = selectedChild === 'Max' ? 'Spelling' : 'Vocabulary';
+            let section3Name = selectedChild === 'Max' ? 'Writing' : 'Experiment';
+            let section1Icon = selectedChild === 'Max' ? '📖' : '📖';
+            let section2Icon = selectedChild === 'Max' ? '🔤' : '📚';
+            let section3Icon = selectedChild === 'Max' ? '✍️' : '🧪';
+            
+            // Section 1
+            html += `<div style="border: 2px solid ${selectedChild === 'Max' ? '#667eea' : '#f5576c'}; border-radius: 10px; overflow: hidden;">
+                <button onclick="toggleSection('section1-context')" style="width: 100%; padding: 15px; background: ${selectedChild === 'Max' ? '#667eea' : '#f5576c'}; color: white; border: none; cursor: pointer; font-size: 1em; font-weight: bold; text-align: left;">${section1Icon} ${section1Name} Context</button>
+                <div id="section1-context" style="padding: 20px; display: none; background: white;">${content[section1Name] || content['Reading']}</div>
             </div>`;
             
-            // Spelling
-            html += `<div style="border: 2px solid #667eea; border-radius: 10px; overflow: hidden;">
-                <button onclick="toggleSection('spelling-context')" style="width: 100%; padding: 15px; background: #667eea; color: white; border: none; cursor: pointer; font-size: 1em; font-weight: bold; text-align: left;">🔤 Spelling Context</button>
-                <div id="spelling-context" style="padding: 20px; display: none; background: white;">${content.Spelling}</div>
+            // Section 2
+            html += `<div style="border: 2px solid ${selectedChild === 'Max' ? '#667eea' : '#f5576c'}; border-radius: 10px; overflow: hidden;">
+                <button onclick="toggleSection('section2-context')" style="width: 100%; padding: 15px; background: ${selectedChild === 'Max' ? '#667eea' : '#f5576c'}; color: white; border: none; cursor: pointer; font-size: 1em; font-weight: bold; text-align: left;">${section2Icon} ${section2Name} Context</button>
+                <div id="section2-context" style="padding: 20px; display: none; background: white;">${content[section2Name] || content['Spelling']}</div>
             </div>`;
             
-            // Writing
-            html += `<div style="border: 2px solid #667eea; border-radius: 10px; overflow: hidden;">
-                <button onclick="toggleSection('writing-context')" style="width: 100%; padding: 15px; background: #667eea; color: white; border: none; cursor: pointer; font-size: 1em; font-weight: bold; text-align: left;">✍️ Writing Context</button>
-                <div id="writing-context" style="padding: 20px; display: none; background: white;">${content.Writing}</div>
+            // Section 3
+            html += `<div style="border: 2px solid ${selectedChild === 'Max' ? '#667eea' : '#f5576c'}; border-radius: 10px; overflow: hidden;">
+                <button onclick="toggleSection('section3-context')" style="width: 100%; padding: 15px; background: ${selectedChild === 'Max' ? '#667eea' : '#f5576c'}; color: white; border: none; cursor: pointer; font-size: 1em; font-weight: bold; text-align: left;">${section3Icon} ${section3Name} Context</button>
+                <div id="section3-context" style="padding: 20px; display: none; background: white;">${content[section3Name] || content['Writing']}</div>
             </div>`;
             
             html += '</div>';
             
             // Attempts section
-            html += `<h3 style="margin-top: 40px; margin-bottom: 15px; color: #333; border-top: 2px solid #ddd; padding-top: 20px;">📊 Max's Attempts</h3>`;
+            html += `<h3 style="margin-top: 40px; margin-bottom: 15px; color: #333; border-top: 2px solid #ddd; padding-top: 20px;">📊 ${selectedChild}'s Attempts</h3>`;
             html += '<div id="attemptsList" style="display: flex; flex-direction: column; gap: 10px;"></div>';
             
             // File upload section
             html += `<hr style="margin: 30px 0; border: none; border-top: 2px solid #ddd;">
             <h3 style="margin-bottom: 15px; color: #333;">📁 Or Upload a JSON File</h3>
-            <div style="border: 2px dashed #667eea; padding: 20px; border-radius: 10px; text-align: center; background: #f9f9f9;">
+            <div style="border: 2px dashed ${selectedChild === 'Max' ? '#667eea' : '#f5576c'}; padding: 20px; border-radius: 10px; text-align: center; background: #f9f9f9;">
                 <input type="file" id="fileUpload" accept=".json" style="display: none;" onchange="handleFileUpload(event)">
-                <button onclick="document.getElementById('fileUpload').click()" style="padding: 12px 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                <button onclick="document.getElementById('fileUpload').click()" style="padding: 12px 25px; background: linear-gradient(135deg, ${selectedChild === 'Max' ? '#667eea 0%, #764ba2' : '#f093fb 0%, #f5576c'} 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
                     📁 Choose File
                 </button>
             </div>`;

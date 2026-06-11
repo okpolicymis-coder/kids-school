@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bud's Assessment - Scientific Method</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #f5576c;
+            padding-bottom: 15px;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+        
+        .timer {
+            font-size: 1.4em;
+            color: #fff;
+            font-weight: bold;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 12px 20px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        
+        .section {
+            display: block;
+            margin-bottom: 20px;
+        }
+        
+        .section.hidden {
+            display: none;
+        }
+        
+        .section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-left: 5px solid #f5576c;
+            padding-left: 15px;
+        }
+        
+        .educational-intro {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f5576c;
+        }
+        
+        .recall-section {
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .recall-question {
+            margin: 15px 0;
+            font-size: 1em;
+        }
+        
+        .recall-question strong {
+            color: #f5576c;
+        }
+        
+        .recall-input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+        }
+        
+        .recall-input:focus {
+            outline: none;
+            border-color: #f5576c;
+            box-shadow: 0 0 0 3px rgba(245, 87, 108, 0.1);
+        }
+        
+        .spelling-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .spelling-input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .spelling-input-group label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .spelling-input-group input {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+        }
+        
+        .spelling-input-group input:focus {
+            outline: none;
+            border-color: #f5576c;
+            box-shadow: 0 0 0 3px rgba(245, 87, 108, 0.1);
+        }
+        
+        .writing-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .writing-step {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .writing-step label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .writing-step textarea {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .writing-step textarea:focus {
+            outline: none;
+            border-color: #f5576c;
+            box-shadow: 0 0 0 3px rgba(245, 87, 108, 0.1);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            margin: 10px 5px 10px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+        }
+        
+        .btn.secondary {
+            background: #ddd;
+            color: #333;
+        }
+        
+        .btn.secondary:hover {
+            background: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 The Scientific Method</h1>
+            <p style="color: #666; margin-top: 10px;">Let's learn how scientists think and solve problems!</p>
+        </div>
+        
+        <!-- PART 1: READING COMPREHENSION -->
+        <div class="section" id="part1">
+            <h2>Part 1: Understanding the Scientific Method</h2>
+            
+            <div class="educational-intro">
+                <strong>What You're Learning:</strong> The scientific method is how scientists ask questions and find answers. It's not magic—it's a step-by-step way of thinking about problems.
+                <br><br>
+                <strong>Why it matters:</strong> You use the scientific method every day without realizing it! When you figure out why something isn't working or test a new idea, you're thinking scientifically.
+            </div>
+            
+            <p style="margin-bottom: 15px;"><strong>📖 Read about the Scientific Method:</strong></p>
+            <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; line-height: 1.8;">
+                <strong>The Scientific Method: 5 Steps to Solve Any Problem</strong><br><br>
+                <div style="margin: 12px 0;"><strong>Step 1: Ask a Question</strong> "I wonder WHY...?" A good scientist always starts with a question about something they observe. Example: "Why does my plant grow faster in the window than in the dark?"</div>
+                <div style="margin: 12px 0;"><strong>Step 2: Do Research</strong> Look up what others have already learned about your question. Read books, watch videos, or ask experts. You want to understand what's already known.</div>
+                <div style="margin: 12px 0;"><strong>Step 3: Make a Hypothesis</strong> A hypothesis is an educated guess—NOT a random guess. Based on what you know, you predict what will happen. Example: "I think the plant will grow faster in the window BECAUSE it gets more sunlight."</div>
+                <div style="margin: 12px 0;"><strong>Step 4: Do an Experiment</strong> Test your hypothesis. Change ONE thing (the variable) and measure what happens. Keep everything else the same. Example: Put one plant in the window and one in the dark, and measure how much they grow.</div>
+                <div style="margin: 12px 0;"><strong>Step 5: Draw a Conclusion</strong> Look at your results. Did your hypothesis come true? Write down what you learned. Even if you were wrong, that's valuable information!</div>
+                <div style="margin: 12px 0;"><strong>Step 6: Repeat!</strong> Try your experiment again to make sure you get the same results. Other people should be able to copy your experiment too.</div>
+            </div>
+            
+            <p style="margin-top: 20px;"><strong>Now answer these questions about the scientific method:</strong></p>
+            
+            <div class="recall-section">
+                <div class="recall-question">
+                    <strong>1. What is the FIRST step of the scientific method?</strong>
+                    <input type="text" class="recall-input" id="answer1" placeholder="Answer: ..." autocomplete="off" />
+                </div>
+                
+                <div class="recall-question">
+                    <strong>2. What is a hypothesis?</strong>
+                    <input type="text" class="recall-input" id="answer2" placeholder="Answer: ..." autocomplete="off" />
+                </div>
+                
+                <div class="recall-question">
+                    <strong>3. Why do scientists repeat experiments?</strong>
+                    <input type="text" class="recall-input" id="answer3" placeholder="Answer: ..." autocomplete="off" />
+                </div>
+                
+                <div class="recall-question">
+                    <strong>4. In an experiment, what is something you need to keep the SAME?</strong>
+                    <input type="text" class="recall-input" id="answer4" placeholder="Answer: ..." autocomplete="off" />
+                </div>
+                
+                <div class="recall-question">
+                    <strong>5. Give an example of a good scientific question (one that starts with "Why" or "How"):</strong>
+                    <input type="text" class="recall-input" id="answer5" placeholder="Answer: ..." autocomplete="off" />
+                </div>
+            </div>
+            
+            <button class="btn" onclick="showPart(2)">Continue to Part 2 →</button>
+        </div>
+        
+        <!-- PART 2: VOCABULARY -->
+        <div class="section hidden" id="part2">
+            <h2>Part 2: Scientific Vocabulary</h2>
+            
+            <div class="educational-intro">
+                <strong>What You're Learning:</strong> Scientists have special words to describe what they do. Knowing these words helps you talk like a scientist!
+            </div>
+            
+            <p style="margin-bottom: 15px;"><strong>🔤 Match each word to its meaning. Write the NUMBER of the definition next to each word:</strong></p>
+            
+            <div class="spelling-inputs" style="grid-template-columns: 1fr;">
+                <div class="spelling-input-group">
+                    <label>1. Hypothesis</label>
+                    <input type="text" id="spelling1" placeholder="Type matching number (1-8)..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="spelling-input-group">
+                    <label>2. Variable</label>
+                    <input type="text" id="spelling2" placeholder="Type matching number (1-8)..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="spelling-input-group">
+                    <label>3. Observation</label>
+                    <input type="text" id="spelling3" placeholder="Type matching number (1-8)..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="spelling-input-group">
+                    <label>4. Evidence</label>
+                    <input type="text" id="spelling4" placeholder="Type matching number (1-8)..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="spelling-input-group">
+                    <label>5. Conclusion</label>
+                    <input type="text" id="spelling5" placeholder="Type matching number (1-8)..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="spelling-input-group">
+                    <label>6. Control</label>
+                    <input type="text" id="spelling6" placeholder="Type matching number (1-8)..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="spelling-input-group">
+                    <label>7. Data</label>
+                    <input type="text" id="spelling7" placeholder="Type matching number (1-8)..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="spelling-input-group">
+                    <label>8. Experiment</label>
+                    <input type="text" id="spelling8" placeholder="Type matching number (1-8)..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+            </div>
+            
+            <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f5576c;">
+                <strong>Definitions to match:</strong>
+                <ol style="margin-top: 10px; margin-left: 20px;">
+                    <li>An educated guess based on research and observations</li>
+                    <li>What you notice or see happening</li>
+                    <li>Information collected during an experiment (numbers, measurements)</li>
+                    <li>The thing you change in an experiment</li>
+                    <li>Facts and information that support an idea</li>
+                    <li>What you decide based on your results</li>
+                    <li>A test you do to answer a question</li>
+                    <li>The unchanged part of an experiment (the comparison)</li>
+                </ol>
+            </div>
+            
+            <button class="btn secondary" onclick="showPart(1)">← Back</button>
+            <button class="btn" onclick="showPart(3)">Continue to Part 3 →</button>
+        </div>
+        
+        <!-- PART 3: APPLY THE METHOD -->
+        <div class="section hidden" id="part3">
+            <h2>Part 3: Design Your Own Experiment</h2>
+            
+            <div class="educational-intro">
+                <strong>Your Challenge:</strong> Think of something YOU are curious about. Then use the scientific method to design an experiment to find the answer.
+                <br><br>
+                <strong>This doesn't have to be complicated!</strong> It can be about anything—food, games, sports, animals, weather, your room, whatever interests you!
+            </div>
+            
+            <p style="margin-bottom: 15px;"><strong>✍️ Plan your experiment by answering these questions:</strong></p>
+            
+            <div class="writing-steps">
+                <div class="writing-step">
+                    <label>Step 1: What is YOUR question? (What are you curious about? Start with "Why..." or "How...")</label>
+                    <textarea id="writing1" placeholder="Example: Why do some plants grow better than others?" autocomplete="off"></textarea>
+                </div>
+                
+                <div class="writing-step">
+                    <label>Step 2: What is your hypothesis? (Your educated guess about the answer)</label>
+                    <textarea id="writing2" placeholder="Example: I think plants grow better with more sunlight because..." autocomplete="off"></textarea>
+                </div>
+                
+                <div class="writing-step">
+                    <label>Step 3: What will you change in your experiment? (The variable)</label>
+                    <textarea id="writing3" placeholder="Example: I will change how much light the plants get" autocomplete="off"></textarea>
+                </div>
+                
+                <div class="writing-step">
+                    <label>Step 4: What will you KEEP THE SAME? (The control)</label>
+                    <textarea id="writing4" placeholder="Example: I will keep the water, soil, pot size, and temperature the same" autocomplete="off"></textarea>
+                </div>
+                
+                <div class="writing-step">
+                    <label>Step 5: How will you MEASURE your results? (What data will you collect?)</label>
+                    <textarea id="writing5" placeholder="Example: I will measure the height of each plant every week" autocomplete="off"></textarea>
+                </div>
+            </div>
+            
+            <button class="btn secondary" onclick="showPart(2)">← Back</button>
+            <button class="btn" onclick="showResults()">View Results & Export →</button>
+        </div>
+        
+        <!-- RESULTS PAGE -->
+        <div class="section hidden" id="results">
+            <h2>✅ Assessment Complete!</h2>
+            <p id="saveStatus" style="display:none; margin-bottom: 20px; padding: 12px; background: #e8f5e9; color: #2e7d32; border-radius: 5px; font-weight: bold;"></p>
+            <div id="resultsDisplay" style="background: white; padding: 20px; border-radius: 10px; margin: 20px 0;"></div>
+            
+            <div style="background: #f0f0f0; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <h3 style="color: #333; margin-bottom: 15px;">📥 Download Your Answers</h3>
+                <button class="btn" onclick="exportToJSON()">📥 Download as JSON File</button>
+                <button class="btn secondary" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+            </div>
+            
+            <button class="btn" onclick="window.location.href='./'">← Back to Lessons</button>
+        </div>
+    </div>
+    
+    <script>
+        const WEEK = parseInt(new URLSearchParams(window.location.search).get('week')) || 1;
+        
+        function buildAllAnswers() {
+            const answers = {
+                reading: {},
+                vocabulary: {},
+                experiment: {}
+            };
+            
+            // Reading answers
+            for (let i = 1; i <= 5; i++) {
+                answers.reading[`answer${i}`] = document.getElementById(`answer${i}`).value;
+            }
+            
+            // Vocabulary answers
+            for (let i = 1; i <= 8; i++) {
+                answers.vocabulary[`vocabulary${i}`] = document.getElementById(`spelling${i}`).value;
+            }
+            
+            // Experiment design answers
+            for (let i = 1; i <= 5; i++) {
+                answers.experiment[`step${i}`] = document.getElementById(`writing${i}`).value;
+            }
+            
+            return answers;
+        }
+        
+        // Navigate between sections
+        function showPart(partNumber) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById('part' + partNumber).classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+        
+        // Show results page
+        function showResults() {
+            const allAnswers = buildAllAnswers();
+            const timestamp = new Date().toLocaleString();
+            
+            // Display results
+            displayResultsPage(allAnswers, timestamp);
+            
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById('results').classList.remove('hidden');
+            window.scrollTo(0, 0);
+            
+            // Try to save to GitHub in background
+            saveToGitHub(allAnswers);
+        }
+        
+        // Save assessment to GitHub via Netlify Function
+        function saveToGitHub(answers) {
+            const timestamp = new Date().toISOString();
+            const payload = {
+                week: WEEK,
+                part: 'Scientific Method',
+                timestamp: timestamp,
+                answers: answers
+            };
+            
+            console.log('Saving to GitHub:', payload);
+            
+            fetch('/.netlify/functions/save-lesson-data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('GitHub save response:', data);
+                if (data.success) {
+                    const msg = document.getElementById('saveStatus');
+                    if (msg) {
+                        msg.textContent = `✓ Answers saved for Attempt ${data.attemptCount}`;
+                        msg.style.display = 'block';
+                    }
+                } else {
+                    console.error('GitHub save failed:', data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error saving to GitHub:', error);
+            });
+        }
+        
+        // Display results on results page
+        function displayResultsPage(allAnswers, timestamp) {
+            let html = `<p style="margin-bottom: 20px; font-size: 0.95em; color: #666;"><strong>Completed:</strong> ${timestamp}</p>`;
+            
+            // Reading section
+            html += '<div style="margin-bottom: 25px;"><h3 style="color: #f5576c; border-bottom: 2px solid #f5576c; padding-bottom: 10px;">📖 Understanding the Scientific Method</h3>';
+            for (let i = 1; i <= 5; i++) {
+                html += `<div style="margin: 12px 0; padding: 10px; background: #f9f9f9; border-radius: 5px;">
+                    <strong>Q${i}:</strong> ${allAnswers.reading[`answer${i}`] || '(no answer)'}
+                </div>`;
+            }
+            html += '</div>';
+            
+            // Vocabulary section
+            html += '<div style="margin-bottom: 25px;"><h3 style="color: #f5576c; border-bottom: 2px solid #f5576c; padding-bottom: 10px;">📚 Vocabulary Matching</h3>';
+            const vocabTerms = ['Hypothesis', 'Variable', 'Observation', 'Evidence', 'Conclusion', 'Control', 'Data', 'Experiment'];
+            for (let i = 1; i <= 8; i++) {
+                const answer = allAnswers.vocabulary[`vocabulary${i}`] || '(blank)';
+                html += `<div style="margin: 8px 0; padding: 8px; background: #f9f9f9; border-radius: 5px;">
+                    <strong>${i}. ${vocabTerms[i-1]}:</strong> ${answer}
+                </div>`;
+            }
+            html += '</div>';
+            
+            // Experiment design section
+            html += '<div style="margin-bottom: 25px;"><h3 style="color: #f5576c; border-bottom: 2px solid #f5576c; padding-bottom: 10px;">🧪 Your Experiment Design</h3>';
+            const steps = ['Question', 'Hypothesis', 'Variable to Change', 'Things to Keep the Same', 'How to Measure'];
+            for (let i = 1; i <= 5; i++) {
+                const answer = allAnswers.experiment[`step${i}`] || '(no answer)';
+                html += `<div style="margin: 12px 0; padding: 10px; background: #f9f9f9; border-radius: 5px;">
+                    <strong>Step ${i}: ${steps[i-1]}</strong><br>
+                    ${answer}
+                </div>`;
+            }
+            html += '</div>';
+            
+            document.getElementById('resultsDisplay').innerHTML = html;
+            
+            // Store for export
+            window.lastAssessmentData = {
+                week: WEEK,
+                part: 'Scientific Method',
+                timestamp: new Date().toISOString(),
+                answers: allAnswers
+            };
+        }
+        
+        // Export to JSON
+        function exportToJSON() {
+            const data = window.lastAssessmentData;
+            if (!data) {
+                alert('No assessment data to export');
+                return;
+            }
+            
+            const filename = `Week${data.week}-${data.part}-${new Date(data.timestamp).getTime()}.json`;
+            const jsonStr = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // Copy to clipboard
+        function copyToClipboard() {
+            const data = window.lastAssessmentData;
+            if (!data) {
+                alert('No assessment data to copy');
+                return;
+            }
+            
+            const jsonStr = JSON.stringify(data, null, 2);
+            navigator.clipboard.writeText(jsonStr).then(() => {
+                alert('Assessment data copied to clipboard!');
+            }).catch(() => {
+                alert('Could not copy to clipboard');
+            });
+        }
+    </script>
+</body>
+</html>
