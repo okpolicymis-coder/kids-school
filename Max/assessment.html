@@ -362,32 +362,32 @@
                 
                 <div class="recall-question">
                     <strong>1. What animal was the passage about?</strong>
-                    <input type="text" class="recall-input" placeholder="Answer: ..." />
-                    <input type="text" class="recall-input" placeholder="Sentence number(s): ..." />
+                    <input type="text" class="recall-input" id="answer1" placeholder="Answer: ..." />
+                    <input type="text" class="recall-input" id="sentence1" placeholder="Sentence number(s): ..." />
                 </div>
                 
                 <div class="recall-question">
                     <strong>2. What time of year do they migrate?</strong>
-                    <input type="text" class="recall-input" placeholder="Answer: ..." />
-                    <input type="text" class="recall-input" placeholder="Sentence number(s): ..." />
+                    <input type="text" class="recall-input" id="answer2" placeholder="Answer: ..." />
+                    <input type="text" class="recall-input" id="sentence2" placeholder="Sentence number(s): ..." />
                 </div>
                 
                 <div class="recall-question">
                     <strong>3. Where do they go? (Name the place or country)</strong>
-                    <input type="text" class="recall-input" placeholder="Answer: ..." />
-                    <input type="text" class="recall-input" placeholder="Sentence number(s): ..." />
+                    <input type="text" class="recall-input" id="answer3" placeholder="Answer: ..." />
+                    <input type="text" class="recall-input" id="sentence3" placeholder="Sentence number(s): ..." />
                 </div>
                 
                 <div class="recall-question">
                     <strong>4. How do butterflies find their way without a map?</strong>
-                    <input type="text" class="recall-input" placeholder="Answer: ..." />
-                    <input type="text" class="recall-input" placeholder="Sentence number(s): ..." />
+                    <input type="text" class="recall-input" id="answer4" placeholder="Answer: ..." />
+                    <input type="text" class="recall-input" id="sentence4" placeholder="Sentence number(s): ..." />
                 </div>
                 
                 <div class="recall-question">
                     <strong>5. What do they do when they get there in the fall?</strong>
-                    <input type="text" class="recall-input" placeholder="Answer: ..." />
-                    <input type="text" class="recall-input" placeholder="Sentence number(s): ..." />
+                    <input type="text" class="recall-input" id="answer5" placeholder="Answer: ..." />
+                    <input type="text" class="recall-input" id="sentence5" placeholder="Sentence number(s): ..." />
                 </div>
             </div>
             
@@ -409,56 +409,56 @@
             <div class="spelling-inputs">
                 <div class="spelling-input-group">
                     <label>1.</label>
-                    <input type="text" placeholder="Listen & type..." />
+                    <input type="text" id="spelling1" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
                     <label>2.</label>
-                    <input type="text" placeholder="Listen & type..." />
+                    <input type="text" id="spelling2" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
                     <label>3.</label>
-                    <input type="text" placeholder="Listen & type..." />
+                    <input type="text" id="spelling3" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
                     <label>4.</label>
-                    <input type="text" placeholder="Listen & type..." />
+                    <input type="text" id="spelling4" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
                     <label>5.</label>
-                    <input type="text" placeholder="Listen & type..." />
+                    <input type="text" id="spelling5" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
                     <label>6.</label>
-                    <input type="text" placeholder="Listen & type..." />
+                    <input type="text" id="spelling6" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
                     <label>7.</label>
-                    <input type="text" placeholder="Listen & type..." />
+                    <input type="text" id="spelling7" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
                     <label>8.</label>
-                    <input type="text" placeholder="Listen & type..." />
+                    <input type="text" id="spelling8" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
                     <label>9.</label>
-                    <input type="text" placeholder="Listen & type..." />
+                    <input type="text" id="spelling9" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
                     <label>10.</label>
-                    <input type="text" placeholder="Listen & type..." />
+                    <input type="text" id="spelling10" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
                     <label>11.</label>
-                    <input type="text" placeholder="Listen & type..." />
+                    <input type="text" id="spelling11" placeholder="Listen & type..." />
                 </div>
                 <div class="spelling-input-group">
                     <label>12.</label>
-                    <input type="text" placeholder="Listen & type..." />
+                    <input type="text" id="spelling12" placeholder="Listen & type..." />
                 </div>
             </div>
             
             <button class="btn secondary" onclick="showPart(1)">← Back</button>
-            <button class="btn" onclick="showPart(3)">Continue to Part 3 →</button>
+            <button class="btn" onclick="submitSpelling()">Submit & Continue →</button>
         </div>
         
         <!-- PART 3: WRITING SAMPLE -->
@@ -466,7 +466,11 @@
             <h2>Part 3: Writing & Sentence Building</h2>
             
             <div class="educational-intro">
-                <strong>What You're Learning:</strong> A complete sentence has three parts: (1) a subject (WHO is doing something), (2) an action word or verb (WHAT they're doing), and (3) a complete thought (it makes sense on its own). Today, you'll build 5 sentences by answering specific questions about your favorite hobby.
+                <strong>What You're Learning:</strong> A complete sentence has three parts:<br>
+                (1) <strong>a subject</strong> (WHO is doing something)<br>
+                (2) <strong>an action word or verb</strong> (WHAT they're doing)<br>
+                (3) <strong>a complete thought</strong> (it makes sense on its own)<br><br>
+                Today, you'll build 5 sentences by answering specific questions about your favorite hobby.
                 <br><br>
                 <strong>Why it matters:</strong> Writing is how you share your ideas. If your sentences are complete, people understand you!
             </div>
@@ -477,30 +481,36 @@
                 <div>
                     <p style="text-align: center; font-weight: bold; color: #4caf50; margin-bottom: 10px;">✅ Complete Sentences</p>
                     <div class="sentence-complete">
-                        <strong>"I play soccer."</strong><br>
-                        Subject: "I" | Verb: "play" | Complete thought: Makes sense!
+                        <strong>"I play soccer."</strong><br><br>
+                        <strong>Subject:</strong> "I"<br>
+                        <strong>Verb:</strong> "play"<br>
+                        <strong>Complete thought:</strong> Makes sense!
                     </div>
                     <div class="sentence-complete">
-                        <strong>"Dogs are very friendly."</strong><br>
-                        Subject: "Dogs" | Verb: "are" | Complete thought: Makes sense!
+                        <strong>"Dogs are very friendly."</strong><br><br>
+                        <strong>Subject:</strong> "Dogs"<br>
+                        <strong>Verb:</strong> "are"<br>
+                        <strong>Complete thought:</strong> Makes sense!
                     </div>
                     <div class="sentence-complete">
-                        <strong>"She writes stories every day."</strong><br>
-                        Subject: "She" | Verb: "writes" | Complete thought: Makes sense!
+                        <strong>"She writes stories every day."</strong><br><br>
+                        <strong>Subject:</strong> "She"<br>
+                        <strong>Verb:</strong> "writes"<br>
+                        <strong>Complete thought:</strong> Makes sense!
                     </div>
                 </div>
                 <div>
                     <p style="text-align: center; font-weight: bold; color: #ff9800; margin-bottom: 10px;">❌ NOT Complete Sentences</p>
                     <div class="sentence-incomplete">
-                        <strong>"Playing soccer."</strong><br>
+                        <strong>"Playing soccer."</strong><br><br>
                         Missing: WHO is playing? We don't know!
                     </div>
                     <div class="sentence-incomplete">
-                        <strong>"Are very friendly."</strong><br>
+                        <strong>"Are very friendly."</strong><br><br>
                         Missing: Who or what is friendly? We don't know!
                     </div>
                     <div class="sentence-incomplete">
-                        <strong>"Every day."</strong><br>
+                        <strong>"Every day."</strong><br><br>
                         Missing: Who? What are they doing? Incomplete thought!
                     </div>
                 </div>
@@ -566,8 +576,39 @@
         
         setInterval(updateTimer, 1000);
         
+        // Save Part 1 answers
+        function savePart1Answers() {
+            const part1Data = {
+                answer1: document.getElementById('answer1').value,
+                sentence1: document.getElementById('sentence1').value,
+                answer2: document.getElementById('answer2').value,
+                sentence2: document.getElementById('sentence2').value,
+                answer3: document.getElementById('answer3').value,
+                sentence3: document.getElementById('sentence3').value,
+                answer4: document.getElementById('answer4').value,
+                sentence4: document.getElementById('sentence4').value,
+                answer5: document.getElementById('answer5').value,
+                sentence5: document.getElementById('sentence5').value,
+            };
+            localStorage.setItem('part1Answers', JSON.stringify(part1Data));
+        }
+        
+        // Save Part 2 spelling answers
+        function submitSpelling() {
+            const spellingData = {};
+            for (let i = 1; i <= 12; i++) {
+                spellingData[`spelling${i}`] = document.getElementById(`spelling${i}`).value;
+            }
+            localStorage.setItem('part2Spelling', JSON.stringify(spellingData));
+            savePart1Answers();
+            showPart(3);
+        }
+        
         // Section Navigation
         function showPart(partNumber) {
+            if (partNumber === 2) {
+                savePart1Answers();
+            }
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.add('hidden');
             });
@@ -576,6 +617,7 @@
         }
         
         function showComplete() {
+            savePart1Answers();
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.add('hidden');
             });

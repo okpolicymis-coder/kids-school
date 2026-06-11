@@ -277,8 +277,19 @@
         <!-- AUTHENTICATED CONTENT -->
         <div class="authenticated-content" id="authenticatedContent">
             
-            <!-- PART 1: READING & NOTES -->
-            <div class="section">
+            <!-- PART 1 ANSWERS -->
+            <div class="section" id="part1AnswersSection" style="display: none;">
+                <h2>📖 Part 1: Max's Reading Answers</h2>
+                <div id="part1AnswersDisplay" style="background: white; padding: 15px; border-radius: 8px;"></div>
+                <p style="margin-top: 15px; font-size: 0.9em; color: #666;"><strong>Note:</strong> Answers update as Max types them on his device.</p>
+            </div>
+            
+            <!-- PART 2 ANSWERS -->
+            <div class="section" id="part2AnswersSection" style="display: none;">
+                <h2>🔤 Part 2: Max's Spelling Attempts</h2>
+                <div id="part2AnswersDisplay" style="background: white; padding: 15px; border-radius: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;"></div>
+                <p style="margin-top: 15px; font-size: 0.9em; color: #666;"><strong>Note:</strong> After Max submits Part 2, his spelling attempts appear here.</p>
+            </div>
                 <h2>📖 Part 1: Reading Fluency - Real-Time Notes</h2>
                 
                 <p><strong>The Reading Passage (With Numbered Sentences - For Reference):</strong></p>
@@ -504,6 +515,7 @@
                 document.getElementById('loginForm').classList.remove('active');
                 document.getElementById('authenticatedContent').classList.add('active');
                 localStorage.setItem('dashboardAuthenticated', 'true');
+                displayAnswers();
             } else {
                 document.getElementById('errorMsg').textContent = 'Incorrect password. Try again.';
                 document.getElementById('passwordInput').value = '';
@@ -524,6 +536,51 @@
             document.getElementById('loginForm').classList.remove('active');
             document.getElementById('passwordInput').value = '';
             document.getElementById('errorMsg').textContent = '';
+        }
+        
+        // Display Max's answers
+        function displayAnswers() {
+            const part1Data = JSON.parse(localStorage.getItem('part1Answers') || '{}');
+            const spellingData = JSON.parse(localStorage.getItem('part2Spelling') || '{}');
+            
+            if (Object.keys(part1Data).length > 0) {
+                document.getElementById('part1AnswersSection').style.display = 'block';
+                let html = '<div style="padding: 10px;">';
+                for (let i = 1; i <= 5; i++) {
+                    html += `
+                        <div style="margin-bottom: 15px; padding: 10px; background: #f9f9f9; border-radius: 5px;">
+                            <strong>Question ${i}:</strong><br>
+                            Answer: ${part1Data[`answer${i}`] || '(no answer)'}<br>
+                            Sentence(s): ${part1Data[`sentence${i}`] || '(not specified)'}
+                        </div>
+                    `;
+                }
+                html += '</div>';
+                document.getElementById('part1AnswersDisplay').innerHTML = html;
+            }
+            
+            if (Object.keys(spellingData).length > 0) {
+                document.getElementById('part2AnswersSection').style.display = 'block';
+                let html = '';
+                const correctWords = ['action', 'decision', 'special', 'picture', 'bicycle', 'energy', 'running', 'complete', 'family', 'discover', 'visible', 'transport'];
+                for (let i = 1; i <= 12; i++) {
+                    const userAnswer = spellingData[`spelling${i}`] || '';
+                    const correct = correctWords[i-1];
+                    const isCorrect = userAnswer.toLowerCase() === correct.toLowerCase();
+                    html += `
+                        <div style="padding: 10px; background: ${isCorrect ? '#e8f5e9' : '#fff3cd'}; border-radius: 5px; border-left: 4px solid ${isCorrect ? '#4caf50' : '#ff9800'};">
+                            <strong>${i}. ${correct}</strong><br>
+                            <small>Max typed: "${userAnswer || '(blank)'}"</small>
+                        </div>
+                    `;
+                }
+                document.getElementById('part2AnswersDisplay').innerHTML = html;
+            }
+        }
+        
+        // Display answers when page loads if authenticated
+        if (localStorage.getItem('dashboardAuthenticated') === 'true') {
+            displayAnswers();
         }
     </script>
 </body>
