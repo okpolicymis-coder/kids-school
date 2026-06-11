@@ -76,24 +76,24 @@ exports.handler = async (event, context) => {
     const payload = JSON.parse(event.body);
     console.log('Parsed payload:', payload);
 
-    const { week, part, timestamp, answers } = payload;
+    const { week, part, timestamp, answers, child } = payload;
 
-    if (!week || !part || !timestamp || !answers) {
+    if (!week || !part || !timestamp || !answers || !child) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: 'Missing required fields' })
+        body: JSON.stringify({ error: 'Missing required fields (week, part, timestamp, answers, child)' })
       };
     }
 
     // Read current attempts.json from GitHub
-    console.log('Fetching Max/attempts.json from GitHub...');
+    console.log(`Fetching ${child}/attempts.json from GitHub...`);
     let attempts = [];
     let sha = null;
 
     try {
       const getResponse = await makeGithubRequest(
         'GET',
-        '/repos/okpolicymis-coder/kids-school/contents/Max/attempts.json'
+        `/repos/okpolicymis-coder/kids-school/contents/${child}/attempts.json`
       );
       if (getResponse.data.content) {
         const fileContent = decodeBase64(getResponse.data.content);
@@ -131,7 +131,7 @@ exports.handler = async (event, context) => {
 
     const writeResponse = await makeGithubRequest(
       'PUT',
-      '/repos/okpolicymis-coder/kids-school/contents/Max/attempts.json',
+      `/repos/okpolicymis-coder/kids-school/contents/${child}/attempts.json`,
       writePayload
     );
 
