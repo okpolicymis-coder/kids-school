@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Max's Reading & Spelling Assessment</title>
+    <title>Max's Assessment</title>
     <style>
         * {
             margin: 0;
@@ -19,7 +19,7 @@
         }
         
         .container {
-            max-width: 900px;
+            max-width: 700px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
@@ -28,10 +28,8 @@
         }
         
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
+            text-align: center;
+            margin-bottom: 40px;
             border-bottom: 3px solid #667eea;
             padding-bottom: 20px;
         }
@@ -39,30 +37,25 @@
         h1 {
             color: #667eea;
             font-size: 2em;
+            margin-bottom: 10px;
         }
         
-        .home-btn {
+        .timer {
             background: #667eea;
             color: white;
-            border: none;
             padding: 10px 20px;
             border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 0.95em;
-            transition: all 0.3s ease;
-        }
-        
-        .home-btn:hover {
-            background: #5568d3;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
         }
         
         .section {
             margin: 40px 0;
             padding: 25px;
-            border-left: 5px solid #667eea;
             background: #f8f9ff;
             border-radius: 8px;
+            border-left: 5px solid #667eea;
         }
         
         .section h2 {
@@ -71,399 +64,247 @@
             margin-bottom: 15px;
         }
         
-        .section h3 {
-            color: #333;
-            font-size: 1.1em;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-        
-        .time-box {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 0.9em;
-        }
-        
-        .content {
+        .section p {
             color: #555;
             line-height: 1.8;
+            margin: 15px 0;
             font-size: 0.95em;
         }
         
-        .content p {
-            margin: 10px 0;
-        }
-        
-        .content ul {
-            margin-left: 25px;
+        .reading-passage {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #667eea;
             margin: 15px 0;
+            line-height: 1.9;
+            font-size: 1em;
+            color: #333;
         }
         
-        .content li {
-            margin: 8px 0;
-            line-height: 1.6;
-        }
-        
-        .word-list {
+        .spelling-words {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             margin: 15px 0;
         }
         
-        .word {
+        .word-item {
             background: white;
-            padding: 12px;
+            padding: 15px;
             border-radius: 8px;
             border: 2px solid #667eea;
             text-align: center;
+        }
+        
+        .word-num {
+            color: #999;
+            font-size: 0.85em;
+            margin-bottom: 5px;
+        }
+        
+        .word {
+            color: #667eea;
             font-weight: bold;
-            color: #667eea;
+            font-size: 1.2em;
         }
         
-        .observation-box {
-            background: #e8eeff;
-            padding: 15px;
-            border-left: 4px solid #667eea;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-        
-        .observation-box strong {
-            color: #667eea;
-        }
-        
-        .timer-section {
+        .writing-prompt {
             background: #fff3cd;
             padding: 20px;
             border-radius: 8px;
+            border-left: 5px solid #f5576c;
             margin: 15px 0;
-            border-left: 4px solid #f5576c;
         }
         
-        .break-section {
-            background: #d4edda;
-            padding: 25px;
-            border-radius: 8px;
-            margin: 40px 0;
-            border-left: 5px solid #28a745;
+        .writing-prompt strong {
+            color: #333;
+            font-size: 1.1em;
         }
         
-        .break-section h2 {
-            color: #28a745;
-        }
-        
-        .notes-area {
-            background: white;
+        textarea {
+            width: 100%;
             padding: 15px;
-            border: 2px dashed #667eea;
+            border: 2px solid #667eea;
             border-radius: 8px;
-            margin: 15px 0;
-            min-height: 100px;
-            color: #999;
-            font-style: italic;
+            font-family: inherit;
+            font-size: 1em;
+            min-height: 120px;
+            margin-top: 10px;
         }
         
-        .example {
-            background: white;
-            padding: 12px;
-            margin: 10px 0;
-            border-left: 3px solid #f5576c;
-            border-radius: 3px;
-            font-size: 0.9em;
-        }
-        
-        .highlight {
-            background: #fff3cd;
-            padding: 2px 6px;
-            border-radius: 3px;
-        }
-        
-        .checklist {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-        }
-        
-        .checklist-item {
-            padding: 8px;
-            margin: 5px 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .checklist-item:last-child {
-            border-bottom: none;
-        }
-        
-        .checklist-item input[type="checkbox"] {
-            margin-right: 10px;
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-        
-        .tip {
+        .instructions {
             background: #e3f2fd;
             padding: 15px;
-            border-left: 4px solid #2196F3;
-            border-radius: 5px;
+            border-radius: 8px;
+            color: #1976D2;
+            font-size: 0.95em;
+            line-height: 1.6;
             margin: 15px 0;
         }
         
-        .tip strong {
-            color: #1976D2;
+        .nav-buttons {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            margin: 0 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        
+        .btn.secondary {
+            background: #999;
+        }
+        
+        .btn.secondary:hover {
+            background: #777;
+        }
+        
+        .parent-note {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 40px 0;
+            font-size: 0.9em;
+            color: #333;
+        }
+        
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📋 Reading & Spelling Assessment</h1>
-            <a href="./" class="home-btn">← Back</a>
-        </div>
-        
-        <div class="tip">
-            <strong>💡 Tip:</strong> This is NOT a test. You're gathering data about Max's abilities. Take notes as you go through each part.
+            <h1>� Reading & Spelling Assessment</h1>
+            <div class="timer" id="timer">⏱️ Time: 1:15</div>
         </div>
         
         <!-- PART 1: READING FLUENCY -->
-        <div class="section">
-            <h2>Part 1: Reading Fluency Check</h2>
-            <div class="time-box">⏱️ 8 minutes</div>
+        <div class="section" id="part1">
+            <h2>Part 1: Reading Fluency</h2>
+            <p style="font-weight: bold; color: #667eea;">You'll have 1 minute to read this passage out loud. Ready? Go!</p>
             
-            <div class="content">
-                <h3>Goal</h3>
-                <p>See how Max decodes, handles multisyllabic words, and manages attention.</p>
-                
-                <h3>What to Do</h3>
-                <ol style="margin-left: 30px;">
-                    <li>Give Max a grade-level paragraph (6th–7th grade nonfiction works best)</li>
-                    <li>Ask him to read aloud for <strong>one minute</strong></li>
-                    <li>Let him finish the paragraph silently</li>
-                    <li>Ask him to tell you what it was about in 2–3 sentences</li>
-                </ol>
-                
-                <h3>What to Observe</h3>
-                <div class="checklist">
-                    <div class="checklist-item">
-                        <input type="checkbox"> Does he guess at words?
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox"> Does he skip endings (-ed, -ing, -s)?
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox"> Does he lose his place?
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox"> Does he sound choppy or monotone?
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox"> Does he self-correct?
-                    </div>
-                </div>
-                
-                <h3>Data You'll Collect</h3>
-                <p>Fluency + comprehension + working memory data in under 10 minutes</p>
-                
-                <h3>Your Notes</h3>
-                <div class="notes-area" contenteditable="true" placeholder="Type your observations here..."></div>
+            <div class="reading-passage">
+                <strong>The Great Migration of Monarch Butterflies</strong><br><br>
+                Every fall, millions of monarch butterflies embark on one of nature's most remarkable journeys. These delicate insects migrate thousands of miles from Canada and the northern United States to the mountains of central Mexico. Scientists have long been fascinated by how monarchs accomplish this incredible feat without a map or GPS. The butterflies navigate using the sun's position and the Earth's magnetic field. Their journey is dangerous, and many monarchs don't survive. But those who make it to Mexico spend the winter in dense clusters on specific trees, waiting for spring. When spring arrives, the monarchs begin their journey north again, laying eggs along the way. These eggs will hatch into the next generation of butterflies that will continue the migration.
             </div>
+            
+            <div class="instructions">
+                <strong>After you finish reading:</strong><br>
+                Tell the adult about this passage in 2-3 sentences. What was it about?
+            </div>
+            
+            <button class="btn" onclick="showPart(2)">Continue to Part 2 →</button>
         </div>
         
-        <!-- PART 2: SPELLING DIAGNOSTIC -->
-        <div class="section">
-            <h2>Part 2: Spelling Diagnostic (THE MOST IMPORTANT)</h2>
-            <div class="time-box">⏱️ 12 minutes</div>
+        <!-- PART 2: SPELLING WORDS -->
+        <div class="section hidden" id="part2">
+            <h2>Part 2: Spelling Words</h2>
+            <p>The adult will say each word out loud. You write it down on paper (not here). Here are the words:</p>
             
-            <div class="content">
-                <h3>Goal</h3>
-                <p>Map Max's spelling patterns to know exactly where to target instruction.</p>
-                
-                <h3>What to Do</h3>
-                <ol style="margin-left: 30px;">
-                    <li>Dictate each word below, one at a time</li>
-                    <li>Have Max write each word on paper</li>
-                    <li>Record what he wrote</li>
-                </ol>
-                
-                <h3>Words to Dictate</h3>
-                <div class="word-list">
-                    <div class="word">action</div>
-                    <div class="word">decision</div>
-                    <div class="word">special</div>
-                    <div class="word">picture</div>
-                    <div class="word">bicycle</div>
-                    <div class="word">energy</div>
-                    <div class="word">running</div>
-                    <div class="word">complete</div>
-                    <div class="word">family</div>
-                    <div class="word">discover</div>
-                    <div class="word">visible</div>
-                    <div class="word">transport</div>
-                </div>
-                
-                <h3>Why These Words?</h3>
-                <p>They target every major pattern 6th–7th graders struggle with:</p>
-                <ul>
-                    <li>-tion, -sion (action, decision)</li>
-                    <li>-cial (special)</li>
-                    <li>-ture (picture)</li>
-                    <li>Soft c/g (bicycle, energy)</li>
-                    <li>Doubling rules (running)</li>
-                    <li>Silent-e (complete)</li>
-                    <li>Schwa vowels (family)</li>
-                    <li>Prefixes/suffixes & Latin roots</li>
-                </ul>
-                
-                <h3>What to Observe</h3>
-                <div class="checklist">
-                    <div class="checklist-item">
-                        <input type="checkbox"> Does he spell phonetically? (e.g., "akshun" for "action")
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox"> Does he drop vowels?
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox"> Does he confuse soft c/g?
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox"> Does he over- or under-double consonants?
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox"> Does he show any awareness of meaning (roots/prefixes)?
-                    </div>
-                </div>
-                
-                <h3>Record His Spellings</h3>
-                <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
-                    <tr style="background: #667eea; color: white;">
-                        <th style="padding: 10px; border: 1px solid #667eea; text-align: left;">Word</th>
-                        <th style="padding: 10px; border: 1px solid #667eea; text-align: left;">Max's Spelling</th>
-                    </tr>
-                    <tr><td style="padding: 10px; border: 1px solid #ddd;">action</td><td style="padding: 10px; border: 1px solid #ddd;" contenteditable="true"></td></tr>
-                    <tr><td style="padding: 10px; border: 1px solid #ddd;">decision</td><td style="padding: 10px; border: 1px solid #ddd;" contenteditable="true"></td></tr>
-                    <tr><td style="padding: 10px; border: 1px solid #ddd;">special</td><td style="padding: 10px; border: 1px solid #ddd;" contenteditable="true"></td></tr>
-                    <tr><td style="padding: 10px; border: 1px solid #ddd;">picture</td><td style="padding: 10px; border: 1px solid #ddd;" contenteditable="true"></td></tr>
-                    <tr><td style="padding: 10px; border: 1px solid #ddd;">bicycle</td><td style="padding: 10px; border: 1px solid #ddd;" contenteditable="true"></td></tr>
-                    <tr><td style="padding: 10px; border: 1px solid #ddd;">energy</td><td style="padding: 10px; border: 1px solid #ddd;" contenteditable="true"></td></tr>
-                    <tr><td style="padding: 10px; border: 1px solid #ddd;">running</td><td style="padding: 10px; border: 1px solid #ddd;" contenteditable="true"></td></tr>
-                    <tr><td style="padding: 10px; border: 1px solid #ddd;">complete</td><td style="padding: 10px; border: 1px solid #ddd;" contenteditable="true"></td></tr>
-                    <tr><td style="padding: 10px; border: 1px solid #ddd;">family</td><td style="padding: 10px; border: 1px solid #ddd;" contenteditable="true"></td></tr>
-                    <tr><td style="padding: 10px; border: 1px solid #ddd;">discover</td><td style="padding: 10px; border: 1px solid #ddd;" contenteditable="true"></td></tr>
-                    <tr><td style="padding: 10px; border: 1px solid #ddd;">visible</td><td style="padding: 10px; border: 1px solid #ddd;" contenteditable="true"></td></tr>
-                    <tr><td style="padding: 10px; border: 1px solid #ddd;">transport</td><td style="padding: 10px; border: 1px solid #ddd;" contenteditable="true"></td></tr>
-                </table>
+            <div class="spelling-words">
+                <div class="word-item"><div class="word-num">1.</div><div class="word">action</div></div>
+                <div class="word-item"><div class="word-num">2.</div><div class="word">decision</div></div>
+                <div class="word-item"><div class="word-num">3.</div><div class="word">special</div></div>
+                <div class="word-item"><div class="word-num">4.</div><div class="word">picture</div></div>
+                <div class="word-item"><div class="word-num">5.</div><div class="word">bicycle</div></div>
+                <div class="word-item"><div class="word-num">6.</div><div class="word">energy</div></div>
+                <div class="word-item"><div class="word-num">7.</div><div class="word">running</div></div>
+                <div class="word-item"><div class="word-num">8.</div><div class="word">complete</div></div>
+                <div class="word-item"><div class="word-num">9.</div><div class="word">family</div></div>
+                <div class="word-item"><div class="word-num">10.</div><div class="word">discover</div></div>
+                <div class="word-item"><div class="word-num">11.</div><div class="word">visible</div></div>
+                <div class="word-item"><div class="word-num">12.</div><div class="word">transport</div></div>
             </div>
+            
+            <div class="instructions">
+                <strong>What to do:</strong><br>
+                • Listen as the adult says each word<br>
+                • Write it on paper as best as you can<br>
+                • Don't worry about being perfect—just do your best!
+            </div>
+            
+            <button class="btn secondary" onclick="showPart(1)">← Back</button>
+            <button class="btn" onclick="showPart(3)">Continue to Part 3 →</button>
         </div>
         
         <!-- PART 3: WRITING SAMPLE -->
-        <div class="section">
-            <h2>Part 3: Writing Sample</h2>
-            <div class="time-box">⏱️ 10 minutes</div>
+        <div class="section hidden" id="part3">
+            <h2>Part 3: Write a Paragraph</h2>
+            <p>It's time to write! You don't have to type it here—write it on paper.</p>
             
-            <div class="content">
-                <h3>Prompt for Max</h3>
-                <div class="example">
-                    <strong>"Write a short paragraph about your favorite game, show, or hobby. At least 5 sentences."</strong>
-                </div>
-                
-                <h3>What to Observe</h3>
-                <div class="checklist">
-                    <div class="checklist-item">
-                        <input type="checkbox"> Sentence boundaries
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox"> Capitalization
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox"> Spelling in context
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox"> Organization
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox"> Attitude/avoidance behaviors
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox"> Can he sustain writing for 10 minutes?
-                    </div>
-                </div>
-                
-                <h3>Your Notes</h3>
-                <div class="notes-area" contenteditable="true" placeholder="Record observations about his writing sample..."></div>
+            <div class="writing-prompt">
+                <strong>Write about your favorite game, show, or hobby.</strong><br>
+                Write at least 5 sentences. Try to use complete sentences and check your spelling when you're done.
             </div>
-        </div>
-        
-        <!-- 15-MINUTE BREAK -->
-        <div class="break-section">
-            <h2>☕ 15-Minute BREAK</h2>
-            <p><strong>This is important!</strong> Especially for kids with gaming-related dopamine patterns.</p>
             
-            <h3>Break Rules</h3>
-            <ul>
-                <li>✗ No screens</li>
-                <li>✓ Snack + movement</li>
-                <li>✓ Something sensory-resetting (walk, trampoline, pet the dog, stretch)</li>
-                <li>✓ Keep it predictable: <span class="highlight">"We start again at [TIME]"</span></li>
-            </ul>
-        </div>
-        
-        <!-- SUMMARY & NEXT STEPS -->
-        <div class="section">
-            <h2>📊 What You've Learned</h2>
-            
-            <div class="content">
-                <p>By the end of the first hour, you'll know whether Max struggles with:</p>
-                
-                <div class="observation-box">
-                    <strong>1. Phonological decoding</strong><br>
-                    (reading aloud is choppy)
-                </div>
-                
-                <div class="observation-box">
-                    <strong>2. Orthographic mapping</strong><br>
-                    (spelling patterns don't stick)
-                </div>
-                
-                <div class="observation-box">
-                    <strong>3. Working memory</strong><br>
-                    (he forgets instructions mid-task)
-                </div>
-                
-                <div class="observation-box">
-                    <strong>4. Executive function</strong><br>
-                    (attitude, avoidance, shutdowns)
-                </div>
-                
-                <div class="observation-box">
-                    <strong>5. Motivation/dopamine imbalance</strong><br>
-                    (common in gaming-heavy kids)
-                </div>
-                
-                <div class="observation-box">
-                    <strong>6. Writing stamina</strong><br>
-                    (10 minutes feels impossible)
-                </div>
-                
-                <h3>This Helps You Decide Whether You Need</h3>
-                <ul>
-                    <li>Structured literacy</li>
-                    <li>Executive function supports</li>
-                    <li>Therapy for gaming addiction</li>
-                    <li>Or a combination of all three</li>
-                </ul>
+            <div class="instructions">
+                <strong>Tips:</strong><br>
+                • Start with what you like about it<br>
+                • Explain why you enjoy it<br>
+                • Give examples or details<br>
+                • You have about 10 minutes
             </div>
+            
+            <button class="btn secondary" onclick="showPart(2)">← Back</button>
+            <button class="btn" onclick="showComplete()">I'm Done! →</button>
         </div>
         
-        <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #eee;">
-            <p style="color: #999; font-size: 0.9em;">Assessment data saved locally in your browser</p>
+        <!-- COMPLETION -->
+        <div class="section hidden" id="complete">
+            <h2>✅ Great Job!</h2>
+            <p style="font-size: 1.1em; color: #28a745; font-weight: bold;">You've completed the assessment!</p>
+            
+            <div class="instructions">
+                You should have on paper:<br>
+                ✓ Your answers about the reading passage<br>
+                ✓ Your 12 spelling words<br>
+                ✓ Your paragraph about your favorite game/show/hobby
+            </div>
+            
+            <div class="parent-note">
+                <strong>📌 For the adult:</strong> Check the "Assessment Guide" page for instructions on what to look for and how to use Max's answers for the next lesson.
+            </div>
+            
+            <button class="btn" onclick="window.location.href='./'">← Back to Lessons</button>
+            <button class="btn secondary" onclick="window.location.href='assessment-guide.html'">📖 View Assessment Guide</button>
         </div>
     </div>
+    
+    <script>
+        function showPart(partNumber) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById('part' + partNumber).classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+        
+        function showComplete() {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById('complete').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+    </script>
 </body>
 </html>
