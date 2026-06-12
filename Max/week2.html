@@ -635,6 +635,83 @@
             <div id="paragraphText"></div>
         </div>
 
+        <!-- EDITING WIZARD (appears after paragraph is generated) -->
+        <div class="wizard" id="editingWizard" style="display:none;">
+            <div class="wizard-header">&#128221; Now Let's Edit Your Writing</div>
+
+            <div class="wizard-step active" id="wstep-0">
+                <div class="wizard-card">
+                    <div class="wizard-step-title">Introducing the Editing Process</div>
+                    <div class="wizard-instruction">
+                        Good writers don't write perfectly the first time &#8212; they write first, then improve. We found your longest sentence and we're going to improve it together, one thing at a time. This is called <strong>drafting and revising</strong>.
+                    </div>
+                    <div class="wizard-instruction">Here's the sentence we'll work on:</div>
+                    <div class="sentence-highlight" id="wizard-sentence"></div>
+                    <div class="wizard-instruction">Ready? Let's go step by step.</div>
+                    <div class="step-nav">
+                        <button class="btn-next-step" onclick="goStep(1)">Start Editing &#8594;</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard-step" id="wstep-1">
+                <div class="wizard-card">
+                    <div class="step-progress">Step 1 of 4</div>
+                    <div class="wizard-step-title">&#128269; Check Spelling</div>
+                    <div class="wizard-instruction">Read each word carefully. Sound it out. Does every word look right? Fix any spelling mistakes you notice. It's okay if you're not sure &#8212; just try your best.</div>
+                    <div class="sentence-highlight" id="wizard-sentence-1"></div>
+                    <textarea class="wizard-textarea" id="we1" placeholder="Rewrite the sentence, fixing any spelling mistakes..."></textarea>
+                    <div class="step-nav">
+                        <button class="btn-next-step" onclick="goStep(2)">Next: Punctuation &#8594;</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard-step" id="wstep-2">
+                <div class="wizard-card">
+                    <div class="step-progress">Step 2 of 4</div>
+                    <div class="wizard-step-title">&#128204; Check Punctuation</div>
+                    <div class="wizard-instruction">Does your sentence end with a period? Are there any commas needed to separate ideas? Punctuation tells the reader when to pause and when a thought is finished.</div>
+                    <div class="sentence-highlight" id="wizard-sentence-2"></div>
+                    <textarea class="wizard-textarea" id="we2" placeholder="Rewrite again, fixing any punctuation..."></textarea>
+                    <div class="step-nav">
+                        <button class="btn-next-step" onclick="goStep(3)">Next: Capitalization &#8594;</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard-step" id="wstep-3">
+                <div class="wizard-card">
+                    <div class="step-progress">Step 3 of 4</div>
+                    <div class="wizard-step-title">&#128288; Check Capitalization</div>
+                    <div class="wizard-instruction">Does your sentence start with a capital letter? Are names of people, places, or specific things capitalized? For example: "warzone" should be "Warzone" because it's a proper name.</div>
+                    <div class="sentence-highlight" id="wizard-sentence-3"></div>
+                    <textarea class="wizard-textarea" id="we3" placeholder="Rewrite again, fixing any capitalization..."></textarea>
+                    <div class="step-nav">
+                        <button class="btn-next-step" onclick="goStep(4)">Next: Read It Aloud &#8594;</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard-step" id="wstep-4">
+                <div class="wizard-card">
+                    <div class="step-progress">Step 4 of 4</div>
+                    <div class="wizard-step-title">&#128362; Read It Aloud &amp; Polish</div>
+                    <div class="wizard-instruction">Read your sentence out loud. Does it sound smooth? Does it make complete sense? Make your final improvements below.</div>
+                    <div class="sentence-highlight" id="wizard-sentence-4"></div>
+                    <textarea class="wizard-textarea" id="we4" placeholder="Your final, polished sentence..."></textarea>
+                    <div class="step-nav">
+                        <button class="btn-next-step" onclick="finishWizard()">Done &#10003;</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard-done" id="wizardDone">
+                <h3>&#127775; Excellent work!</h3>
+                <p>You just practiced one of the most important writing skills: <strong>editing your own work</strong>. Writers call this "revising" and great writers do it every single time.</p>
+            </div>
+        </div><!-- /editingWizard -->
+
         <div class="btn-row">
             <button class="btn btn-primary" onclick="submitAssessment()">Submit Assessment &#10003;</button>
         </div>
@@ -664,92 +741,6 @@
         </div>
 
         <div class="saved-banner">&#10003; Answers saved to your account!</div>
-
-        <!-- EDITING WIZARD -->
-        <div class="wizard">
-            <div class="wizard-header">&#128221; Let's Edit Your Writing</div>
-
-            <div class="wizard-step active" id="wstep-0">
-                <div class="wizard-card">
-                    <div class="wizard-step-title">Introducing the Editing Process</div>
-                    <div class="wizard-instruction">
-                        Good writers don't write perfectly the first time &#8212; they write first, then improve. We're going to look at your longest sentence and improve it together, one thing at a time. This is called <strong>drafting and revising</strong>, and it's what every author does.
-                    </div>
-                    <div class="wizard-instruction">Here's the sentence we'll work on:</div>
-                    <div class="sentence-highlight" id="wizard-sentence"></div>
-                    <div class="wizard-instruction">Ready? Let's go step by step.</div>
-                    <div class="step-nav">
-                        <button class="btn-next-step" onclick="goStep(1)">Start Editing &#8594;</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="wizard-step" id="wstep-1">
-                <div class="wizard-card">
-                    <div class="step-progress">Step 1 of 4</div>
-                    <div class="wizard-step-title">&#128269; Check Spelling</div>
-                    <div class="wizard-instruction">
-                        Read each word carefully. Sound it out. Does every word look right? Fix any spelling mistakes you notice. It's okay if you're not sure &#8212; just try your best.
-                    </div>
-                    <div class="sentence-highlight" id="wizard-sentence-1"></div>
-                    <textarea class="wizard-textarea" id="we1" placeholder="Rewrite the sentence, fixing any spelling mistakes..."></textarea>
-                    <div class="step-nav">
-                        <button class="btn-next-step" onclick="goStep(2)">Next: Punctuation &#8594;</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="wizard-step" id="wstep-2">
-                <div class="wizard-card">
-                    <div class="step-progress">Step 2 of 4</div>
-                    <div class="wizard-step-title">&#128204; Check Punctuation</div>
-                    <div class="wizard-instruction">
-                        Does your sentence end with a period? Are there any commas needed to separate ideas? Punctuation tells the reader when to pause and when a thought is finished.
-                    </div>
-                    <div class="sentence-highlight" id="wizard-sentence-2"></div>
-                    <textarea class="wizard-textarea" id="we2" placeholder="Rewrite again, fixing any punctuation..."></textarea>
-                    <div class="step-nav">
-                        <button class="btn-next-step" onclick="goStep(3)">Next: Capitalization &#8594;</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="wizard-step" id="wstep-3">
-                <div class="wizard-card">
-                    <div class="step-progress">Step 3 of 4</div>
-                    <div class="wizard-step-title">&#128288; Check Capitalization</div>
-                    <div class="wizard-instruction">
-                        Does your sentence start with a capital letter? Are names of people, places, or specific things capitalized? For example: "warzone" should be "Warzone" because it's a proper name.
-                    </div>
-                    <div class="sentence-highlight" id="wizard-sentence-3"></div>
-                    <textarea class="wizard-textarea" id="we3" placeholder="Rewrite again, fixing any capitalization..."></textarea>
-                    <div class="step-nav">
-                        <button class="btn-next-step" onclick="goStep(4)">Next: Read It Aloud &#8594;</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="wizard-step" id="wstep-4">
-                <div class="wizard-card">
-                    <div class="step-progress">Step 4 of 4</div>
-                    <div class="wizard-step-title">&#128362; Read It Aloud &amp; Polish</div>
-                    <div class="wizard-instruction">
-                        Read your sentence out loud. Does it sound smooth? Does it make complete sense? Is anything missing or confusing? Make your final improvements below.
-                    </div>
-                    <div class="sentence-highlight" id="wizard-sentence-4"></div>
-                    <textarea class="wizard-textarea" id="we4" placeholder="Your final, polished sentence..."></textarea>
-                    <div class="step-nav">
-                        <button class="btn-next-step" onclick="finishWizard()">Done &#10003;</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="wizard-done" id="wizardDone">
-                <h3>&#127775; Excellent work!</h3>
-                <p>You just practiced one of the most important writing skills: <strong>editing your own work</strong>. The more you do this, the easier and more natural it becomes. Writers call this "revising" and great writers do it every single time.</p>
-            </div>
-
-        </div><!-- /wizard -->
 
         <div class="btn-row" style="margin-top: 30px;">
             <button class="btn btn-primary" onclick="window.location.href='index.html'">Back to Dashboard</button>
@@ -840,12 +831,32 @@
 
         if (!parts.length) {
             document.getElementById('paragraphBox').classList.remove('show');
+            document.getElementById('editingWizard').style.display = 'none';
             return;
         }
 
         document.getElementById('paragraphText').textContent = parts.join(' ');
         document.getElementById('paragraphBox').classList.add('show');
-        document.getElementById('paragraphBox').scrollIntoView({ behavior: 'smooth' });
+
+        // Silently find the longest sentence and load the editing wizard
+        var longest = parts.reduce(function(a, b) { return b.length > a.length ? b : a; }, '');
+
+        ['wizard-sentence','wizard-sentence-1','wizard-sentence-2','wizard-sentence-3','wizard-sentence-4'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.textContent = longest;
+        });
+        document.getElementById('we1').value = longest;
+        document.getElementById('we2').value = longest;
+        document.getElementById('we3').value = longest;
+        document.getElementById('we4').value = longest;
+
+        // Reset wizard to step 0
+        document.querySelectorAll('.wizard-step').forEach(function(el) { el.classList.remove('active'); });
+        document.getElementById('wstep-0').classList.add('active');
+        document.getElementById('wizardDone').classList.remove('show');
+
+        document.getElementById('editingWizard').style.display = 'block';
+        document.getElementById('editingWizard').scrollIntoView({ behavior: 'smooth' });
     }
 
     function collectAnswers() {
@@ -894,20 +905,6 @@
     function submitAssessment() {
         var answers = collectAnswers();
         saveToGitHub(answers);
-
-        var longest = getLongestSentence(answers.writing);
-
-        // Populate all wizard sentence displays
-        ['wizard-sentence','wizard-sentence-1','wizard-sentence-2','wizard-sentence-3','wizard-sentence-4'].forEach(function(id) {
-            var el = document.getElementById(id);
-            if (el) el.textContent = longest;
-        });
-
-        // Pre-fill each wizard textarea with the previous step's content for easy editing
-        document.getElementById('we1').value = longest;
-        document.getElementById('we2').value = longest;
-        document.getElementById('we3').value = longest;
-        document.getElementById('we4').value = longest;
 
         document.getElementById('assessmentForm').style.display = 'none';
         document.getElementById('resultsPage').classList.add('active');
