@@ -5,56 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Max's Week 2 Assessment</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
-        
-        .header {
+
+        .page-header {
             max-width: 1200px;
             margin: 0 auto 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
-        .header h1 {
-            color: white;
-            font-size: 1.5em;
-        }
-        
+
+        .page-header h1 { color: white; font-size: 1.5em; }
+
         .home-btn {
             background: rgba(255,255,255,0.2);
             color: white;
             border: 2px solid white;
             padding: 10px 20px;
             border-radius: 8px;
-            cursor: pointer;
             text-decoration: none;
             transition: all 0.3s;
         }
-        
-        .home-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
-        
-        .assessment-container {
+
+        .home-btn:hover { background: rgba(255,255,255,0.3); }
+
+        .container {
             max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
             padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-        
+
         .part-header {
             color: #667eea;
             font-size: 1.3em;
@@ -64,150 +54,76 @@
             padding-bottom: 10px;
             border-bottom: 3px solid #667eea;
         }
-        
-        .part-header:first-of-type {
-            margin-top: 0;
-        }
-        
+
         .why-learning {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+            background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08));
             border-left: 4px solid #667eea;
             padding: 15px;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             font-size: 0.95em;
-            line-height: 1.6;
+            line-height: 1.7;
             color: #555;
         }
-        
-        .why-learning strong {
-            color: #667eea;
-        }
-        
-        /* READING PART CSS */
-        .reading-container {
+
+        .why-learning strong { color: #667eea; }
+
+        /* PART 1 - Reading */
+        .reading-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
-            margin-bottom: 30px;
+            align-items: start;
         }
-        
-        .passage-column {
+
+        .passage-col {
             background: #f8f9ff;
-            padding: 20px;
-            border-radius: 10px;
             border-left: 4px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            position: sticky;
+            top: 20px;
         }
-        
-        .passage-title {
+
+        .passage-col h3 {
             color: #667eea;
-            font-weight: bold;
-            font-size: 1em;
-            margin-bottom: 15px;
+            font-size: 0.95em;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            margin-bottom: 15px;
         }
-        
+
         .passage-text {
             line-height: 2;
             color: #333;
             font-size: 0.95em;
         }
-        
-        .sentence {
+
+        /* Sentences are clickable to select as evidence */
+        .s {
             cursor: pointer;
-            padding: 4px 2px;
             border-radius: 3px;
-            transition: all 0.2s;
-            position: relative;
-            display: inline;
+            padding: 1px 2px;
+            transition: background 0.15s;
         }
-        
-        .sentence:hover {
-            background: rgba(102, 126, 234, 0.2);
-            font-weight: 500;
-        }
-        
-        .sentence.selected {
-            background: rgba(102, 126, 234, 0.4);
-            font-weight: bold;
-            box-shadow: inset 0 0 0 2px #667eea;
-        }
-        
-        .questions-column {
+
+        .s:hover { background: rgba(102,126,234,0.2); }
+        .s.picked { background: rgba(102,126,234,0.38); outline: 2px solid #667eea; }
+
+        .questions-col {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 18px;
         }
-        
-        .question-block {
+
+        .q-block {
             background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
             padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
         }
-        
-        .question-label {
-            color: #667eea;
-            font-weight: bold;
-            font-size: 0.9em;
-            margin-bottom: 10px;
-        }
-        
-        .question-text {
-            color: #333;
-            font-size: 0.95em;
-            margin-bottom: 12px;
-            line-height: 1.5;
-        }
-        
-        .select-sentence-btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: all 0.2s;
-        }
-        
-        .select-sentence-btn:hover {
-            background: #5568d3;
-        }
-        
-        .selected-sentence {
-            display: none;
-            margin-top: 10px;
-            padding: 10px;
-            background: #e8f0ff;
-            border-left: 3px solid #667eea;
-            border-radius: 4px;
-            font-size: 0.9em;
-            color: #333;
-            line-height: 1.5;
-        }
-        
-        .selected-sentence.show {
-            display: block;
-        }
-        
-        /* SPELLING PART CSS */
-        .spelling-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .spelling-item {
-            background: #f8f9ff;
-            padding: 12px;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .spelling-label {
+
+        .q-label {
             color: #667eea;
             font-weight: bold;
             font-size: 0.85em;
@@ -215,48 +131,163 @@
             letter-spacing: 0.05em;
             margin-bottom: 8px;
         }
-        
-        .answer-input {
+
+        .q-text { color: #333; font-size: 0.95em; line-height: 1.5; margin-bottom: 12px; }
+
+        .pick-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.88em;
+            transition: background 0.2s;
+        }
+
+        .pick-btn:hover { background: #5568d3; }
+        .pick-btn.active { background: #28a745; }
+
+        .evidence-display {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #e8f0ff;
+            border-left: 3px solid #667eea;
+            border-radius: 4px;
+            font-size: 0.88em;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .evidence-display.show { display: block; }
+
+        .change-link {
+            font-size: 0.8em;
+            color: #667eea;
+            cursor: pointer;
+            margin-left: 8px;
+            text-decoration: underline;
+        }
+
+        /* Sentence picker modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.open { display: flex; }
+
+        .modal-box {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 620px;
+            width: 92%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-title {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+
+        .modal-sentence {
+            padding: 12px;
+            background: #f8f9ff;
+            border: 2px solid #e0e0ff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 8px;
+            transition: all 0.15s;
+        }
+
+        .modal-sentence:hover { background: #e8f0ff; border-color: #667eea; }
+        .modal-sentence.chosen { background: #dce8ff; border-color: #667eea; font-weight: 500; }
+
+        .modal-footer { display: flex; gap: 10px; margin-top: 15px; }
+
+        .modal-footer button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-confirm { background: #667eea; color: white; }
+        .btn-confirm:hover { background: #5568d3; }
+        .btn-cancel { background: #e0e0ff; color: #667eea; }
+        .btn-cancel:hover { background: #d0d0ff; }
+
+        /* PART 2 - Spelling */
+        .spelling-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 10px;
+        }
+
+        .spell-item {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .spell-label {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .spell-input {
             width: 100%;
             padding: 10px;
             border: 2px solid #ddd;
             border-radius: 6px;
             font-size: 0.95em;
             font-family: inherit;
-            transition: border-color 0.3s;
-            autocomplete: off;
+            transition: border-color 0.2s;
         }
-        
-        .answer-input:focus {
-            outline: none;
-            border-color: #667eea;
-            background: #fff;
-        }
-        
-        /* WRITING PART CSS */
-        .writing-prompt {
+
+        .spell-input:focus { outline: none; border-color: #667eea; }
+
+        /* PART 3 - Writing */
+        .writing-block {
             background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
             padding: 15px;
             margin-bottom: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
         }
-        
-        .prompt-number {
+
+        .writing-label {
             color: #667eea;
             font-weight: bold;
             font-size: 0.9em;
             margin-bottom: 8px;
         }
-        
-        .prompt-text {
-            color: #555;
-            font-size: 0.95em;
-            margin-bottom: 10px;
-            line-height: 1.5;
-        }
-        
-        .prompt-textarea {
+
+        .writing-prompt-text { color: #444; font-size: 0.95em; line-height: 1.5; margin-bottom: 10px; }
+
+        .writing-input {
             width: 100%;
             min-height: 60px;
             padding: 10px;
@@ -265,227 +296,99 @@
             font-size: 0.95em;
             font-family: inherit;
             resize: vertical;
-            transition: border-color 0.3s;
-            autocomplete: off;
+            transition: border-color 0.2s;
         }
-        
-        .prompt-textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        
-        /* MODAL CSS */
-        .modal {
+
+        .writing-input:focus { outline: none; border-color: #667eea; }
+
+        .paragraph-box {
             display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-        
-        .modal.show {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 12px;
-            max-height: 80vh;
-            overflow-y: auto;
-            max-width: 600px;
-            width: 90%;
-        }
-        
-        .modal-header {
-            color: #667eea;
-            font-size: 1.1em;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        
-        .sentence-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-        
-        .sentence-option {
-            padding: 12px;
-            background: #f8f9ff;
-            border: 2px solid #e0e0ff;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.9em;
-            line-height: 1.5;
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            line-height: 1.8;
             color: #333;
+            font-size: 0.95em;
         }
-        
-        .sentence-option:hover {
-            background: #e8f0ff;
-            border-color: #667eea;
-        }
-        
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .modal-buttons button {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.2s;
-        }
-        
-        .btn-confirm {
-            background: #667eea;
-            color: white;
-        }
-        
-        .btn-confirm:hover {
-            background: #5568d3;
-        }
-        
-        .btn-cancel {
-            background: #e0e0ff;
-            color: #667eea;
-        }
-        
-        .btn-cancel:hover {
-            background: #d0d0ff;
-        }
-        
-        /* RESULTS & EDITING */
-        .results-page {
-            display: none;
-        }
-        
-        .results-page.active {
-            display: block;
-        }
-        
-        .results-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .results-header h2 {
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-        
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 30px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
+
+        .paragraph-box.show { display: block; }
+        .paragraph-box h4 { color: #667eea; margin-bottom: 12px; }
+
+        /* Submit / buttons */
+        .btn-row { display: flex; gap: 12px; margin-top: 30px; justify-content: center; flex-wrap: wrap; }
+
         .btn {
-            padding: 15px 30px;
+            padding: 14px 30px;
             font-size: 1em;
+            font-weight: bold;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
+            transition: all 0.2s;
         }
-        
-        .btn-primary {
-            background: #667eea;
-            color: white;
+
+        .btn-primary { background: #667eea; color: white; }
+        .btn-primary:hover { background: #5568d3; transform: translateY(-2px); }
+        .btn-outline { background: #e0e0ff; color: #667eea; }
+        .btn-outline:hover { background: #d0d0ff; }
+
+        /* Results page */
+        .results-page { display: none; }
+        .results-page.active { display: block; }
+
+        .results-hero { text-align: center; margin-bottom: 30px; }
+        .results-hero h2 { color: #667eea; font-size: 1.6em; margin-bottom: 8px; }
+        .results-hero p { color: #666; }
+
+        .saved-banner {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 25px;
         }
-        
-        .btn-primary:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-        }
-        
-        .btn-secondary {
-            background: #e0e0ff;
-            color: #667eea;
-        }
-        
-        .btn-secondary:hover {
-            background: #d0d0ff;
-        }
-        
-        /* EDITING WIZARD */
-        .editing-wizard {
-            display: none;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
-            border: 2px solid #e0e0ff;
-            border-radius: 10px;
-            padding: 25px;
-            margin-top: 20px;
-        }
-        
-        .editing-wizard.active {
-            display: block;
-        }
-        
+
+        /* Editing wizard */
+        .wizard { margin-top: 30px; }
+
         .wizard-header {
             color: #667eea;
+            font-size: 1.2em;
             font-weight: bold;
-            font-size: 1.1em;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
         }
-        
-        .editing-step {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .step-title {
-            color: #667eea;
-            font-weight: bold;
-            font-size: 1em;
-            margin-bottom: 12px;
-        }
-        
-        .step-instruction {
-            color: #555;
-            font-size: 0.95em;
-            line-height: 1.6;
-            margin-bottom: 12px;
-        }
-        
-        .sentence-to-edit {
+
+        .wizard-step { display: none; }
+        .wizard-step.active { display: block; }
+
+        .wizard-card {
             background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .wizard-step-title { color: #667eea; font-weight: bold; font-size: 1em; margin-bottom: 10px; }
+        .wizard-instruction { color: #555; font-size: 0.95em; line-height: 1.6; margin-bottom: 14px; }
+
+        .sentence-highlight {
+            background: #fff3cd;
+            border-left: 3px solid #ffc107;
             padding: 12px;
-            border-left: 3px solid #667eea;
             border-radius: 4px;
-            margin-bottom: 12px;
             font-size: 0.95em;
             line-height: 1.6;
+            margin-bottom: 14px;
             color: #333;
         }
-        
-        .highlight-word {
-            background: rgba(255, 193, 7, 0.3);
-            padding: 2px 4px;
-            border-radius: 3px;
-            font-weight: 500;
-        }
-        
-        .step-input {
+
+        .wizard-textarea {
             width: 100%;
             min-height: 80px;
             padding: 12px;
@@ -495,450 +398,553 @@
             font-family: inherit;
             resize: vertical;
         }
-        
-        .step-input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        
-        .step-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .step-buttons button {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.2s;
-        }
-        
-        .btn-next {
-            background: #667eea;
-            color: white;
-        }
-        
-        .btn-next:hover {
-            background: #5568d3;
-        }
-        
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid #28a745;
-            display: none;
-        }
-        
-        .success-message.show {
-            display: block;
+
+        .wizard-textarea:focus { outline: none; border-color: #667eea; }
+
+        .step-progress {
+            font-size: 0.85em;
+            color: #888;
+            margin-bottom: 15px;
         }
 
-        @media (max-width: 900px) {
-            .reading-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .spelling-grid {
-                grid-template-columns: 1fr;
-            }
+        .step-nav { display: flex; gap: 10px; margin-top: 15px; }
+        .step-nav button { flex: 1; padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .btn-next-step { background: #667eea; color: white; }
+        .btn-next-step:hover { background: #5568d3; }
+
+        .wizard-done {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: #d4edda;
+            border-radius: 10px;
+            color: #155724;
+        }
+
+        .wizard-done.show { display: block; }
+        .wizard-done h3 { font-size: 1.3em; margin-bottom: 10px; }
+
+        @media (max-width: 860px) {
+            .reading-layout { grid-template-columns: 1fr; }
+            .passage-col { position: static; }
+            .spelling-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>📚 Max's Week 2 Assessment</h1>
-        <a href="index.html" class="home-btn">← Back</a>
+
+<div class="page-header">
+    <h1>&#128218; Max's Week 2 Assessment</h1>
+    <a href="index.html" class="home-btn">&#8592; Back</a>
+</div>
+
+<div class="container">
+
+    <!-- ===== ASSESSMENT FORM ===== -->
+    <div id="assessmentForm">
+
+        <!-- PART 1: READING -->
+        <div class="part-header">Part 1: Reading Comprehension</div>
+        <div class="why-learning">
+            <strong>Why we're learning this:</strong> Last week you discovered that when you read carefully, you can find the exact sentence that proves your answer. This week we're taking that skill further. Instead of writing a sentence number, you'll <strong>click directly on the sentence</strong> from the passage that supports each answer. That's how real researchers find evidence!
+        </div>
+
+        <div class="reading-layout">
+
+            <!-- PASSAGE (left) -->
+            <div class="passage-col">
+                <h3>The Northern Lights</h3>
+                <div class="passage-text" id="passage">
+                    <span class="s" data-i="0">The Northern Lights, also called the Aurora Borealis, are one of Earth's most stunning natural displays.</span>
+                    <span class="s" data-i="1">They light up the sky in the Arctic regions, particularly around countries like Norway, Canada, and Alaska.</span>
+                    <span class="s" data-i="2">Scientists have studied this phenomenon for centuries, trying to understand its mysterious beauty.</span>
+                    <span class="s" data-i="3">The lights are caused by a fascinating process involving the Sun and Earth's atmosphere.</span>
+                    <span class="s" data-i="4">The Sun constantly releases charged particles called solar wind.</span>
+                    <span class="s" data-i="5">When these particles reach Earth, they interact with our planet's magnetic field, which protects us like a shield.</span>
+                    <span class="s" data-i="6">As the charged particles collide with gases in Earth's upper atmosphere&#8212;particularly oxygen and nitrogen&#8212;they create the colorful light show we see.</span>
+                    <span class="s" data-i="7">The colors depend on which gas is hit.</span>
+                    <span class="s" data-i="8">Oxygen produces green and red lights, while nitrogen creates blue and purple colors.</span>
+                    <span class="s" data-i="9">The Aurora Borealis typically appears in a region called the auroral oval.</span>
+                    <span class="s" data-i="10">This region forms a circle around the North Pole, usually between 65 and 72 degrees latitude.</span>
+                    <span class="s" data-i="11">Places in northern Scandinavia, northern Canada, and Alaska experience frequent displays during winter months when the sky stays dark longer.</span>
+                    <span class="s" data-i="12">Many people travel thousands of miles just to witness this extraordinary event.</span>
+                    <span class="s" data-i="13">Indigenous peoples of the Arctic have observed and created legends about the Northern Lights for thousands of years.</span>
+                    <span class="s" data-i="14">Today, viewing the Aurora Borealis has become an unforgettable experience for millions of visitors worldwide.</span>
+                </div>
+            </div>
+
+            <!-- QUESTIONS (right) -->
+            <div class="questions-col">
+
+                <div class="q-block">
+                    <div class="q-label">Question 1</div>
+                    <div class="q-text">What is another name for the Northern Lights?</div>
+                    <button class="pick-btn" id="pickBtn-0" onclick="openModal(0)">&#128270; Click to select your evidence sentence</button>
+                    <div class="evidence-display" id="evidence-0">
+                        <span id="evidence-text-0"></span>
+                        <span class="change-link" onclick="openModal(0)">Change</span>
+                    </div>
+                </div>
+
+                <div class="q-block">
+                    <div class="q-label">Question 2</div>
+                    <div class="q-text">What causes the colors in the Northern Lights?</div>
+                    <button class="pick-btn" id="pickBtn-1" onclick="openModal(1)">&#128270; Click to select your evidence sentence</button>
+                    <div class="evidence-display" id="evidence-1">
+                        <span id="evidence-text-1"></span>
+                        <span class="change-link" onclick="openModal(1)">Change</span>
+                    </div>
+                </div>
+
+                <div class="q-block">
+                    <div class="q-label">Question 3</div>
+                    <div class="q-text">Where does the Aurora Borealis typically appear?</div>
+                    <button class="pick-btn" id="pickBtn-2" onclick="openModal(2)">&#128270; Click to select your evidence sentence</button>
+                    <div class="evidence-display" id="evidence-2">
+                        <span id="evidence-text-2"></span>
+                        <span class="change-link" onclick="openModal(2)">Change</span>
+                    </div>
+                </div>
+
+                <div class="q-block">
+                    <div class="q-label">Question 4</div>
+                    <div class="q-text">Why do you think people travel to see the Northern Lights?</div>
+                    <button class="pick-btn" id="pickBtn-3" onclick="openModal(3)">&#128270; Click to select your evidence sentence</button>
+                    <div class="evidence-display" id="evidence-3">
+                        <span id="evidence-text-3"></span>
+                        <span class="change-link" onclick="openModal(3)">Change</span>
+                    </div>
+                </div>
+
+                <div class="q-block">
+                    <div class="q-label">Question 5</div>
+                    <div class="q-text">What have indigenous peoples done with their observations of the Northern Lights?</div>
+                    <button class="pick-btn" id="pickBtn-4" onclick="openModal(4)">&#128270; Click to select your evidence sentence</button>
+                    <div class="evidence-display" id="evidence-4">
+                        <span id="evidence-text-4"></span>
+                        <span class="change-link" onclick="openModal(4)">Change</span>
+                    </div>
+                </div>
+
+            </div><!-- /questions-col -->
+        </div><!-- /reading-layout -->
+
+
+        <!-- PART 2: SPELLING -->
+        <div class="part-header">Part 2: Spelling Practice</div>
+        <div class="why-learning">
+            <strong>Why we're learning this:</strong> This week we're focusing on two important spelling patterns that show up everywhere in 7th grade writing.<br><br>
+            <strong>Rule 1 &#8212; Double Consonants:</strong> When a short vowel comes before a single consonant at the end of a word, you usually double that consonant before adding an ending. Example: "run" &#8594; "running", "stop" &#8594; "stopped". Words this week: <em>hurry, summer, button, dinner, happen, success</em>.<br><br>
+            <strong>Rule 2 &#8212; Endings that sound different than they look:</strong> The endings <strong>-tion</strong> (sounds like "shun"), <strong>-ture</strong> (sounds like "cher"), and <strong>-sure</strong> (sounds like "zher") are very common in English. Words this week: <em>station, question, creature, treasure, pleasure, measure</em>.
+        </div>
+
+        <div class="spelling-grid">
+            <div class="spell-item">
+                <div class="spell-label">Word 1</div>
+                <input class="spell-input" id="sp1" type="text" placeholder="spell it here" autocomplete="off" autocorrect="off" spellcheck="false">
+            </div>
+            <div class="spell-item">
+                <div class="spell-label">Word 2</div>
+                <input class="spell-input" id="sp2" type="text" placeholder="spell it here" autocomplete="off" autocorrect="off" spellcheck="false">
+            </div>
+            <div class="spell-item">
+                <div class="spell-label">Word 3</div>
+                <input class="spell-input" id="sp3" type="text" placeholder="spell it here" autocomplete="off" autocorrect="off" spellcheck="false">
+            </div>
+            <div class="spell-item">
+                <div class="spell-label">Word 4</div>
+                <input class="spell-input" id="sp4" type="text" placeholder="spell it here" autocomplete="off" autocorrect="off" spellcheck="false">
+            </div>
+            <div class="spell-item">
+                <div class="spell-label">Word 5</div>
+                <input class="spell-input" id="sp5" type="text" placeholder="spell it here" autocomplete="off" autocorrect="off" spellcheck="false">
+            </div>
+            <div class="spell-item">
+                <div class="spell-label">Word 6</div>
+                <input class="spell-input" id="sp6" type="text" placeholder="spell it here" autocomplete="off" autocorrect="off" spellcheck="false">
+            </div>
+            <div class="spell-item">
+                <div class="spell-label">Word 7</div>
+                <input class="spell-input" id="sp7" type="text" placeholder="spell it here" autocomplete="off" autocorrect="off" spellcheck="false">
+            </div>
+            <div class="spell-item">
+                <div class="spell-label">Word 8</div>
+                <input class="spell-input" id="sp8" type="text" placeholder="spell it here" autocomplete="off" autocorrect="off" spellcheck="false">
+            </div>
+            <div class="spell-item">
+                <div class="spell-label">Word 9</div>
+                <input class="spell-input" id="sp9" type="text" placeholder="spell it here" autocomplete="off" autocorrect="off" spellcheck="false">
+            </div>
+            <div class="spell-item">
+                <div class="spell-label">Word 10</div>
+                <input class="spell-input" id="sp10" type="text" placeholder="spell it here" autocomplete="off" autocorrect="off" spellcheck="false">
+            </div>
+            <div class="spell-item">
+                <div class="spell-label">Word 11</div>
+                <input class="spell-input" id="sp11" type="text" placeholder="spell it here" autocomplete="off" autocorrect="off" spellcheck="false">
+            </div>
+            <div class="spell-item">
+                <div class="spell-label">Word 12</div>
+                <input class="spell-input" id="sp12" type="text" placeholder="spell it here" autocomplete="off" autocorrect="off" spellcheck="false">
+            </div>
+        </div>
+
+
+        <!-- PART 3: WRITING -->
+        <div class="part-header">Part 3: Writing &#8212; Your Favorite Movie or Show</div>
+        <div class="why-learning">
+            <strong>Why we're learning this:</strong> Last week you had a great insight &#8212; you noticed that when sentences are read together they form a paragraph, and reading out loud helped you catch mistakes. This week we're going to use that skill on purpose. Write one sentence for each question, then click <strong>Generate My Paragraph</strong> to see how they flow together. After that, we'll practice editing!
+        </div>
+
+        <div class="writing-block">
+            <div class="writing-label">Question 1</div>
+            <div class="writing-prompt-text">What is your favorite movie or show?</div>
+            <textarea class="writing-input" id="w1" placeholder="Write your sentence here..." autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+        </div>
+
+        <div class="writing-block">
+            <div class="writing-label">Question 2</div>
+            <div class="writing-prompt-text">Why do you like it so much?</div>
+            <textarea class="writing-input" id="w2" placeholder="Write your sentence here..." autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+        </div>
+
+        <div class="writing-block">
+            <div class="writing-label">Question 3</div>
+            <div class="writing-prompt-text">Describe one character from it.</div>
+            <textarea class="writing-input" id="w3" placeholder="Write your sentence here..." autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+        </div>
+
+        <div class="writing-block">
+            <div class="writing-label">Question 4</div>
+            <div class="writing-prompt-text">What happens in your favorite scene?</div>
+            <textarea class="writing-input" id="w4" placeholder="Write your sentence here..." autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+        </div>
+
+        <div class="writing-block">
+            <div class="writing-label">Question 5</div>
+            <div class="writing-prompt-text">Would you recommend it to a friend? Why or why not?</div>
+            <textarea class="writing-input" id="w5" placeholder="Write your sentence here..." autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+        </div>
+
+        <div class="btn-row">
+            <button class="btn btn-outline" onclick="generateParagraph()">&#128196; Generate My Paragraph</button>
+        </div>
+
+        <div class="paragraph-box" id="paragraphBox">
+            <h4>&#128218; Your Paragraph</h4>
+            <div id="paragraphText"></div>
+        </div>
+
+        <div class="btn-row">
+            <button class="btn btn-primary" onclick="submitAssessment()">Submit Assessment &#10003;</button>
+        </div>
+
+    </div><!-- /assessmentForm -->
+
+
+    <!-- ===== SENTENCE PICKER MODAL ===== -->
+    <div class="modal-overlay" id="sentenceModal">
+        <div class="modal-box">
+            <div class="modal-title">&#128270; Click the sentence that best supports your answer</div>
+            <div id="modalSentenceList"></div>
+            <div class="modal-footer">
+                <button class="btn-confirm" onclick="confirmSentence()">Confirm Selection</button>
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
     </div>
-    
-    <div class="assessment-container">
-        <!-- Assessment Form -->
-        <div id="assessmentForm">
-            <!-- PART 1: READING -->
-            <div class="part-header">Part 1: Reading Comprehension</div>
-            <div class="why-learning">
-                <strong>Why we're learning this:</strong> Last week you discovered that when you read sentences carefully, you can find evidence that supports your answers. This week we're strengthening that skill. When you click on a sentence that answers a question, you're proving that you read closely and understood the text!
-            </div>
-            
-            <div class="reading-container">
-                <div class="passage-column">
-                    <div class="passage-title">The Northern Lights</div>
-                    <div class="passage-text" id="passageText">
-                        <!-- Sentences will be generated by JavaScript -->
-                    </div>
-                </div>
-                
-                <div class="questions-column" id="questionsColumn">
-                    <!-- Questions will be generated by JavaScript -->
-                </div>
-            </div>
-            
-            <!-- PART 2: SPELLING -->
-            <div class="part-header">Part 2: Spelling Practice</div>
-            <div class="why-learning">
-                <strong>Why we're learning this:</strong> This week we're focusing on two important spelling patterns: <strong>double consonants</strong> (like "hurry" and "summer") and the <strong>-tion/-ure endings</strong> (like "station" and "pleasure"). These patterns show up in lots of words you'll encounter in 7th grade and beyond.
-            </div>
-            
-            <div class="spelling-grid" id="spellingGrid">
-                <!-- Spelling items will be generated by JavaScript -->
-            </div>
-            
-            <!-- PART 3: WRITING -->
-            <div class="part-header">Part 3: Writing - Your Favorite Movie or Show</div>
-            <div class="why-learning">
-                <strong>Why we're learning this:</strong> Last week you noticed that sentences flow together to form paragraphs. This week we're building that skill by writing individual responses that we'll combine into a paragraph. Then we'll learn how to edit and improve your writing together!
-            </div>
-            
-            <div id="writingPrompts">
-                <!-- Writing prompts will be generated by JavaScript -->
-            </div>
-            
-            <div class="button-group">
-                <button class="btn btn-primary" onclick="submitAssessment()">Submit Assessment ✓</button>
-            </div>
+
+
+    <!-- ===== RESULTS PAGE ===== -->
+    <div class="results-page" id="resultsPage">
+
+        <div class="results-hero">
+            <h2>&#10024; Great work, Max!</h2>
+            <p>Your Week 2 answers have been saved.</p>
         </div>
-        
-        <!-- Sentence Selection Modal -->
-        <div id="sentenceModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">Click the sentence that answers this question</div>
-                <div class="sentence-options" id="sentenceOptions"></div>
-                <div class="modal-buttons">
-                    <button class="btn-confirm" onclick="confirmSentenceSelection()">Confirm</button>
-                    <button class="btn-cancel" onclick="closeSentenceModal()">Cancel</button>
+
+        <div class="saved-banner">&#10003; Answers saved to your account!</div>
+
+        <!-- EDITING WIZARD -->
+        <div class="wizard">
+            <div class="wizard-header">&#128221; Let's Edit Your Writing</div>
+
+            <div class="wizard-step active" id="wstep-0">
+                <div class="wizard-card">
+                    <div class="wizard-step-title">Introducing the Editing Process</div>
+                    <div class="wizard-instruction">
+                        Good writers don't write perfectly the first time &#8212; they write first, then improve. We're going to look at your longest sentence and improve it together, one thing at a time. This is called <strong>drafting and revising</strong>, and it's what every author does.
+                    </div>
+                    <div class="wizard-instruction">Here's the sentence we'll work on:</div>
+                    <div class="sentence-highlight" id="wizard-sentence"></div>
+                    <div class="wizard-instruction">Ready? Let's go step by step.</div>
+                    <div class="step-nav">
+                        <button class="btn-next-step" onclick="goStep(1)">Start Editing &#8594;</button>
+                    </div>
                 </div>
             </div>
+
+            <div class="wizard-step" id="wstep-1">
+                <div class="wizard-card">
+                    <div class="step-progress">Step 1 of 4</div>
+                    <div class="wizard-step-title">&#128269; Check Spelling</div>
+                    <div class="wizard-instruction">
+                        Read each word carefully. Sound it out. Does every word look right? Fix any spelling mistakes you notice. It's okay if you're not sure &#8212; just try your best.
+                    </div>
+                    <div class="sentence-highlight" id="wizard-sentence-1"></div>
+                    <textarea class="wizard-textarea" id="we1" placeholder="Rewrite the sentence, fixing any spelling mistakes..."></textarea>
+                    <div class="step-nav">
+                        <button class="btn-next-step" onclick="goStep(2)">Next: Punctuation &#8594;</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard-step" id="wstep-2">
+                <div class="wizard-card">
+                    <div class="step-progress">Step 2 of 4</div>
+                    <div class="wizard-step-title">&#128204; Check Punctuation</div>
+                    <div class="wizard-instruction">
+                        Does your sentence end with a period? Are there any commas needed to separate ideas? Punctuation tells the reader when to pause and when a thought is finished.
+                    </div>
+                    <div class="sentence-highlight" id="wizard-sentence-2"></div>
+                    <textarea class="wizard-textarea" id="we2" placeholder="Rewrite again, fixing any punctuation..."></textarea>
+                    <div class="step-nav">
+                        <button class="btn-next-step" onclick="goStep(3)">Next: Capitalization &#8594;</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard-step" id="wstep-3">
+                <div class="wizard-card">
+                    <div class="step-progress">Step 3 of 4</div>
+                    <div class="wizard-step-title">&#128288; Check Capitalization</div>
+                    <div class="wizard-instruction">
+                        Does your sentence start with a capital letter? Are names of people, places, or specific things capitalized? For example: "warzone" should be "Warzone" because it's a proper name.
+                    </div>
+                    <div class="sentence-highlight" id="wizard-sentence-3"></div>
+                    <textarea class="wizard-textarea" id="we3" placeholder="Rewrite again, fixing any capitalization..."></textarea>
+                    <div class="step-nav">
+                        <button class="btn-next-step" onclick="goStep(4)">Next: Read It Aloud &#8594;</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard-step" id="wstep-4">
+                <div class="wizard-card">
+                    <div class="step-progress">Step 4 of 4</div>
+                    <div class="wizard-step-title">&#128362; Read It Aloud &amp; Polish</div>
+                    <div class="wizard-instruction">
+                        Read your sentence out loud. Does it sound smooth? Does it make complete sense? Is anything missing or confusing? Make your final improvements below.
+                    </div>
+                    <div class="sentence-highlight" id="wizard-sentence-4"></div>
+                    <textarea class="wizard-textarea" id="we4" placeholder="Your final, polished sentence..."></textarea>
+                    <div class="step-nav">
+                        <button class="btn-next-step" onclick="finishWizard()">Done &#10003;</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard-done" id="wizardDone">
+                <h3>&#127775; Excellent work!</h3>
+                <p>You just practiced one of the most important writing skills: <strong>editing your own work</strong>. The more you do this, the easier and more natural it becomes. Writers call this "revising" and great writers do it every single time.</p>
+            </div>
+
+        </div><!-- /wizard -->
+
+        <div class="btn-row" style="margin-top: 30px;">
+            <button class="btn btn-primary" onclick="window.location.href='index.html'">Back to Dashboard</button>
         </div>
-        
-        <!-- Results Page -->
-        <div id="resultsPage" class="results-page">
-            <div class="results-header">
-                <h2>✨ Assessment Complete!</h2>
-                <p>Your answers have been saved!</p>
-            </div>
-            
-            <div class="success-message show" id="successMessage">
-                ✓ Your answers have been saved to your account!
-            </div>
-            
-            <div id="editingWizard" class="editing-wizard">
-                <div class="wizard-header">📝 Let's Edit Your Writing Together</div>
-                <div id="wizardContent"></div>
-            </div>
-            
-            <div class="button-group">
-                <button class="btn btn-primary" onclick="window.location.href='index.html'">Back to Dashboard</button>
-            </div>
-        </div>
-    </div>
-    
-    <script>
-        const WEEK = 2;
-        const CHILD = 'Max';
-        
-        // Passage sentences (internally tracked but not numbered visually)
-        const sentences = [
-            "The Northern Lights, also called the Aurora Borealis, are one of Earth's most stunning natural displays.",
-            "They light up the sky in the Arctic regions, particularly around countries like Norway, Canada, and Alaska.",
-            "Scientists have studied this phenomenon for centuries, trying to understand its mysterious beauty.",
-            "The lights are caused by a fascinating process involving the Sun and Earth's atmosphere.",
-            "The Sun constantly releases charged particles called solar wind.",
-            "When these particles reach Earth, they interact with our planet's magnetic field, which protects us like a shield.",
-            "As the charged particles collide with gases in Earth's upper atmosphere—particularly oxygen and nitrogen—they create the colorful light show we see.",
-            "The colors depend on which gas is hit.",
-            "Oxygen produces green and red lights, while nitrogen creates blue and purple colors.",
-            "The Aurora Borealis typically appears in a region called the auroral oval.",
-            "This region forms a circle around the North Pole, usually between 65 and 72 degrees latitude.",
-            "Places in northern Scandinavia, northern Canada, and Alaska experience frequent displays during winter months when the sky stays dark longer.",
-            "Many people travel thousands of miles just to witness this extraordinary event.",
-            "Indigenous peoples of the Arctic have observed and created legends about the Northern Lights for thousands of years.",
-            "Today, viewing the Aurora Borealis has become an unforgettable experience for millions of visitors worldwide."
-        ];
-        
-        const questions = [
-            { text: "What is another name for the Northern Lights?", correctSentence: 0 },
-            { text: "What causes the colors in the Northern Lights?", correctSentence: 7 },
-            { text: "Where does the Aurora Borealis typically appear?", correctSentence: 9 },
-            { text: "Why do you think people travel to see the Northern Lights?", correctSentence: 12 },
-            { text: "What have indigenous peoples done with their observations of the Northern Lights?", correctSentence: 13 }
-        ];
-        
-        const spellingWords = [
-            "hurry", "summer", "button", "dinner", "station", "question", "creature", "treasure", "pleasure", "measure", "happen", "success"
-        ];
-        
-        const writingPrompts = [
-            "What is your favorite movie or show?",
-            "Why do you like it so much?",
-            "Describe one character from it.",
-            "What happens in your favorite scene?",
-            "Would you recommend it to a friend? Why or why not?"
-        ];
-        
-        let selectedSentenceIndex = null;
-        let currentQuestionIndex = null;
-        let answers = {
-            reading: {},
-            spelling: {},
-            writing: {}
-        };
-        
-        function initializePassage() {
-            const passageElement = document.getElementById('passageText');
-            let html = '';
-            sentences.forEach((sentence, index) => {
-                html += `<span class="sentence" data-index="${index}" onclick="openSentenceModal(${index})">${sentence}</span> `;
-            });
-            passageElement.innerHTML = html;
-        }
-        
-        function initializeQuestions() {
-            const column = document.getElementById('questionsColumn');
-            column.innerHTML = '';
-            questions.forEach((q, index) => {
-                const qBlock = document.createElement('div');
-                qBlock.className = 'question-block';
-                qBlock.innerHTML = `
-                    <div class="question-label">Question ${index + 1}</div>
-                    <div class="question-text">${q.text}</div>
-                    <button class="select-sentence-btn" onclick="openSentenceModalForQuestion(${index})">Click to select sentence</button>
-                    <div class="selected-sentence" id="selected-${index}"></div>
-                `;
-                column.appendChild(qBlock);
-            });
-        }
-        
-        function initializeSpelling() {
-            const grid = document.getElementById('spellingGrid');
-            grid.innerHTML = '';
-            spellingWords.forEach((word, index) => {
-                const item = document.createElement('div');
-                item.className = 'spelling-item';
-                item.innerHTML = `
-                    <div class="spelling-label">Word ${index + 1}</div>
-                    <input type="text" class="answer-input" id="spelling-${index}" placeholder="spell it" autocomplete="off" autocorrect="off" spellcheck="false">
-                `;
-                grid.appendChild(item);
-            });
-        }
-        
-        function initializeWriting() {
-            const container = document.getElementById('writingPrompts');
-            container.innerHTML = '';
-            writingPrompts.forEach((prompt, index) => {
-                const promptDiv = document.createElement('div');
-                promptDiv.className = 'writing-prompt';
-                promptDiv.innerHTML = `
-                    <div class="prompt-number">Question ${index + 1}</div>
-                    <div class="prompt-text">${prompt}</div>
-                    <textarea class="prompt-textarea" id="writing-${index}" placeholder="Your answer..." autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
-                `;
-                container.appendChild(promptDiv);
-            });
-        }
-        
-        function openSentenceModalForQuestion(qIndex) {
-            currentQuestionIndex = qIndex;
-            openSentenceModal();
-        }
-        
-        function openSentenceModal() {
-            const modal = document.getElementById('sentenceModal');
-            const options = document.getElementById('sentenceOptions');
-            options.innerHTML = '';
-            
-            sentences.forEach((sentence, index) => {
-                const option = document.createElement('div');
-                option.className = 'sentence-option';
-                option.textContent = sentence;
-                option.onclick = () => {
-                    document.querySelectorAll('.sentence-option').forEach(s => s.style.background = '#f8f9ff');
-                    option.style.background = '#e8f0ff';
-                    selectedSentenceIndex = index;
-                };
-                options.appendChild(option);
-            });
-            
-            modal.classList.add('show');
-        }
-        
-        function closeSentenceModal() {
-            document.getElementById('sentenceModal').classList.remove('show');
-            selectedSentenceIndex = null;
-            currentQuestionIndex = null;
-        }
-        
-        function confirmSentenceSelection() {
-            if (selectedSentenceIndex !== null && currentQuestionIndex !== null) {
-                answers.reading[`answer${currentQuestionIndex + 1}`] = sentences[selectedSentenceIndex];
-                answers.reading[`sentenceIndex${currentQuestionIndex + 1}`] = selectedSentenceIndex;
-                
-                const display = document.getElementById(`selected-${currentQuestionIndex}`);
-                display.textContent = sentences[selectedSentenceIndex];
-                display.classList.add('show');
-                
-                closeSentenceModal();
+
+    </div><!-- /resultsPage -->
+
+</div><!-- /container -->
+
+<script>
+    // All passage sentences as an array (index matches data-i on spans)
+    var SENTENCES = [
+        "The Northern Lights, also called the Aurora Borealis, are one of Earth's most stunning natural displays.",
+        "They light up the sky in the Arctic regions, particularly around countries like Norway, Canada, and Alaska.",
+        "Scientists have studied this phenomenon for centuries, trying to understand its mysterious beauty.",
+        "The lights are caused by a fascinating process involving the Sun and Earth's atmosphere.",
+        "The Sun constantly releases charged particles called solar wind.",
+        "When these particles reach Earth, they interact with our planet's magnetic field, which protects us like a shield.",
+        "As the charged particles collide with gases in Earth's upper atmosphere, particularly oxygen and nitrogen, they create the colorful light show we see.",
+        "The colors depend on which gas is hit.",
+        "Oxygen produces green and red lights, while nitrogen creates blue and purple colors.",
+        "The Aurora Borealis typically appears in a region called the auroral oval.",
+        "This region forms a circle around the North Pole, usually between 65 and 72 degrees latitude.",
+        "Places in northern Scandinavia, northern Canada, and Alaska experience frequent displays during winter months when the sky stays dark longer.",
+        "Many people travel thousands of miles just to witness this extraordinary event.",
+        "Indigenous peoples of the Arctic have observed and created legends about the Northern Lights for thousands of years.",
+        "Today, viewing the Aurora Borealis has become an unforgettable experience for millions of visitors worldwide."
+    ];
+
+    var currentQuestion = null;
+    var selectedSentenceIndex = null;
+    var evidenceAnswers = {};
+
+    function openModal(qIndex) {
+        currentQuestion = qIndex;
+        selectedSentenceIndex = null;
+
+        var list = document.getElementById('modalSentenceList');
+        list.innerHTML = '';
+
+        SENTENCES.forEach(function(sentence, i) {
+            var div = document.createElement('div');
+            div.className = 'modal-sentence';
+            div.textContent = sentence;
+            if (evidenceAnswers[qIndex] === i) {
+                div.classList.add('chosen');
+                selectedSentenceIndex = i;
             }
-        }
-        
-        function collectAnswers() {
-            // Spelling
-            spellingWords.forEach((word, index) => {
-                answers.spelling[`spelling${index + 1}`] = document.getElementById(`spelling-${index}`).value;
-            });
-            
-            // Writing
-            writingPrompts.forEach((prompt, index) => {
-                answers.writing[`writing${index + 1}`] = document.getElementById(`writing-${index}`).value;
-            });
-            
-            return answers;
-        }
-        
-        function saveToGitHub(answers) {
-            const timestamp = new Date().toISOString();
-            
-            fetch('/.netlify/functions/save-lesson-data', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    week: WEEK,
-                    part: 'Reading',
-                    timestamp: timestamp,
-                    answers: answers,
-                    child: CHILD
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log('Answers saved successfully');
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        }
-        
-        function showEditingWizard() {
-            // Find longest sentence from writing answers
-            let longestSentence = '';
-            let longestLength = 0;
-            for (let i = 1; i <= 5; i++) {
-                const text = answers.writing[`writing${i}`] || '';
-                if (text.length > longestLength) {
-                    longestLength = text.length;
-                    longestSentence = text;
-                }
-            }
-            
-            if (!longestSentence) {
-                longestSentence = "You didn't write anything to edit.";
-            }
-            
-            const wizardContent = document.getElementById('wizardContent');
-            wizardContent.innerHTML = `
-                <div class="editing-step active" id="step-0">
-                    <div class="step-title">Your Longest Sentence</div>
-                    <div class="sentence-to-edit">${longestSentence}</div>
-                    <p class="step-instruction">We're going to help you improve this sentence step by step. Let's start with spelling!</p>
-                    <button class="step-buttons" onclick="nextEditingStep(1)"><button class="btn-next">Continue →</button></button>
-                </div>
-                
-                <div class="editing-step" id="step-1">
-                    <div class="step-title">Step 1: Check Spelling</div>
-                    <p class="step-instruction">Read through this sentence carefully. Are there any words that might be spelled incorrectly? Here are some to look for:</p>
-                    <div class="sentence-to-edit">${highlightPotentialMisspellings(longestSentence)}</div>
-                    <p class="step-instruction">Type the corrected version below:</p>
-                    <textarea class="step-input" id="step1-answer" placeholder="Fix any spelling mistakes...">${longestSentence}</textarea>
-                    <div class="step-buttons">
-                        <button class="btn-next" onclick="nextEditingStep(2)">Next: Punctuation →</button>
-                    </div>
-                </div>
-                
-                <div class="editing-step" id="step-2">
-                    <div class="step-title">Step 2: Check Punctuation</div>
-                    <p class="step-instruction">Now look at your sentence. Does it have a period at the end? Do commas make sense? Try rewriting it with correct punctuation:</p>
-                    <textarea class="step-input" id="step2-answer" placeholder="Add or fix punctuation...">${document.getElementById('step1-answer').value}</textarea>
-                    <div class="step-buttons">
-                        <button class="btn-next" onclick="nextEditingStep(3)">Next: Capitalization →</button>
-                    </div>
-                </div>
-                
-                <div class="editing-step" id="step-3">
-                    <div class="step-title">Step 3: Check Capitalization</div>
-                    <p class="step-instruction">Make sure the first word is capitalized, and any proper nouns (like names) start with capital letters:</p>
-                    <textarea class="step-input" id="step3-answer" placeholder="Check capitalization...">${document.getElementById('step2-answer').value}</textarea>
-                    <div class="step-buttons">
-                        <button class="btn-next" onclick="nextEditingStep(4)">Next: Flow & Clarity →</button>
-                    </div>
-                </div>
-                
-                <div class="editing-step" id="step-4">
-                    <div class="step-title">Step 4: Flow & Clarity</div>
-                    <p class="step-instruction">Read your sentence out loud. Does it make sense? Is it clear? Does it have all the words it needs? Make final adjustments:</p>
-                    <textarea class="step-input" id="step4-answer" placeholder="Make final improvements...">${document.getElementById('step3-answer').value}</textarea>
-                    <div class="step-buttons">
-                        <button class="btn-next" onclick="finishEditing()">Done! ✓</button>
-                    </div>
-                </div>
-            `;
-            document.getElementById('editingWizard').classList.add('active');
-        }
-        
-        function highlightPotentialMisspellings(text) {
-            // Simple highlighting of common spelling issues
-            return text.replace(/[^ .,!?;:]+/g, (word) => {
-                if (word.length > 5 && !isLikelyCorrect(word)) {
-                    return `<span class="highlight-word">${word}</span>`;
-                }
-                return word;
-            });
-        }
-        
-        function isLikelyCorrect(word) {
-            // Very basic check - just for demonstration
-            const commonWords = ['because', 'favorite', 'character', 'happens', 'recommend', 'watching', 'playing'];
-            return commonWords.some(w => word.toLowerCase().includes(w));
-        }
-        
-        function nextEditingStep(stepNum) {
-            document.querySelectorAll('.editing-step').forEach(step => {
-                step.classList.remove('active');
-                step.style.display = 'none';
-            });
-            const step = document.getElementById(`step-${stepNum}`);
-            if (step) {
-                step.style.display = 'block';
-                step.classList.add('active');
-                step.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-        
-        function finishEditing() {
-            alert('Great job editing! You've learned how to improve your writing step by step. Keep practicing this process!');
-        }
-        
-        function submitAssessment() {
-            collectAnswers();
-            saveToGitHub(answers);
-            
-            document.getElementById('assessmentForm').style.display = 'none';
-            document.getElementById('resultsPage').classList.add('active');
-            showEditingWizard();
-            window.scrollTo(0, 0);
-        }
-        
-        window.addEventListener('load', function() {
-            initializePassage();
-            initializeQuestions();
-            initializeSpelling();
-            initializeWriting();
+            div.onclick = function() {
+                document.querySelectorAll('.modal-sentence').forEach(function(el) {
+                    el.classList.remove('chosen');
+                });
+                div.classList.add('chosen');
+                selectedSentenceIndex = i;
+            };
+            list.appendChild(div);
         });
-    </script>
+
+        document.getElementById('sentenceModal').classList.add('open');
+    }
+
+    function closeModal() {
+        document.getElementById('sentenceModal').classList.remove('open');
+        currentQuestion = null;
+        selectedSentenceIndex = null;
+    }
+
+    function confirmSentence() {
+        if (selectedSentenceIndex === null) { closeModal(); return; }
+
+        evidenceAnswers[currentQuestion] = selectedSentenceIndex;
+
+        var evidenceBox = document.getElementById('evidence-' + currentQuestion);
+        document.getElementById('evidence-text-' + currentQuestion).textContent = SENTENCES[selectedSentenceIndex];
+        evidenceBox.classList.add('show');
+
+        var btn = document.getElementById('pickBtn-' + currentQuestion);
+        btn.textContent = 'Evidence selected \u2713';
+        btn.classList.add('active');
+
+        closeModal();
+    }
+
+    function generateParagraph() {
+        var parts = ['w1','w2','w3','w4','w5'].map(function(id) {
+            return (document.getElementById(id).value || '').trim();
+        }).filter(Boolean);
+
+        if (!parts.length) {
+            document.getElementById('paragraphBox').classList.remove('show');
+            return;
+        }
+
+        document.getElementById('paragraphText').textContent = parts.join(' ');
+        document.getElementById('paragraphBox').classList.add('show');
+        document.getElementById('paragraphBox').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function collectAnswers() {
+        var reading = {};
+        for (var i = 0; i < 5; i++) {
+            reading['sentenceIndex' + (i+1)] = (evidenceAnswers[i] !== undefined) ? evidenceAnswers[i] : null;
+            reading['sentenceText' + (i+1)] = (evidenceAnswers[i] !== undefined) ? SENTENCES[evidenceAnswers[i]] : '';
+        }
+
+        var spelling = {};
+        for (var s = 1; s <= 12; s++) {
+            spelling['spelling' + s] = document.getElementById('sp' + s).value;
+        }
+
+        var writing = {};
+        for (var w = 1; w <= 5; w++) {
+            writing['writing' + w] = document.getElementById('w' + w).value;
+        }
+
+        return { reading: reading, spelling: spelling, writing: writing };
+    }
+
+    function getLongestSentence(writing) {
+        var longest = '';
+        Object.values(writing).forEach(function(v) {
+            var text = (v || '').trim();
+            if (text.length > longest.length) longest = text;
+        });
+        return longest || 'No writing found.';
+    }
+
+    function saveToGitHub(answers) {
+        fetch('/.netlify/functions/save-lesson-data', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                week: 2,
+                part: 'Reading',
+                timestamp: new Date().toISOString(),
+                answers: answers,
+                child: 'Max'
+            })
+        }).catch(function(e) { console.error('Save error:', e); });
+    }
+
+    function submitAssessment() {
+        var answers = collectAnswers();
+        saveToGitHub(answers);
+
+        var longest = getLongestSentence(answers.writing);
+
+        // Populate all wizard sentence displays
+        ['wizard-sentence','wizard-sentence-1','wizard-sentence-2','wizard-sentence-3','wizard-sentence-4'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.textContent = longest;
+        });
+
+        // Pre-fill each wizard textarea with the previous step's content for easy editing
+        document.getElementById('we1').value = longest;
+        document.getElementById('we2').value = longest;
+        document.getElementById('we3').value = longest;
+        document.getElementById('we4').value = longest;
+
+        document.getElementById('assessmentForm').style.display = 'none';
+        document.getElementById('resultsPage').classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    function goStep(stepNum) {
+        // Copy previous textarea value into next step
+        var prevMap = { 1: null, 2: 'we1', 3: 'we2', 4: 'we3' };
+        if (prevMap[stepNum]) {
+            var prevVal = document.getElementById(prevMap[stepNum]).value;
+            var currentInputId = 'we' + stepNum;
+            if (prevVal.trim()) {
+                document.getElementById(currentInputId).value = prevVal;
+            }
+            // Also update the sentence-highlight for continuity
+            var sentenceEl = document.getElementById('wizard-sentence-' + stepNum);
+            if (sentenceEl && prevVal.trim()) sentenceEl.textContent = prevVal;
+        }
+
+        document.querySelectorAll('.wizard-step').forEach(function(el) {
+            el.classList.remove('active');
+        });
+        var next = document.getElementById('wstep-' + stepNum);
+        if (next) {
+            next.classList.add('active');
+            next.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    function finishWizard() {
+        document.querySelectorAll('.wizard-step').forEach(function(el) {
+            el.classList.remove('active');
+        });
+        document.getElementById('wizardDone').classList.add('show');
+        document.getElementById('wizardDone').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
 </body>
 </html>
