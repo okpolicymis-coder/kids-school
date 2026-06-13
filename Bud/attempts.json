@@ -1,1 +1,33 @@
-[]
+[
+  {
+    "week": 1,
+    "part": "Scientific Method",
+    "timestamp": "2026-06-13T20:57:45.096Z",
+    "answers": {
+      "reading": {
+        "answer1": "ask a question",
+        "answer2": "an educated guess",
+        "answer3": "to make sure their experimental outcomes were consistent",
+        "answer4": "as many variables as possible",
+        "answer5": "why does the spring launch the pen farther than the string"
+      },
+      "vocabulary": {
+        "vocabulary1": "1",
+        "vocabulary2": "4",
+        "vocabulary3": "2",
+        "vocabulary4": "5",
+        "vocabulary5": "6",
+        "vocabulary6": "8",
+        "vocabulary7": "3",
+        "vocabulary8": "7"
+      },
+      "experiment": {
+        "step1": "why does launching the pen with the spring go farther than launching the pen with the string ",
+        "step2": "i think launching the pen with the spring would go farther than launching the pen with the string because the spring has more potential energy than the string",
+        "step3": "using the spring to using the string",
+        "step4": "the part we shoot out of, the pen we used, we shot the pen in the same direction",
+        "step5": "how far did the pen go"
+      }
+    }
+  }
+]
