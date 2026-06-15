@@ -99,16 +99,51 @@
             font-size: 0.95em;
         }
 
-        /* Sentences are clickable to select as evidence */
+        /* Sentences — clickable in selection mode */
         .s {
-            cursor: pointer;
             border-radius: 3px;
-            padding: 1px 2px;
-            transition: background 0.15s;
+            padding: 2px 3px;
+            transition: background 0.15s, outline 0.15s;
+            display: inline;
         }
 
-        .s:hover { background: rgba(102,126,234,0.2); }
-        .s.picked { background: rgba(102,126,234,0.38); outline: 2px solid #667eea; }
+        /* When passage is in selection mode, sentences become interactive */
+        .passage-selecting .s {
+            cursor: pointer;
+        }
+
+        .passage-selecting .s:hover {
+            background: rgba(102,126,234,0.25);
+            outline: 2px solid rgba(102,126,234,0.4);
+        }
+
+        /* Soft-locked evidence sentence for a question */
+        .s.locked {
+            background: rgba(102,126,234,0.38);
+            outline: 2px solid #667eea;
+        }
+
+        /* Passage glows when in selection mode */
+        .passage-col.selecting {
+            outline: 3px solid #667eea;
+            box-shadow: 0 0 0 6px rgba(102,126,234,0.12);
+        }
+
+        /* Active question block glows to show which one we're selecting for */
+        .q-block.selecting {
+            outline: 2px solid #667eea;
+            box-shadow: 0 0 0 4px rgba(102,126,234,0.1);
+        }
+
+        .selection-hint {
+            font-size: 0.82em;
+            color: #667eea;
+            font-style: italic;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .selection-hint.show { display: block; }
 
         .questions-col {
             display: flex;
@@ -146,7 +181,7 @@
         }
 
         .pick-btn:hover { background: #5568d3; }
-        .pick-btn.active { background: #28a745; }
+        .pick-btn.locked { background: #28a745; }
 
         .evidence-display {
             display: none;
@@ -162,76 +197,20 @@
 
         .evidence-display.show { display: block; }
 
-        .change-link {
-            font-size: 0.8em;
+        .change-btn {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.82em;
             color: #667eea;
             cursor: pointer;
-            margin-left: 8px;
-            text-decoration: underline;
-        }
-
-        /* Sentence picker modal */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 999;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-overlay.open { display: flex; }
-
-        .modal-box {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            max-width: 620px;
-            width: 92%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .modal-title {
-            color: #667eea;
-            font-weight: bold;
-            font-size: 1em;
-            margin-bottom: 15px;
-        }
-
-        .modal-sentence {
-            padding: 12px;
-            background: #f8f9ff;
-            border: 2px solid #e0e0ff;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9em;
-            line-height: 1.6;
-            color: #333;
-            margin-bottom: 8px;
+            background: none;
+            border: 1px solid #667eea;
+            border-radius: 4px;
+            padding: 3px 8px;
             transition: all 0.15s;
         }
 
-        .modal-sentence:hover { background: #e8f0ff; border-color: #667eea; }
-        .modal-sentence.chosen { background: #dce8ff; border-color: #667eea; font-weight: 500; }
-
-        .modal-footer { display: flex; gap: 10px; margin-top: 15px; }
-
-        .modal-footer button {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-confirm { background: #667eea; color: white; }
-        .btn-confirm:hover { background: #5568d3; }
-        .btn-cancel { background: #e0e0ff; color: #667eea; }
-        .btn-cancel:hover { background: #d0d0ff; }
+        .change-btn:hover { background: #667eea; color: white; }
 
         /* PART 2 - Spelling */
         .spelling-grid {
@@ -476,53 +455,58 @@
             <!-- QUESTIONS (right) -->
             <div class="questions-col">
 
-                <div class="q-block">
+                <div class="q-block" id="qblock-0">
                     <div class="q-label">Question 1</div>
                     <div class="q-text">What is another name for the Northern Lights?</div>
-                    <button class="pick-btn" id="pickBtn-0" onclick="openModal(0)">&#128270; Click to select your evidence sentence</button>
+                    <button class="pick-btn" id="pickBtn-0" onclick="enterSelectMode(0)">&#128270; Click here, then select your evidence sentence</button>
+                    <div class="selection-hint" id="hint-0">&#8592; Now click a sentence in the passage on the left</div>
                     <div class="evidence-display" id="evidence-0">
-                        <span id="evidence-text-0"></span>
-                        <span class="change-link" onclick="openModal(0)">Change</span>
+                        <div id="evidence-text-0"></div>
+                        <button class="change-btn" onclick="enterSelectMode(0)">&#128260; Click here to change your evidence sentence</button>
                     </div>
                 </div>
 
-                <div class="q-block">
+                <div class="q-block" id="qblock-1">
                     <div class="q-label">Question 2</div>
                     <div class="q-text">What causes the colors in the Northern Lights?</div>
-                    <button class="pick-btn" id="pickBtn-1" onclick="openModal(1)">&#128270; Click to select your evidence sentence</button>
+                    <button class="pick-btn" id="pickBtn-1" onclick="enterSelectMode(1)">&#128270; Click here, then select your evidence sentence</button>
+                    <div class="selection-hint" id="hint-1">&#8592; Now click a sentence in the passage on the left</div>
                     <div class="evidence-display" id="evidence-1">
-                        <span id="evidence-text-1"></span>
-                        <span class="change-link" onclick="openModal(1)">Change</span>
+                        <div id="evidence-text-1"></div>
+                        <button class="change-btn" onclick="enterSelectMode(1)">&#128260; Click here to change your evidence sentence</button>
                     </div>
                 </div>
 
-                <div class="q-block">
+                <div class="q-block" id="qblock-2">
                     <div class="q-label">Question 3</div>
                     <div class="q-text">Where does the Aurora Borealis typically appear?</div>
-                    <button class="pick-btn" id="pickBtn-2" onclick="openModal(2)">&#128270; Click to select your evidence sentence</button>
+                    <button class="pick-btn" id="pickBtn-2" onclick="enterSelectMode(2)">&#128270; Click here, then select your evidence sentence</button>
+                    <div class="selection-hint" id="hint-2">&#8592; Now click a sentence in the passage on the left</div>
                     <div class="evidence-display" id="evidence-2">
-                        <span id="evidence-text-2"></span>
-                        <span class="change-link" onclick="openModal(2)">Change</span>
+                        <div id="evidence-text-2"></div>
+                        <button class="change-btn" onclick="enterSelectMode(2)">&#128260; Click here to change your evidence sentence</button>
                     </div>
                 </div>
 
-                <div class="q-block">
+                <div class="q-block" id="qblock-3">
                     <div class="q-label">Question 4</div>
                     <div class="q-text">Why do you think people travel to see the Northern Lights?</div>
-                    <button class="pick-btn" id="pickBtn-3" onclick="openModal(3)">&#128270; Click to select your evidence sentence</button>
+                    <button class="pick-btn" id="pickBtn-3" onclick="enterSelectMode(3)">&#128270; Click here, then select your evidence sentence</button>
+                    <div class="selection-hint" id="hint-3">&#8592; Now click a sentence in the passage on the left</div>
                     <div class="evidence-display" id="evidence-3">
-                        <span id="evidence-text-3"></span>
-                        <span class="change-link" onclick="openModal(3)">Change</span>
+                        <div id="evidence-text-3"></div>
+                        <button class="change-btn" onclick="enterSelectMode(3)">&#128260; Click here to change your evidence sentence</button>
                     </div>
                 </div>
 
-                <div class="q-block">
+                <div class="q-block" id="qblock-4">
                     <div class="q-label">Question 5</div>
                     <div class="q-text">What have indigenous peoples done with their observations of the Northern Lights?</div>
-                    <button class="pick-btn" id="pickBtn-4" onclick="openModal(4)">&#128270; Click to select your evidence sentence</button>
+                    <button class="pick-btn" id="pickBtn-4" onclick="enterSelectMode(4)">&#128270; Click here, then select your evidence sentence</button>
+                    <div class="selection-hint" id="hint-4">&#8592; Now click a sentence in the passage on the left</div>
                     <div class="evidence-display" id="evidence-4">
-                        <span id="evidence-text-4"></span>
-                        <span class="change-link" onclick="openModal(4)">Change</span>
+                        <div id="evidence-text-4"></div>
+                        <button class="change-btn" onclick="enterSelectMode(4)">&#128260; Click here to change your evidence sentence</button>
                     </div>
                 </div>
 
@@ -719,17 +703,7 @@
     </div><!-- /assessmentForm -->
 
 
-    <!-- ===== SENTENCE PICKER MODAL ===== -->
-    <div class="modal-overlay" id="sentenceModal">
-        <div class="modal-box">
-            <div class="modal-title">&#128270; Click the sentence that best supports your answer</div>
-            <div id="modalSentenceList"></div>
-            <div class="modal-footer">
-                <button class="btn-confirm" onclick="confirmSentence()">Confirm Selection</button>
-                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-            </div>
-        </div>
-    </div>
+    <!-- No modal needed — selection happens inline in the passage -->
 
 
     <!-- ===== RESULTS PAGE ===== -->
@@ -770,58 +744,68 @@
         "Today, viewing the Aurora Borealis has become an unforgettable experience for millions of visitors worldwide."
     ];
 
-    var currentQuestion = null;
-    var selectedSentenceIndex = null;
-    var evidenceAnswers = {};
+    var activeQuestion = null;   // which question is awaiting a sentence click
+    var evidenceAnswers = {};     // qIndex -> sentence index
 
-    function openModal(qIndex) {
-        currentQuestion = qIndex;
-        selectedSentenceIndex = null;
+    function enterSelectMode(qIndex) {
+        // Clear any previous selection mode
+        exitSelectMode();
 
-        var list = document.getElementById('modalSentenceList');
-        list.innerHTML = '';
+        activeQuestion = qIndex;
 
-        SENTENCES.forEach(function(sentence, i) {
-            var div = document.createElement('div');
-            div.className = 'modal-sentence';
-            div.textContent = sentence;
-            if (evidenceAnswers[qIndex] === i) {
-                div.classList.add('chosen');
-                selectedSentenceIndex = i;
-            }
-            div.onclick = function() {
-                document.querySelectorAll('.modal-sentence').forEach(function(el) {
-                    el.classList.remove('chosen');
-                });
-                div.classList.add('chosen');
-                selectedSentenceIndex = i;
-            };
-            list.appendChild(div);
+        // Highlight the passage and question block
+        document.getElementById('passage').classList.add('passage-selecting');
+        document.querySelector('.passage-col').classList.add('selecting');
+        document.getElementById('qblock-' + qIndex).classList.add('selecting');
+
+        // Show the hint arrow
+        document.getElementById('hint-' + qIndex).classList.add('show');
+
+        // Attach click handlers to all sentence spans
+        document.querySelectorAll('.s').forEach(function(span) {
+            span.onclick = function() { selectSentence(parseInt(span.dataset.i)); };
         });
-
-        document.getElementById('sentenceModal').classList.add('open');
     }
 
-    function closeModal() {
-        document.getElementById('sentenceModal').classList.remove('open');
-        currentQuestion = null;
-        selectedSentenceIndex = null;
+    function exitSelectMode() {
+        document.getElementById('passage').classList.remove('passage-selecting');
+        document.querySelector('.passage-col').classList.remove('selecting');
+        document.querySelectorAll('.q-block').forEach(function(el) { el.classList.remove('selecting'); });
+        document.querySelectorAll('.selection-hint').forEach(function(el) { el.classList.remove('show'); });
+        // Remove click handlers from sentences
+        document.querySelectorAll('.s').forEach(function(span) { span.onclick = null; });
+        activeQuestion = null;
     }
 
-    function confirmSentence() {
-        if (selectedSentenceIndex === null) { closeModal(); return; }
+    function selectSentence(sentenceIndex) {
+        if (activeQuestion === null) return;
+        var qIndex = activeQuestion;
 
-        evidenceAnswers[currentQuestion] = selectedSentenceIndex;
+        // Remove locked highlight from any sentence previously chosen for this question
+        var prev = evidenceAnswers[qIndex];
+        if (prev !== undefined) {
+            var prevSpan = document.querySelector('.s[data-i="' + prev + '"]');
+            if (prevSpan) prevSpan.classList.remove('locked');
+        }
 
-        var evidenceBox = document.getElementById('evidence-' + currentQuestion);
-        document.getElementById('evidence-text-' + currentQuestion).textContent = SENTENCES[selectedSentenceIndex];
-        evidenceBox.classList.add('show');
+        evidenceAnswers[qIndex] = sentenceIndex;
 
-        var btn = document.getElementById('pickBtn-' + currentQuestion);
-        btn.textContent = 'Evidence selected \u2713';
-        btn.classList.add('active');
+        // Soft-lock highlight the chosen sentence
+        var chosenSpan = document.querySelector('.s[data-i="' + sentenceIndex + '"]');
+        if (chosenSpan) chosenSpan.classList.add('locked');
 
-        closeModal();
+        // Show evidence below the question
+        document.getElementById('evidence-text-' + qIndex).textContent = SENTENCES[sentenceIndex];
+        document.getElementById('evidence-' + qIndex).classList.add('show');
+
+        // Update pick button to show confirmed state
+        var btn = document.getElementById('pickBtn-' + qIndex);
+        btn.textContent = '\u2713 Evidence selected';
+        btn.classList.add('locked');
+        btn.onclick = function() { enterSelectMode(qIndex); };
+
+        // Exit selection mode
+        exitSelectMode();
     }
 
     function generateParagraph() {
