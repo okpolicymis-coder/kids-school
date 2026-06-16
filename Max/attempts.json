@@ -38,5 +38,45 @@
         "writing5": "No I would not recommend theis game to other people because it cud mac them distrwy thigs and be rudd to people."
       }
     }
+  },
+  {
+    "week": 2,
+    "part": "Reading",
+    "timestamp": "2026-06-16T01:30:56.950Z",
+    "answers": {
+      "reading": {
+        "sentenceIndex1": 0,
+        "sentenceText1": "The Northern Lights, also called the Aurora Borealis, are one of Earth's most stunning natural displays.",
+        "sentenceIndex2": 6,
+        "sentenceText2": "As the charged particles collide with gases in Earth's upper atmosphere, particularly oxygen and nitrogen, they create the colorful light show we see.",
+        "sentenceIndex3": 9,
+        "sentenceText3": "The Aurora Borealis typically appears in a region called the auroral oval.",
+        "sentenceIndex4": 13,
+        "sentenceText4": "Indigenous peoples of the Arctic have observed and created legends about the Northern Lights for thousands of years.",
+        "sentenceIndex5": 13,
+        "sentenceText5": "Indigenous peoples of the Arctic have observed and created legends about the Northern Lights for thousands of years."
+      },
+      "spelling": {
+        "spelling1": "hurrey",
+        "spelling2": "summer",
+        "spelling3": "buttion",
+        "spelling4": "dinner",
+        "spelling5": "staition",
+        "spelling6": "qesttion",
+        "spelling7": "creture",
+        "spelling8": "tresure",
+        "spelling9": "plesure",
+        "spelling10": "mesure",
+        "spelling11": "happen",
+        "spelling12": "success"
+      },
+      "writing": {
+        "writing1": "",
+        "writing2": "",
+        "writing3": "",
+        "writing4": "",
+        "writing5": ""
+      }
+    }
   }
 ]
