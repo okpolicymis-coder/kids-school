@@ -723,7 +723,18 @@
             // Spelling (Max)
             if (data.answers.spelling && Object.keys(data.answers.spelling).length > 0) {
                 html += '<div style="margin-bottom: 25px;"><h3 style="color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px;">🔤 Spelling</h3>';
-                const correctWords = ['action', 'decision', 'special', 'picture', 'bicycle', 'energy', 'running', 'complete', 'family', 'discover', 'visible', 'transport'];
+                
+                // Answer keys by week
+                let correctWords = [];
+                if (data.week === 1) {
+                    correctWords = ['action', 'decision', 'special', 'picture', 'bicycle', 'energy', 'running', 'complete', 'family', 'discover', 'visible', 'transport'];
+                } else if (data.week === 2) {
+                    correctWords = ['hurry', 'summer', 'button', 'dinner', 'station', 'question', 'creature', 'treasure', 'pleasure', 'measure', 'happen', 'success'];
+                } else {
+                    // Default fallback
+                    correctWords = ['action', 'decision', 'special', 'picture', 'bicycle', 'energy', 'running', 'complete', 'family', 'discover', 'visible', 'transport'];
+                }
+                
                 let correct = 0, total = 0;
                 for (let i = 1; i <= 12; i++) {
                     const userAnswer = data.answers.spelling[`spelling${i}`] || '';
