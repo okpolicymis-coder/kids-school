@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 Feedback - Bud</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #f5576c;
+            padding-bottom: 20px;
+        }
+
+        .header h1 { color: #333; font-size: 2em; margin-bottom: 8px; }
+        .header .subtitle { color: #666; font-size: 1em; }
+
+        .home-btn {
+            display: inline-block;
+            background: #f5576c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1em;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+        .home-btn:hover { background: #e03f5c; }
+
+        .section-title {
+            color: #f5576c;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f5576c;
+        }
+
+        .why-box {
+            background: linear-gradient(135deg, rgba(240,147,251,0.08), rgba(245,87,108,0.08));
+            border-left: 4px solid #f5576c;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            line-height: 1.7;
+            color: #555;
+        }
+        .why-box strong { color: #f5576c; }
+
+        .q-result {
+            margin: 12px 0;
+            padding: 14px;
+            border-radius: 8px;
+            border-left: 5px solid #4caf50;
+            background: #f9f9f9;
+        }
+        .q-result.incorrect {
+            border-left-color: #ff9800;
+            background: #fff8f0;
+        }
+        .q-result .q-num {
+            font-weight: bold;
+            color: #f5576c;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+        .q-result .q-question { color: #333; margin: 4px 0; }
+        .q-result .bud-answer { font-size: 0.9em; color: #666; margin-top: 6px; font-style: italic; }
+        .q-result .verdict {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85em;
+            margin-top: 6px;
+        }
+        .verdict-correct { background: #d4edda; color: #155724; }
+        .verdict-off { background: #fff3cd; color: #856404; }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 600px) {
+            .vocab-grid { grid-template-columns: 1fr; }
+        }
+        .vocab-card {
+            padding: 10px 12px;
+            border-radius: 6px;
+            border-left: 4px solid #4caf50;
+            background: #e8f5e9;
+            font-size: 0.9em;
+        }
+        .vocab-card .term { font-weight: bold; color: #333; }
+        .vocab-card .match { font-size: 0.85em; color: #666; margin-top: 2px; }
+        .vocab-card .mark { font-weight: bold; font-size: 0.85em; color: #2e7d32; }
+
+        .experiment-block {
+            background: #fff5f7;
+            border-left: 4px solid #f5576c;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
+        }
+        .experiment-block .step-label {
+            color: #f5576c;
+            font-weight: bold;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .experiment-block .response {
+            color: #333;
+            font-size: 0.95em;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .summary-box {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .summary-box.strengths {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+        }
+        .summary-box.growth {
+            background: #fff8e1;
+            border-left: 5px solid #ff9800;
+        }
+        .summary-box h3 { margin-bottom: 10px; }
+        .summary-box.strengths h3 { color: #2e7d32; }
+        .summary-box.growth h3 { color: #e65100; }
+        .summary-box ul { margin-left: 20px; line-height: 1.8; color: #444; }
+
+        .score-badge {
+            display: inline-block;
+            background: #f5576c;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.95em;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="home-btn">&#8592; Back to Dashboard</a>
+
+    <div class="header">
+        <h1>&#128218; Week 1 Feedback</h1>
+        <p class="subtitle">Bud's Results &mdash; The Scientific Method</p>
+    </div>
+
+    <!-- ===== PART 1: READING ===== -->
+    <div class="section-title">&#128214; Part 1: Understanding the Scientific Method <span class="score-badge">4 / 5 Correct</span></div>
+
+    <div class="why-box">
+        <strong>&#127775; What you showed us:</strong> You read the passage carefully and understood the scientific method really well! You got 4 out of 5 questions correct, and the one you missed was a tricky question about what to keep the same in an experiment. Your example of a scientific question ("why does the spring launch the pen farther than the string") was creative and testable &mdash; exactly what a good scientist asks!
+    </div>
+
+    <div class="q-result">
+        <div class="q-num">Question 1</div>
+        <div class="q-question">What is the FIRST step of the scientific method?</div>
+        <div class="bud-answer">Your answer: "ask a question"</div>
+        <span class="verdict verdict-correct">&#10003; Correct!</span>
+    </div>
+
+    <div class="q-result">
+        <div class="q-num">Question 2</div>
+        <div class="q-question">What is a hypothesis?</div>
+        <div class="bud-answer">Your answer: "an educated guess"</div>
+        <span class="verdict verdict-correct">&#10003; Correct!</span>
+    </div>
+
+    <div class="q-result">
+        <div class="q-num">Question 3</div>
+        <div class="q-question">Why do scientists repeat experiments?</div>
+        <div class="bud-answer">Your answer: "to make sure their experimental outcomes were consistent"</div>
+        <span class="verdict verdict-correct">&#10003; Correct! Great use of the word "consistent"!</span>
+    </div>
+
+    <div class="q-result incorrect">
+        <div class="q-num">Question 4</div>
+        <div class="q-question">In an experiment, what is something you need to keep the SAME?</div>
+        <div class="bud-answer">Your answer: "as many variables as possible"</div>
+        <span class="verdict verdict-off">&#9888; Not quite &mdash; a variable is what you CHANGE, not what you keep the same. The passage says: "Change ONE thing (the variable) and keep everything else the same." So you keep everything ELSE the same (the control variables). This is a common mix-up, and now you know the difference!</span>
+    </div>
+
+    <div class="q-result">
+        <div class="q-num">Question 5</div>
+        <div class="q-question">Give an example of a good scientific question.</div>
+        <div class="bud-answer">Your answer: "why does the spring launch the pen farther than the string"</div>
+        <span class="verdict verdict-correct">&#10003; Excellent! A testable question that starts with "why"!</span>
+    </div>
+
+    <!-- ===== PART 2: VOCABULARY ===== -->
+    <div class="section-title">&#128214; Part 2: Scientific Vocabulary <span class="score-badge">8 / 8 Correct</span></div>
+
+    <div class="why-box">
+        <strong>&#127775; Perfect score!</strong> You matched every scientific term to its correct definition. This shows you really understand the language scientists use. Knowing these words &mdash; hypothesis, variable, control, data, evidence, conclusion &mdash; is a big deal because they show up in every science class from now through high school.
+    </div>
+
+    <div class="vocab-grid">
+        <div class="vocab-card"><div class="term">1. Hypothesis</div><div class="match">Matched to definition #1 (educated guess)</div><div class="mark">&#10003;</div></div>
+        <div class="vocab-card"><div class="term">2. Variable</div><div class="match">Matched to definition #4 (thing you change)</div><div class="mark">&#10003;</div></div>
+        <div class="vocab-card"><div class="term">3. Observation</div><div class="match">Matched to definition #2 (what you notice)</div><div class="mark">&#10003;</div></div>
+        <div class="vocab-card"><div class="term">4. Evidence</div><div class="match">Matched to definition #5 (facts that support)</div><div class="mark">&#10003;</div></div>
+        <div class="vocab-card"><div class="term">5. Conclusion</div><div class="match">Matched to definition #6 (what you decide)</div><div class="mark">&#10003;</div></div>
+        <div class="vocab-card"><div class="term">6. Control</div><div class="match">Matched to definition #8 (unchanged part)</div><div class="mark">&#10003;</div></div>
+        <div class="vocab-card"><div class="term">7. Data</div><div class="match">Matched to definition #3 (numbers/measurements)</div><div class="mark">&#10003;</div></div>
+        <div class="vocab-card"><div class="term">8. Experiment</div><div class="match">Matched to definition #7 (test to answer question)</div><div class="mark">&#10003;</div></div>
+    </div>
+
+    <!-- ===== PART 3: EXPERIMENT DESIGN ===== -->
+    <div class="section-title">&#128300; Part 3: Design Your Own Experiment</div>
+
+    <div class="why-box">
+        <strong>&#128079; What you showed us:</strong> You designed a real, testable experiment about launching a pen with a spring vs. a string. Every step of the scientific method was there: a clear question, a hypothesis with a "because" reason, a variable you'd change, controls you'd keep the same, and a way to measure results. The phrase "potential energy" in your hypothesis shows you're thinking like a real scientist! This is exactly the kind of thinking that makes science fun.
+    </div>
+
+    <div class="experiment-block">
+        <div class="step-label">Step 1: Your Question</div>
+        <div class="response">"why does launching the pen with the spring go farther than launching the pen with the string"</div>
+    </div>
+
+    <div class="experiment-block">
+        <div class="step-label">Step 2: Your Hypothesis</div>
+        <div class="response">"i think launching the pen with the spring would go farther than launching the pen with the string because the spring has more potential energy than the string"</div>
+    </div>
+
+    <div class="experiment-block">
+        <div class="step-label">Step 3: Your Variable (what you'd change)</div>
+        <div class="response">"using the spring to using the string"</div>
+    </div>
+
+    <div class="experiment-block">
+        <div class="step-label">Step 4: Your Controls (what you'd keep the same)</div>
+        <div class="response">"the part we shoot out of, the pen we used, we shot the pen in the same direction"</div>
+    </div>
+
+    <div class="experiment-block">
+        <div class="step-label">Step 5: Your Measurement (data to collect)</div>
+        <div class="response">"how far did the pen go"</div>
+    </div>
+
+    <!-- ===== SUMMARY ===== -->
+    <div class="summary-box strengths">
+        <h3>&#127775; Strengths to Celebrate</h3>
+        <ul>
+            <li><strong>Vocabulary mastery:</strong> 8/8 on matching scientific terms &mdash; you know the language of science cold.</li>
+            <li><strong>Scientific thinking:</strong> Your experiment design was complete and creative. You used "potential energy" in your hypothesis &mdash; that's advanced thinking!</li>
+            <li><strong>Reading comprehension:</strong> 4/5 on a brand-new topic shows you read carefully and understood the material.</li>
+            <li><strong>Real-world connection:</strong> You applied the scientific method to something you're actually curious about (the pen launcher). That's what real scientists do!</li>
+        </ul>
+    </div>
+
+    <div class="summary-box growth">
+        <h3>&#127919; One Thing to Clarify</h3>
+        <ul>
+            <li><strong>Variable vs. Control:</strong> The only mix-up was Q4 &mdash; a <em>variable</em> is what you CHANGE, and the <em>control</em> is what you keep the SAME. You actually demonstrated this correctly in Part 3 when you listed your controls ("the part we shoot out of, the pen we used, we shot the pen in the same direction"). So you understand the concept &mdash; the word just tripped you up in the reading section. Easy fix!</li>
+        </ul>
+    </div>
+
+    <div class="summary-box growth" style="margin-top: 15px;">
+        <h3>&#128218; Switching Gears: Next Week is ELA</h3>
+        <ul>
+            <li>We're moving from science to <strong>English Language Arts</strong> for Week 2. Based on your schoolwork, you've got real strengths in creative projects and figurative language. We'll build on those while working on literary elements (character, setting, plot, theme) and parts of speech &mdash; areas where a little extra practice will go a long way.</li>
+        </ul>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="index.html" class="home-btn" style="font-size: 1.1em; padding: 14px 30px;">&#8592; Back to Dashboard</a>
+    </div>
+
+</div>
+
+</body>
+</html>
