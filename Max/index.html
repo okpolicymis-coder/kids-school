@@ -451,6 +451,7 @@
                     <div class="weeks-column">
                         <a href="assessment.html?week=1" class="week-button">📚 Week 1</a>
                         <a href="week2.html" class="week-button">📚 Week 2</a>
+                        <a href="week3.html" class="week-button">📚 Week 3</a>
                     </div>
                     
                     <div class="weeks-column">
@@ -488,14 +489,51 @@
                             </div>
                         </div>
                         
-                        <!-- Week 2 Feedback Widget (Hidden until after attempt) -->
-                        <div class="feedback-widget hidden" id="week2Feedback">
+                        <!-- Week 2 Feedback Widget -->
+                        <div class="feedback-widget visible" id="week2Feedback">
                             <div class="feedback-header" onclick="toggleFeedback('week2')">
                                 <span class="feedback-toggle">▼</span>
                                 <span>✨ Week 2 Results</span>
                             </div>
                             <div class="feedback-content-wrapper">
-                                <!-- Week 2 feedback will be added here after you complete the assessment -->
+                                <div class="feedback-narrative">
+                                    <p><strong>Solid progress this week!</strong> Your reading comprehension continues to be a real strength — you got 4 out of 5 evidence questions correct. You're becoming a skilled text detective! Your spelling showed clear patterns: double consonant words where the sound is obvious (summer, dinner, happen, success) were all correct, and the new -tion/-ture/-sure endings are patterns we'll keep building.</p>
+                                    <p>Your writing shifted to a new topic (movies instead of games) and you gave honest, thoughtful answers with complete sentences. We kept your original spellings so we could target exactly the patterns you need most.</p>
+                                </div>
+                                <div class="feedback-sections">
+                                    <div class="takeaway-section">
+                                        <div class="takeaway-label">💪 Strengths</div>
+                                        <ul class="takeaway-list">
+                                            <li>4/5 reading evidence correct</li>
+                                            <li>Double consonant words mastered</li>
+                                            <li>Complete sentences in writing</li>
+                                            <li>Honest, thoughtful answers</li>
+                                        </ul>
+                                    </div>
+                                    <div class="takeaway-section">
+                                        <div class="takeaway-label">🎯 Next Focus</div>
+                                        <ul class="takeaway-list">
+                                            <li>-tion/-ture/-sure endings</li>
+                                            <li>Silent 'e' rule-breakers</li>
+                                            <li>'ough' pattern</li>
+                                            <li>Soft 'c' (sounds like 's')</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div style="text-align: center; margin-top: 20px;">
+                                    <a href="week2-feedback.html" style="display: inline-block; padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">📋 View Full Feedback</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Week 3 Feedback Widget (Hidden until after attempt) -->
+                        <div class="feedback-widget hidden" id="week3Feedback">
+                            <div class="feedback-header" onclick="toggleFeedback('week3')">
+                                <span class="feedback-toggle">▼</span>
+                                <span>✨ Week 3 Results</span>
+                            </div>
+                            <div class="feedback-content-wrapper">
+                                <!-- Week 3 feedback will be added here after you complete the assessment -->
                             </div>
                         </div>
                     </div>

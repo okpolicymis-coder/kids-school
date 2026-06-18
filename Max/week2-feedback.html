@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2 Feedback - Max</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+
+        .header h1 { color: #333; font-size: 2em; margin-bottom: 8px; }
+        .header .subtitle { color: #666; font-size: 1em; }
+
+        .home-btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1em;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+        .home-btn:hover { background: #5568d3; }
+
+        .section-title {
+            color: #667eea;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .why-box {
+            background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08));
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            line-height: 1.7;
+            color: #555;
+        }
+        .why-box strong { color: #667eea; }
+
+        /* Reading results */
+        .q-result {
+            margin: 12px 0;
+            padding: 14px;
+            border-radius: 8px;
+            border-left: 5px solid #4caf50;
+            background: #f9f9f9;
+        }
+        .q-result.incorrect {
+            border-left-color: #ff9800;
+            background: #fff8f0;
+        }
+        .q-result .q-num {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+        .q-result .q-question { color: #333; margin: 4px 0; }
+        .q-result .evidence { font-size: 0.9em; color: #666; margin-top: 6px; font-style: italic; }
+        .q-result .verdict {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85em;
+            margin-top: 6px;
+        }
+        .verdict-correct { background: #d4edda; color: #155724; }
+        .verdict-off { background: #fff3cd; color: #856404; }
+
+        /* Spelling grid */
+        .spelling-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 700px) {
+            .spelling-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .spell-card {
+            padding: 10px 12px;
+            border-radius: 6px;
+            border-left: 4px solid #4caf50;
+            background: #e8f5e9;
+            font-size: 0.9em;
+        }
+        .spell-card.wrong {
+            border-left-color: #ff9800;
+            background: #fff3cd;
+        }
+        .spell-card .target { font-weight: bold; color: #333; }
+        .spell-card .user-spelling { font-size: 0.85em; color: #666; margin-top: 2px; }
+        .spell-card .mark { font-weight: bold; font-size: 0.85em; }
+        .mark-ok { color: #2e7d32; }
+        .mark-x { color: #e65100; }
+
+        /* Writing display */
+        .writing-block {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
+        }
+        .writing-block .prompt-label {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .writing-block .response {
+            color: #333;
+            font-size: 0.95em;
+            line-height: 1.6;
+            font-style: italic;
+        }
+        .writing-block .response.empty { color: #aaa; font-style: normal; }
+
+        /* Strengths & growth */
+        .summary-box {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .summary-box.strengths {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+        }
+        .summary-box.growth {
+            background: #fff8e1;
+            border-left: 5px solid #ff9800;
+        }
+        .summary-box h3 { margin-bottom: 10px; }
+        .summary-box.strengths h3 { color: #2e7d32; }
+        .summary-box.growth h3 { color: #e65100; }
+        .summary-box ul { margin-left: 20px; line-height: 1.8; color: #444; }
+
+        .score-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.95em;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="home-btn">&#8592; Back to Dashboard</a>
+
+    <div class="header">
+        <h1>&#128218; Week 2 Feedback</h1>
+        <p class="subtitle">Max's Results &mdash; Northern Lights &amp; Spelling Patterns</p>
+    </div>
+
+    <!-- ===== PART 1: READING ===== -->
+    <div class="section-title">&#128214; Part 1: Reading Comprehension <span class="score-badge">4 / 5 Correct</span></div>
+
+    <div class="why-box">
+        <strong>&#127775; What you showed us:</strong> You did a really solid job finding evidence in the passage! For 4 out of 5 questions, you clicked exactly the right sentence that proved your answer. That's the skill of a <strong>text detective</strong> &mdash; and you're getting good at it. The one question you missed (Q4) was tricky because it asked you to think about <em>why</em> people do something, not just <em>what</em> happens. That's a harder kind of question, and we'll practice it more.
+    </div>
+
+    <div class="q-result">
+        <div class="q-num">Question 1</div>
+        <div class="q-question">What is another name for the Northern Lights?</div>
+        <div class="evidence">&#128270; Evidence: "The Northern Lights, also called the Aurora Borealis, are one of Earth's most stunning natural displays."</div>
+        <span class="verdict verdict-correct">&#10003; Correct! Sentence 0</span>
+    </div>
+
+    <div class="q-result">
+        <div class="q-num">Question 2</div>
+        <div class="q-question">What causes the colors in the Northern Lights?</div>
+        <div class="evidence">&#128270; Evidence: "As the charged particles collide with gases in Earth's upper atmosphere, particularly oxygen and nitrogen, they create the colorful light show we see."</div>
+        <span class="verdict verdict-correct">&#10003; Correct! Sentence 6</span>
+    </div>
+
+    <div class="q-result">
+        <div class="q-num">Question 3</div>
+        <div class="q-question">Where does the Aurora Borealis typically appear?</div>
+        <div class="evidence">&#128270; Evidence: "The Aurora Borealis typically appears in a region called the auroral oval."</div>
+        <span class="verdict verdict-correct">&#10003; Correct! Sentence 9</span>
+    </div>
+
+    <div class="q-result incorrect">
+        <div class="q-num">Question 4</div>
+        <div class="q-question">Why do you think people travel to see the Northern Lights?</div>
+        <div class="evidence">&#128270; Your evidence: "Indigenous peoples of the Arctic have observed and created legends about the Northern Lights for thousands of years."</div>
+        <span class="verdict verdict-off">&#9888; Off-target &mdash; this sentence is about legends, not about why people travel. The better evidence was Sentence 12: "Many people travel thousands of miles just to witness this extraordinary event."</span>
+    </div>
+
+    <div class="q-result">
+        <div class="q-num">Question 5</div>
+        <div class="q-question">What have indigenous peoples done with their observations of the Northern Lights?</div>
+        <div class="evidence">&#128270; Evidence: "Indigenous peoples of the Arctic have observed and created legends about the Northern Lights for thousands of years."</div>
+        <span class="verdict verdict-correct">&#10003; Correct! Sentence 13</span>
+    </div>
+
+    <!-- ===== PART 2: SPELLING ===== -->
+    <div class="section-title">&#128221; Part 2: Spelling Practice <span class="score-badge">4 / 12 Correct</span></div>
+
+    <div class="why-box">
+        <strong>&#128161; What we learned about your spelling:</strong> This week introduced two important patterns: <strong>double consonants</strong> (like "running" and "summer") and <strong>tricky endings</strong> (-tion sounds like "shun", -ture sounds like "cher", -sure sounds like "zher"). You did well on words where the double letter is obvious (summer, dinner, happen, success &mdash; 4/4 on those!). The -tion/-ture/-sure endings are new and we'll keep working on them. You also noticed something smart: some of these words have an 'a' before the ending that's easy to miss when you're just listening to the sound. That's exactly right, and we'll practice it!
+    </div>
+
+    <div class="spelling-grid">
+        <div class="spell-card wrong">
+            <div class="target">1. hurry</div>
+            <div class="user-spelling">You wrote: <strong>hurrey</strong></div>
+            <div class="mark mark-x">&#10007; Missing double R, added extra E</div>
+        </div>
+        <div class="spell-card">
+            <div class="target">2. summer</div>
+            <div class="user-spelling">You wrote: <strong>summer</strong></div>
+            <div class="mark mark-ok">&#10003; Perfect!</div>
+        </div>
+        <div class="spell-card wrong">
+            <div class="target">3. button</div>
+            <div class="user-spelling">You wrote: <strong>bution</strong></div>
+            <div class="mark mark-x">&#10007; Mixed up double T with -tion pattern</div>
+        </div>
+        <div class="spell-card">
+            <div class="target">4. dinner</div>
+            <div class="user-spelling">You wrote: <strong>dinner</strong></div>
+            <div class="mark mark-ok">&#10003; Perfect!</div>
+        </div>
+        <div class="spell-card wrong">
+            <div class="target">5. station</div>
+            <div class="user-spelling">You wrote: <strong>staition</strong></div>
+            <div class="mark mark-x">&#10007; Extra 'i' before -tion</div>
+        </div>
+        <div class="spell-card wrong">
+            <div class="target">6. question</div>
+            <div class="user-spelling">You wrote: <strong>qestion</strong></div>
+            <div class="mark mark-x">&#10007; Missing 'u', doubled T unnecessarily</div>
+        </div>
+        <div class="spell-card wrong">
+            <div class="target">7. creature</div>
+            <div class="user-spelling">You wrote: <strong>creture</strong></div>
+            <div class="mark mark-x">&#10007; Missing 'a' before -ture</div>
+        </div>
+        <div class="spell-card wrong">
+            <div class="target">8. treasure</div>
+            <div class="user-spelling">You wrote: <strong>tresure</strong></div>
+            <div class="mark mark-x">&#10007; Missing 'a' before -sure</div>
+        </div>
+        <div class="spell-card wrong">
+            <div class="target">9. pleasure</div>
+            <div class="user-spelling">You wrote: <strong>plesure</strong></div>
+            <div class="mark mark-x">&#10007; Missing 'a' before -sure</div>
+        </div>
+        <div class="spell-card wrong">
+            <div class="target">10. measure</div>
+            <div class="user-spelling">You wrote: <strong>mesure</strong></div>
+            <div class="mark mark-x">&#10007; Missing 'a' before -sure</div>
+        </div>
+        <div class="spell-card">
+            <div class="target">11. happen</div>
+            <div class="user-spelling">You wrote: <strong>happen</strong></div>
+            <div class="mark mark-ok">&#10003; Perfect!</div>
+        </div>
+        <div class="spell-card">
+            <div class="target">12. success</div>
+            <div class="user-spelling">You wrote: <strong>success</strong></div>
+            <div class="mark mark-ok">&#10003; Perfect!</div>
+        </div>
+    </div>
+
+    <!-- ===== PART 3: WRITING ===== -->
+    <div class="section-title">&#9997;&#65039; Part 3: Writing &mdash; Your Favorite Movie</div>
+
+    <div class="why-box">
+        <strong>&#128079; What you showed us:</strong> You wrote about a movie instead of a video game this time &mdash; that's great! You're thinking about different topics. Your sentences were complete thoughts, and your reasoning in the last answer ("I would recommend it because there is a cool monster but the movie is for kids") shows you can evaluate something and make a judgment. That's real critical thinking. You also worked through some tricky spellings while writing, and we kept your original spellings so we could see exactly which patterns to practice next. That's smart &mdash; it helps us build lessons that target <em>your</em> specific needs.
+    </div>
+
+    <div class="writing-block">
+        <div class="prompt-label">Question 1: What is your favorite movie?</div>
+        <div class="response">"My favorite movie is monster trucks."</div>
+    </div>
+
+    <div class="writing-block">
+        <div class="prompt-label">Question 2: Why do you like it so much?</div>
+        <div class="response">"I like the movie monster trucks a lot because I just thout it's cool."</div>
+    </div>
+
+    <div class="writing-block">
+        <div class="prompt-label">Question 3: Describe one character from it.</div>
+        <div class="response">"It's bin a few years sins I last saw the movie so I can't remember vare much."</div>
+    </div>
+
+    <div class="writing-block">
+        <div class="prompt-label">Question 4: What happens in your favorite scene?</div>
+        <div class="response">"Althoe monster trucks is my favorite movie I don't hav a favorite scene."</div>
+    </div>
+
+    <div class="writing-block">
+        <div class="prompt-label">Question 5: Would you recommend it to a friend?</div>
+        <div class="response">"I would recommend it to a friend because thare is a cool monster but the movie is a for kids."</div>
+    </div>
+
+    <!-- ===== SUMMARY ===== -->
+    <div class="summary-box strengths">
+        <h3>&#127775; Strengths to Celebrate</h3>
+        <ul>
+            <li><strong>Reading comprehension is a real strength</strong> &mdash; 4/5 on evidence-finding is excellent work. You know how to find the right sentence!</li>
+            <li><strong>Double consonant words where the double letter is obvious</strong> (summer, dinner, happen, success) &mdash; you got all 4 of these right. You understand this rule when the sound is clear.</li>
+            <li><strong>Complete sentences in writing</strong> &mdash; every answer was a full thought with a subject and a verb. That's the #1 writing skill and you've got it.</li>
+            <li><strong>Honest, thoughtful answers</strong> &mdash; you gave real opinions and reasoning, not just one-word answers.</li>
+            <li><strong>You noticed the 'a' in -ture/-sure words is tricky</strong> &mdash; that's great self-awareness! Recognizing the pattern is the first step to mastering it.</li>
+        </ul>
+    </div>
+
+    <div class="summary-box growth">
+        <h3>&#127919; Skills We're Building Next</h3>
+        <ul>
+            <li><strong>-tion, -ture, -sure endings</strong> &mdash; all 6 of these were new patterns. We'll practice them with more words next week so they start to feel natural.</li>
+            <li><strong>Silent 'e' at the end of words</strong> &mdash; you wrote "hav" for "have." You noticed the 'e' feels awkward there, and you're right &mdash; it breaks the long A rule! We'll explore why English does this.</li>
+            <li><strong>The 'ee' vowel team</strong> &mdash; "bin" for "been." The 'ee' makes one sound together, and we'll practice spotting it.</li>
+            <li><strong>The 'ough' pattern</strong> &mdash; "thout" for "thought" and "althoe" for "although." This is one of the weirdest patterns in English, and we'll tackle it together.</li>
+            <li><strong>Soft 'c' (sounds like 's')</strong> &mdash; "sins" for "since." When 'c' comes before 'e' or 'i', it often makes an 's' sound.</li>
+        </ul>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="index.html" class="home-btn" style="font-size: 1.1em; padding: 14px 30px;">&#8592; Back to Dashboard</a>
+    </div>
+
+</div>
+
+</body>
+</html>
