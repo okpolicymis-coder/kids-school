@@ -29,5 +29,38 @@
         "step5": "how far did the pen go"
       }
     }
+  },
+  {
+    "week": 2,
+    "part": "ELA",
+    "timestamp": "2026-06-19T22:32:10.537Z",
+    "answers": {
+      "reading": {
+        "answer1": "Leo is the main character in this story",
+        "answer2": "the story takes place at the park. On a not to windy day but just windy enoph to fly a kite",
+        "answer3": "leo's problem was that his kite would not fly",
+        "answer4": "the problem was solved by adding a extra ribben to the tail of the kite",
+        "answer5": "that some parts that look decrotive really can be a imortent part witch is needed"
+      },
+      "partsOfSpeech": {
+        "pos1": "leo",
+        "pos2": "launched",
+        "pos3": "diamond-shaped",
+        "pos4": "bench",
+        "pos5": "stopped",
+        "pos6": "solid",
+        "pos7": "kite",
+        "pos8": "grinned",
+        "pos9": "wooden",
+        "pos10": "steady"
+      },
+      "writing": {
+        "writing1": "jason was a nice but was a kid that didnt pay mutch attenchon",
+        "writing2": "it was damp and getting dark in the park",
+        "writing3": "he hast to get medicen for his mom but the store in the park was closed",
+        "writing4": "he left the park to find a different store",
+        "writing5": "he found a open store and bout the medicen for his mom"
+      }
+    }
   }
 ]
