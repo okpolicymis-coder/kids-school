@@ -118,5 +118,57 @@
         "writing5": "I would recommend it to a friend because thare is a cool monster but the movie is a for kids."
       }
     }
+  },
+  {
+    "week": 3,
+    "part": "Reading",
+    "timestamp": "2026-06-23T02:19:25.600Z",
+    "answers": {
+      "reading": {
+        "sentenceIndex1": null,
+        "sentenceText1": "",
+        "sentenceIndex2": null,
+        "sentenceText2": "",
+        "sentenceIndex3": null,
+        "sentenceText3": "",
+        "sentenceIndex4": null,
+        "sentenceText4": "",
+        "sentenceIndex5": null,
+        "sentenceText5": ""
+      },
+      "spelling": {
+        "spelling1": "hopping",
+        "spelling2": "grabbed",
+        "spelling3": "planner",
+        "spelling4": "bigger",
+        "spelling5": "atention",
+        "spelling6": "fraction",
+        "spelling7": "advenature",
+        "spelling8": "preasure",
+        "spelling9": "have",
+        "spelling10": "give",
+        "spelling11": "gone",
+        "spelling12": "been",
+        "spelling13": "seen",
+        "spelling14": "green",
+        "spelling15": "thoutht",
+        "spelling16": "althouth",
+        "spelling17": "through",
+        "spelling18": "since",
+        "spelling19": "onec",
+        "spelling20": "there",
+        "spelling21": "treasure",
+        "spelling22": "nature",
+        "spelling23": "measure",
+        "spelling24": "feature"
+      },
+      "writing": {
+        "writing1": "",
+        "writing2": "",
+        "writing3": "",
+        "writing4": "",
+        "writing5": ""
+      }
+    }
   }
 ]
