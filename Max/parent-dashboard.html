@@ -433,6 +433,69 @@
                             <p style="margin-top: 15px; color: #666; font-size: 0.9em;"><strong>What to look for:</strong> This week Max learns that writing is a process. First you get ideas down (any way they come), then you improve them. Does he understand that editing is about making things better, not about being "wrong"?</p>
                         </div>
                     `
+                },
+                3: {
+                    'Reading': `
+                        <div style="margin-bottom: 30px;">
+                            <h3 style="color: #667eea; margin-bottom: 15px;">📖 Reading Passage & Questions - How Video Games Are Made</h3>
+                            <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; line-height: 1.8;">
+                                <strong>Passage Summary:</strong><br><br>
+                                <p style="margin: 12px 0;">Max reads an informational passage about how video games are created, including concept design, programming, art, sound design, testing, and release.</p>
+                                <p style="margin: 12px 0;"><strong>Same evidence format as Week 2:</strong> Max clicks the exact sentence in the passage that supports each answer.</p>
+                            </div>
+                            <p style="margin-top: 15px; color: #666; font-size: 0.95em;"><strong>What to look for:</strong> Is Max selecting precise evidence, especially for “why” questions? Week 3 continues evidence-based reading from Week 2.</p>
+                        </div>
+                    `,
+                    'Spelling': `
+                        <div style="margin-bottom: 30px;">
+                            <h3 style="color: #667eea; margin-bottom: 15px;">🔤 Spelling Words - Week 3 (24 Words)</h3>
+                            <div style="background: #f5f5f5; padding: 20px; border-radius: 10px;">
+                                <p style="margin-bottom: 15px;"><strong>Max spells these 24 words:</strong></p>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                    <div>1. hopping</div>
+                                    <div>2. grabbed</div>
+                                    <div>3. planner</div>
+                                    <div>4. bigger</div>
+                                    <div>5. attention</div>
+                                    <div>6. fraction</div>
+                                    <div>7. adventure</div>
+                                    <div>8. pressure</div>
+                                    <div>9. have</div>
+                                    <div>10. give</div>
+                                    <div>11. gone</div>
+                                    <div>12. been</div>
+                                    <div>13. seen</div>
+                                    <div>14. green</div>
+                                    <div>15. thought</div>
+                                    <div>16. although</div>
+                                    <div>17. through</div>
+                                    <div>18. since</div>
+                                    <div>19. once</div>
+                                    <div>20. there</div>
+                                    <div>21. treasure</div>
+                                    <div>22. nature</div>
+                                    <div>23. measure</div>
+                                    <div>24. feature</div>
+                                </div>
+                                <p style="margin-top: 15px; color: #666; font-size: 0.9em;"><strong>Focus Areas:</strong> Week 3 reinforces double consonants and -tion/-ture/-sure patterns, then targets writing-based spelling gaps (silent-e rule-breakers, ee vowel team, ough words, soft c) with four added words emphasizing the “a before -ture/-sure” pattern.</p>
+                            </div>
+                        </div>
+                    `,
+                    'Writing': `
+                        <div style="margin-bottom: 30px;">
+                            <h3 style="color: #667eea; margin-bottom: 15px;">✍️ Writing Prompts - A Place You'd Love to Visit</h3>
+                            <div style="background: #f5f5f5; padding: 20px; border-radius: 10px;">
+                                <p style="margin-bottom: 15px;"><strong>Max writes 5 sentences, then edits his work in a guided wizard:</strong></p>
+                                <ol style="line-height: 1.8; margin-bottom: 15px;">
+                                    <li>What is a place you would love to visit?</li>
+                                    <li>Why do you want to go there?</li>
+                                    <li>What would you do first when you got there?</li>
+                                    <li>Who would you bring with you?</li>
+                                    <li>What is one thing you hope to see or experience there?</li>
+                                </ol>
+                            </div>
+                        </div>
+                    `
                 }
             },
             Bud: {
@@ -730,13 +793,15 @@
                     correctWords = ['action', 'decision', 'special', 'picture', 'bicycle', 'energy', 'running', 'complete', 'family', 'discover', 'visible', 'transport'];
                 } else if (data.week === 2) {
                     correctWords = ['hurry', 'summer', 'button', 'dinner', 'station', 'question', 'creature', 'treasure', 'pleasure', 'measure', 'happen', 'success'];
+                } else if (data.week === 3) {
+                    correctWords = ['hopping', 'grabbed', 'planner', 'bigger', 'attention', 'fraction', 'adventure', 'pressure', 'have', 'give', 'gone', 'been', 'seen', 'green', 'thought', 'although', 'through', 'since', 'once', 'there', 'treasure', 'nature', 'measure', 'feature'];
                 } else {
                     // Default fallback
                     correctWords = ['action', 'decision', 'special', 'picture', 'bicycle', 'energy', 'running', 'complete', 'family', 'discover', 'visible', 'transport'];
                 }
                 
                 let correct = 0, total = 0;
-                for (let i = 1; i <= 12; i++) {
+                for (let i = 1; i <= correctWords.length; i++) {
                     const userAnswer = data.answers.spelling[`spelling${i}`] || '';
                     const correctWord = correctWords[i-1];
                     const isCorrect = userAnswer.toLowerCase() === correctWord.toLowerCase();
@@ -746,7 +811,7 @@
                         <strong>${i}. ${correctWord}</strong> — ${isCorrect ? '✓ Correct!' : `typed: "${userAnswer || '(blank)'}"`}
                     </div>`;
                 }
-                html += `<div style="margin-top: 15px; padding: 12px; background: #e3f2fd; border-radius: 5px;"><strong>Score: ${correct}/${total || 12} correct</strong></div>`;
+                html += `<div style="margin-top: 15px; padding: 12px; background: #e3f2fd; border-radius: 5px;"><strong>Score: ${correct}/${total || correctWords.length} correct</strong></div>`;
                 html += '</div>';
             }
             
